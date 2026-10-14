@@ -1,11 +1,11 @@
 package dev.arakiel.fargosoulfabric.common.entity;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.api.FargoSoulHelper;
-import dev.arakiel.fargosoulfabric.common.attachment.AttachmentEntityData;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PathNode;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.FSFPlayerSummons;
+import dev.arakiel.fargosoulfabric.common.attachment.SummonData;
+import dev.arakiel.fargosoulfabric.common.summon.PathNode;
 import dev.arakiel.fargosoulfabric.common.minion.Minion;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -15,14 +15,14 @@ import net.minecraft.world.phys.Vec3;
 public class ShadowOrb extends Minion {
 
     public ShadowOrb() {
-        super(SummonerAttachmentEntityRegister.SHADOW_ORB);
+        super(SummonTypeRegister.SHADOW_ORB);
         setSlotCost(0);
     }
 
     @Override
     public void tick() {
         if (!owner.level().isClientSide()) {
-            if (!SoulItemData.isEquipped(owner, FargoSoulItemRegister.AncientShadowSoulItem)) {
+            if (!PlayerSouls.isEquipped(owner, FSFItemRegister.AncientShadowSoulItem)) {
                 setRemove();
                 return;
             }
@@ -33,12 +33,12 @@ public class ShadowOrb extends Minion {
 
     @Override
     public int getOrder() {
-        return FargoSoulHelper.get(owner).getEntityData().get(getType()).indexOf(this);
+        return FSFPlayerSummons.get(owner).getSummons().get(getType()).indexOf(this);
     }
 
     @Override
     public int getSameSize() {
-        return FargoSoulHelper.get(owner).getEntityData().get(getType()).size();
+        return FSFPlayerSummons.get(owner).getSummons().get(getType()).size();
     }
 
     /**

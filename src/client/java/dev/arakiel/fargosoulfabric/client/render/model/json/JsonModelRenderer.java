@@ -3,7 +3,7 @@ package dev.arakiel.fargosoulfabric.client.render.model.json;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.arakiel.fargosoulfabric.client.render.ColorBufferSource;
-import dev.arakiel.fargosoulfabric.client.render.FargoSoulRenderTypes;
+import dev.arakiel.fargosoulfabric.client.render.FSFRenderTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -36,7 +36,7 @@ public final class JsonModelRenderer {
       if (model != modelManager.getMissingModel()) {
          ColorBufferSource colorBufferSource = new ColorBufferSource(bufferSource);
          colorBufferSource.setColor(color);
-         VertexConsumer consumer = colorBufferSource.getBuffer(FargoSoulRenderTypes.getModel());
+         VertexConsumer consumer = colorBufferSource.getBuffer(FSFRenderTypes.getModel());
          dev.arakiel.fargosoulfabric.client.render.RenderUtil.renderModel(model, poseStack, consumer, packedLight);
       }
 

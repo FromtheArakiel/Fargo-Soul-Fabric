@@ -1,9 +1,9 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.terraPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -19,12 +19,12 @@ public class LeadSoul extends SoulItem {
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        target.addEffect(new MobEffectInstance(FargoSoulMobEffectRegister.LeadPoisoning, 100));
+        target.addEffect(new MobEffectInstance(FSFMobEffectRegister.LeadPoisoning, 100));
     }
 
     @Override
     public boolean effectApplicable(Player player, MobEffectInstance effectInstance) {
-        if (effectInstance.is(FargoSoulMobEffectRegister.LeadPoisoning)) {
+        if (effectInstance.is(FSFMobEffectRegister.LeadPoisoning)) {
             return false;
         }
         return super.effectApplicable(player, effectInstance);

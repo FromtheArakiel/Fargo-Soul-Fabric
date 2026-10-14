@@ -1,11 +1,11 @@
 package dev.arakiel.fargosoulfabric.common.entity;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.common.attachment.InvincibleData;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.IEntityCollision;
-import dev.arakiel.fargosoulfabric.common.projectile.Projectile;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
+import dev.arakiel.fargosoulfabric.common.summon.IEntityCollision;
+import dev.arakiel.fargosoulfabric.common.projectile.SummonProjectile;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,12 +16,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @SuppressWarnings("this-escape")
-public class Petal extends Projectile implements IEntityCollision<Petal> {
+public class Petal extends SummonProjectile implements IEntityCollision<Petal> {
 
     private LivingEntity chaseTarget = null;
 
     public Petal() {
-        super(SummonerAttachmentEntityRegister.PETAL);
+        super(SummonTypeRegister.PETAL);
         setDrag(0.8f);
         setMaxLife(60);
     }
@@ -38,7 +38,7 @@ public class Petal extends Projectile implements IEntityCollision<Petal> {
 
     @Override
     public boolean isValidCollisionTarget(Petal entity, LivingEntity target) {
-        return SoulTargetCache.isTarget(owner, target);
+        return SoulTargets.isTarget(owner, target);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class Petal extends Projectile implements IEntityCollision<Petal> {
         HitContext first = hitContexts.getFirst();
         LivingEntity target = first.entity();
         if (source != null) {
-            target.addEffect(new MobEffectInstance(FargoSoulMobEffectRegister.OrichalcumPoisoning, 100));
-            InvincibleData.attack(target)
+            target.addEffect(new MobEffectInstance(FSFMobEffectRegister.OrichalcumPoisoning, 100));
+            Invulnerability.attack(target)
                     .attacker(getUuid())
                     .damageSource(source)
                     .damageAmount(getDamage())

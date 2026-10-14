@@ -1,17 +1,17 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.earthPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.entity.BloodDrop;
 import dev.arakiel.fargosoulfabric.common.entity.TrackingBlood;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -30,10 +30,10 @@ public class PalladiumSoul extends SoulItem {
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        Info info = SoulInfoData.getSoulInfo(attacker, FargoSoulSoulInfoRegister.PALLADIUM_SOUL_INFO);
+        Info info = SoulStates.getSoulState(attacker, SoulStateRegister.PALLADIUM_SOUL_INFO);
         if (info == null) {
             info = new Info();
-            SoulInfoData.putSoulInfo(attacker, info);
+            SoulStates.putSoulState(attacker, info);
         }
         if (info.attackCd <= 0 && attacker.getRandom().nextFloat() < 0.2f) {
             info.attackCd = 40;
@@ -51,10 +51,10 @@ public class PalladiumSoul extends SoulItem {
 
     @Override
     public void tick(Player player) {
-        Info info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.PALLADIUM_SOUL_INFO);
+        Info info = SoulStates.getSoulState(player, SoulStateRegister.PALLADIUM_SOUL_INFO);
         if (info == null) {
             info = new Info();
-            SoulInfoData.putSoulInfo(player, info);
+            SoulStates.putSoulState(player, info);
         }
         if (info.attackCd > 0) {
             info.attackCd--;
@@ -71,17 +71,17 @@ public class PalladiumSoul extends SoulItem {
 
     @Override
     public void healAmount(Player player, float amount, List<ValueModifier> modifiers) {
-        Info info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.PALLADIUM_SOUL_INFO);
+        Info info = SoulStates.getSoulState(player, SoulStateRegister.PALLADIUM_SOUL_INFO);
         if (info == null) {
             info = new Info();
-            SoulInfoData.putSoulInfo(player, info);
+            SoulStates.putSoulState(player, info);
         }
         info.lifePower = Math.min(info.maxLifePower, info.lifePower + amount * 0.25f);
         if (info.surgeTime > 0 && amount > 0 && !player.level().isClientSide()) {
             float overflow = player.getHealth() + amount - player.getMaxHealth();
             if (overflow > 0) {
                 Vec3 from = player.getBoundingBox().getCenter().add(0, 0.5, 0);
-                List<LivingEntity> others = SoulTargetCache.get(player).getEntitiesInRadius(from, 16, null);
+                List<LivingEntity> others = SoulTargets.get(player).getEntitiesInRadius(from, 16, null);
                 if (!others.isEmpty()) {
                     RandomSource random = player.getRandom();
                     LivingEntity chase = others.get(random.nextInt(others.size()));
@@ -97,7 +97,7 @@ public class PalladiumSoul extends SoulItem {
         }
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public float lifePower = 0;
         public float maxLifePower = 200;
@@ -105,13 +105,13 @@ public class PalladiumSoul extends SoulItem {
         public int attackCd = 0;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.PALLADIUM_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.PALLADIUM_SOUL_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (!SoulItemData.isEquipped(living, FargoSoulItemRegister.PalladiumSoulItem)) {
+            if (!PlayerSouls.isEquipped(living, FSFItemRegister.PalladiumSoulItem)) {
                 setRemove(true);
             }
         }

@@ -1,14 +1,14 @@
 package dev.arakiel.fargosoulfabric.common.item.base;
 
-import dev.arakiel.fargosoulfabric.register.FargoSoulRegisters;
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.api.SoulKey;
+import dev.arakiel.fargosoulfabric.register.FSFRegisters;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.SoulKey;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import dev.arakiel.fargosoulfabric.common.MovementState;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
-import dev.arakiel.fargosoulfabric.common.dataComponent.FargoSoulRarity;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.IEntityCollision;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
+import dev.arakiel.fargosoulfabric.common.dataComponent.FSFRarity;
+import dev.arakiel.fargosoulfabric.common.summon.IEntityCollision;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -50,7 +50,7 @@ public abstract class SoulItem extends Item implements ICurioItem {
 
     @Override
     public boolean canEquip(SlotContext slotContext, ItemStack stack) {
-        return !SoulItemData.isEquipped(slotContext.entity(), stack.getItem());
+        return !PlayerSouls.isEquipped(slotContext.entity(), stack.getItem());
     }
 
     public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(Player player) {
@@ -104,7 +104,7 @@ public abstract class SoulItem extends Item implements ICurioItem {
             if (master) {
                 list.add(Component.empty());
             }
-            FargoSoulRarity rarity = (master ? itemStack : this.getDefaultInstance()).get(FargoSoulRegisters.RARITY);
+            FSFRarity rarity = (master ? itemStack : this.getDefaultInstance()).get(FSFRegisters.RARITY);
             int rarityColor = rarity != null ? rarity.color() : -1;
             for (int i = 1; language.has(key + i); i++) {
                 MutableComponent translatable = Component.translatable(key + i);
@@ -162,11 +162,11 @@ public abstract class SoulItem extends Item implements ICurioItem {
     public void sprintClient(Player player, List<ValueModifier> modifiers) {
     }
 
-    public @Nullable ResourceLocation keyPressed(Player player, SoulKey key) {
+    public @Nullable ResourceLocation keyAction(Player player, SoulKey key) {
         return null;
     }
 
-    public void keyHandle(Player player, ResourceLocation location) {
+    public void handleKeyAction(Player player, ResourceLocation location) {
     }
 
     public int fly(Player player, int flyTime) {

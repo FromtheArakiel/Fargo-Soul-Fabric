@@ -8,18 +8,18 @@ import org.spongepowered.asm.mixin.Unique;
 @Mixin({DamageSource.class})
 public class DamageSourceMixin implements IDamageSourceCritical {
    @Unique
-   private boolean fargoSoul$isCritical = false;
+   private boolean fsf$isCritical = false;
 
    public DamageSourceMixin() {
    }
 
    @Override
-   public boolean fargoSoul$isCritical() {
-      return this.fargoSoul$isCritical;
+   public boolean fsf$isCritical() {
+      return this.fsf$isCritical;
    }
 
    @Override
-   public void fargoSoul$setCritical(boolean isCritical) {
-      this.fargoSoul$isCritical = isCritical;
+   public void fsf$setCritical(boolean isCritical) {
+      this.fsf$isCritical = isCritical;
    }
 }

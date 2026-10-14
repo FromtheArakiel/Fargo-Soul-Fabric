@@ -1,7 +1,7 @@
 package dev.arakiel.fargosoulfabric.common.builder;
 
-import dev.arakiel.fargosoulfabric.register.FargoSoulRegisters;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntityType;
+import dev.arakiel.fargosoulfabric.register.FSFRegisters;
+import dev.arakiel.fargosoulfabric.common.summon.SummonType;
 import dev.arakiel.fargosoulfabric.common.dataComponent.MinionWeapon;
 import dev.arakiel.fargosoulfabric.common.item.SummonerWeaponItem;
 import dev.arakiel.fargosoulfabric.common.minion.Minion;
@@ -18,7 +18,7 @@ import org.apache.commons.lang3.function.TriConsumer;
 import org.jetbrains.annotations.NotNull;
 
 public class MinionWeaponItemBuilder<T extends Minion> {
-   private final Supplier<AttachmentEntityType<T>> typeSupplier;
+   private final Supplier<SummonType<T>> typeSupplier;
    private float damage = 0.0F;
    private float knockback = 0.0F;
    private float armorPierce = 0.0F;
@@ -28,7 +28,7 @@ public class MinionWeaponItemBuilder<T extends Minion> {
    private TriConsumer<SummonerWeaponItem<T>, Player, ItemStack> removeConsumer = null;
    private Consumer<Properties> properties = null;
 
-   public MinionWeaponItemBuilder(ResourceLocation identifier, @NotNull Supplier<AttachmentEntityType<T>> typeSupplier) {
+   public MinionWeaponItemBuilder(ResourceLocation identifier, @NotNull Supplier<SummonType<T>> typeSupplier) {
       this.typeSupplier = typeSupplier;
    }
 
@@ -79,7 +79,7 @@ public class MinionWeaponItemBuilder<T extends Minion> {
       }
 
       proper.component(
-         FargoSoulRegisters.MINION_WEAPON, new MinionWeapon(this.damage, this.knockback, this.armorPierce, this.slotType, this.soundEventHolder)
+         FSFRegisters.MINION_WEAPON, new MinionWeapon(this.damage, this.knockback, this.armorPierce, this.slotType, this.soundEventHolder)
       );
       return new SummonerWeaponItem<>(proper, this.typeSupplier, this.summonConsumer, this.removeConsumer);
    }

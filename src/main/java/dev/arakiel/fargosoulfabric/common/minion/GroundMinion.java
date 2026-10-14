@@ -1,10 +1,10 @@
 package dev.arakiel.fargosoulfabric.common.minion;
 
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntityType;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.IBlockCollision;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PathNode;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.SyncFieldDispatcher;
-import dev.arakiel.fargosoulfabric.utils.FargoSoulStreamCodecs;
+import dev.arakiel.fargosoulfabric.common.summon.SummonType;
+import dev.arakiel.fargosoulfabric.common.summon.IBlockCollision;
+import dev.arakiel.fargosoulfabric.common.summon.PathNode;
+import dev.arakiel.fargosoulfabric.common.summon.SyncFieldDispatcher;
+import dev.arakiel.fargosoulfabric.utils.FSFStreamCodecs;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.Holder;
@@ -19,15 +19,15 @@ public abstract class GroundMinion extends MomentumMinion implements IBlockColli
    private boolean isWalking = false;
    private boolean onGround = false;
 
-   public GroundMinion(AttachmentEntityType<?> type) {
+   public GroundMinion(SummonType<?> type) {
       super(type);
    }
 
    @Override
    protected void registerSyncFields(SyncFieldDispatcher fields) {
       super.registerSyncFields(fields);
-      fields.field(FargoSoulStreamCodecs.BOOL, this::isWalking, this::setWalking);
-      fields.field(FargoSoulStreamCodecs.BOOL, this::isFlying, this::setFlying);
+      fields.field(FSFStreamCodecs.BOOL, this::isWalking, this::setWalking);
+      fields.field(FSFStreamCodecs.BOOL, this::isFlying, this::setFlying);
    }
 
    @Override

@@ -1,11 +1,11 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.lifePower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.common.attachment.InvincibleData;
+import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -39,9 +39,9 @@ public class PumpkinSoul extends SoulItem {
         if (state.is(Blocks.PUMPKIN) || state.is(Blocks.CARVED_PUMPKIN)) {
             player.level().destroyBlock(below, false);
             player.heal(player.getMaxHealth() * 0.05f);
-            List<LivingEntity> enemies = SoulTargetCache.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 3, null);
+            List<LivingEntity> enemies = SoulTargets.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 3, null);
             for (LivingEntity enemy : enemies) {
-                InvincibleData.attack(enemy)
+                Invulnerability.attack(enemy)
                         .attacker(player.getUUID())
                         .damageSource(player.damageSources().playerAttack(player))
                         .damageAmount(8)

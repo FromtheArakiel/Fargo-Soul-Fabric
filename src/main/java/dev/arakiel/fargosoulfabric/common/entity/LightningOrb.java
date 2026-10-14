@@ -1,11 +1,11 @@
 package dev.arakiel.fargosoulfabric.common.entity;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.common.attachment.InvincibleData;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.SyncFieldDispatcher;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
+import dev.arakiel.fargosoulfabric.common.summon.SyncFieldDispatcher;
 import dev.arakiel.fargosoulfabric.common.particle.genericParticle.GenericParticleBuilder;
-import dev.arakiel.fargosoulfabric.common.projectile.Projectile;
+import dev.arakiel.fargosoulfabric.common.projectile.SummonProjectile;
 import dev.arakiel.fargosoulfabric.utils.ParticleHelper;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @SuppressWarnings("this-escape")
-public class LightningOrb extends Projectile {
+public class LightningOrb extends SummonProjectile {
 
     private static final StreamCodec<RegistryFriendlyByteBuf, Set<Integer>> STREAM_CODEC = StreamCodec.of(
             (buf, ids) -> {
@@ -40,7 +40,7 @@ public class LightningOrb extends Projectile {
     private final Set<Integer> idList = new HashSet<>();
 
     public LightningOrb() {
-        super(SummonerAttachmentEntityRegister.LIGHTNING_ORB);
+        super(SummonTypeRegister.LIGHTNING_ORB);
         setDrag(1f);
         setMaxLife(40);
     }
@@ -59,10 +59,10 @@ public class LightningOrb extends Projectile {
         Level level = owner.level();
         if (!level.isClientSide()) {
             idList.clear();
-            List<LivingEntity> entities = SoulTargetCache.get(owner).getEntitiesInRadius(getPos(), 3, null);
+            List<LivingEntity> entities = SoulTargets.get(owner).getEntitiesInRadius(getPos(), 3, null);
             for (LivingEntity living : entities) {
                 idList.add(living.getId());
-                InvincibleData.attack(living)
+                Invulnerability.attack(living)
                         .attacker(getUuid())
                         .damageSource(getDamageSource())
                         .damageAmount(getDamage())

@@ -1,15 +1,15 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.cosmicPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,7 +26,7 @@ public class NebulaSoul extends SoulItem {
 
     @Override
     public void tick(Player player) {
-        Info soulInfo = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.NEBULA_SOUL_INFO);
+        Info soulInfo = SoulStates.getSoulState(player, SoulStateRegister.NEBULA_SOUL_INFO);
         if (soulInfo != null) {
             if (player.tickCount % 20 == 0) {
                 player.heal(soulInfo.nebulaPower * 0.1f);
@@ -40,27 +40,27 @@ public class NebulaSoul extends SoulItem {
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        Info soulInfo = SoulInfoData.getSoulInfo(attacker, FargoSoulSoulInfoRegister.NEBULA_SOUL_INFO);
+        Info soulInfo = SoulStates.getSoulState(attacker, SoulStateRegister.NEBULA_SOUL_INFO);
         if (soulInfo == null) {
             soulInfo = new Info();
-            SoulInfoData.putSoulInfo(attacker, soulInfo);
+            SoulStates.putSoulState(attacker, soulInfo);
         }
         modifiers.add(new ValueModifier(attacker.getMaxHealth() * 0.04f, ValueOperation.ADD_VALUE));
         soulInfo.nebulaPower += container.getOriginalDamage() * 0.15f;
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public float nebulaPower = 0;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.NEBULA_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.NEBULA_SOUL_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (!SoulItemData.isEquipped(living, FargoSoulItemRegister.NebulaSoulItem)) {
+            if (!PlayerSouls.isEquipped(living, FSFItemRegister.NebulaSoulItem)) {
                 setRemove(true);
             }
         }

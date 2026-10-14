@@ -1,17 +1,17 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.forestPower;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.entity.Star;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -31,19 +31,19 @@ public class PearlWoodSoul extends SoulItem {
 
     @Override
     public void criticalHit(Player player, LivingEntity target, List<ValueModifier> modifiers) {
-        float bonus = player.hasEffect(FargoSoulMobEffectRegister.Starlight) ? 0.6f : 0.2f;
+        float bonus = player.hasEffect(FSFMobEffectRegister.Starlight) ? 0.6f : 0.2f;
         modifiers.add(new ValueModifier(bonus, ValueOperation.ADD_MULTIPLIED_BASE));
     }
 
     @Override
     public void pickup(Player player, ItemStack itemStack) {
-        Info info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.PEARL_WOOD_SOUL_INFO);
+        Info info = SoulStates.getSoulState(player, SoulStateRegister.PEARL_WOOD_SOUL_INFO);
         if (info == null) {
             info = new Info();
-            SoulInfoData.putSoulInfo(player, info);
+            SoulStates.putSoulState(player, info);
         }
         if (info.cooldown <= 0) {
-            List<LivingEntity> targets = SoulTargetCache.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 12, null);
+            List<LivingEntity> targets = SoulTargets.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 12, null);
             if (!targets.isEmpty()) {
                 RandomSource random = player.getRandom();
                 LivingEntity target = targets.get(random.nextInt(targets.size()));
@@ -61,18 +61,18 @@ public class PearlWoodSoul extends SoulItem {
         }
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public int cooldown = 0;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.PEARL_WOOD_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.PEARL_WOOD_SOUL_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (SoulItemData.isEquipped(living, FargoSoulItemRegister.PearlWoodSoulItem)) {
+            if (PlayerSouls.isEquipped(living, FSFItemRegister.PearlWoodSoulItem)) {
                 if (cooldown > 0) {
                     cooldown--;
                 }

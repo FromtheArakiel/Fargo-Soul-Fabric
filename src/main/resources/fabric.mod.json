@@ -14,10 +14,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "dev.arakiel.fargosoulfabric.FargoSoul"
+      "dev.arakiel.fargosoulfabric.FSF"
     ],
     "client": [
-      "dev.arakiel.fargosoulfabric.client.FargoSoulClient"
+      "dev.arakiel.fargosoulfabric.client.FSFClient"
     ]
   },
   "mixins": [

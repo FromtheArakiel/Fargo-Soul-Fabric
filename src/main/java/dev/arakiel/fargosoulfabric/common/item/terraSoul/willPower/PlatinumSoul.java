@@ -1,12 +1,12 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.willPower;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
@@ -23,10 +23,10 @@ public class PlatinumSoul extends SoulItem {
     @Override
     public void kill(Player player, LivingEntity target, DamageSource source) {
         if (player.getRandom().nextFloat() < 0.2f) {
-            Info info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.PLATINUM_SOUL_INFO);
+            Info info = SoulStates.getSoulState(player, SoulStateRegister.PLATINUM_SOUL_INFO);
             if (info == null) {
                 info = new Info();
-                SoulInfoData.putSoulInfo(player, info);
+                SoulStates.putSoulState(player, info);
             }
             info.dropScale = 5;
         }
@@ -34,7 +34,7 @@ public class PlatinumSoul extends SoulItem {
 
     @Override
     public float dropFromLootTableScale(Player attacker, LivingEntity target, float scale) {
-        Info info = SoulInfoData.getSoulInfo(attacker, FargoSoulSoulInfoRegister.PLATINUM_SOUL_INFO);
+        Info info = SoulStates.getSoulState(attacker, SoulStateRegister.PLATINUM_SOUL_INFO);
         if (info != null && info.dropScale > 1) {
             scale *= info.dropScale;
             info.dropScale = 1;
@@ -42,18 +42,18 @@ public class PlatinumSoul extends SoulItem {
         return scale;
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public float dropScale = 1;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.PLATINUM_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.PLATINUM_SOUL_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (!SoulItemData.isEquipped(living, FargoSoulItemRegister.PlatinumSoulItem)) {
+            if (!PlayerSouls.isEquipped(living, FSFItemRegister.PlatinumSoulItem)) {
                 setRemove(true);
             }
         }

@@ -1,16 +1,16 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.earthPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -30,40 +30,40 @@ public class CobaltSoul extends SoulItem {
 
     @Override
     public void hurt(@Nullable Entity attacker, @NotNull Player target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        Info info = SoulInfoData.getSoulInfo(target, FargoSoulSoulInfoRegister.COBALT_SOUL_INFO);
+        Info info = SoulStates.getSoulState(target, SoulStateRegister.COBALT_SOUL_INFO);
         if (info == null) {
             info = new Info();
-            SoulInfoData.putSoulInfo(target, info);
+            SoulStates.putSoulState(target, info);
         }
         if (info.cooldown <= 0) {
             info.cooldown = 60;
-            List<LivingEntity> enemies = SoulTargetCache.get(target).getEntitiesInRadius(target.getBoundingBox().getCenter(), 6, null);
+            List<LivingEntity> enemies = SoulTargets.get(target).getEntitiesInRadius(target.getBoundingBox().getCenter(), 6, null);
             for (LivingEntity enemy : enemies) {
-                enemy.addEffect(new MobEffectInstance(FargoSoulMobEffectRegister.Oiled, 50));
+                enemy.addEffect(new MobEffectInstance(FSFMobEffectRegister.Oiled, 50));
             }
         }
     }
 
     @Override
     public boolean effectApplicable(Player player, MobEffectInstance effectInstance) {
-        if (effectInstance.is(FargoSoulMobEffectRegister.Oiled)) {
+        if (effectInstance.is(FSFMobEffectRegister.Oiled)) {
             return false;
         }
         return super.effectApplicable(player, effectInstance);
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public int cooldown = 0;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.COBALT_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.COBALT_SOUL_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (SoulItemData.isEquipped(living, FargoSoulItemRegister.CobaltSoulItem)) {
+            if (PlayerSouls.isEquipped(living, FSFItemRegister.CobaltSoulItem)) {
                 if (cooldown > 0) {
                     cooldown--;
                 }

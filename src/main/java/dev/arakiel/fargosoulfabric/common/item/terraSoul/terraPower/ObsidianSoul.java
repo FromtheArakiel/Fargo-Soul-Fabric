@@ -1,6 +1,6 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.terraPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;

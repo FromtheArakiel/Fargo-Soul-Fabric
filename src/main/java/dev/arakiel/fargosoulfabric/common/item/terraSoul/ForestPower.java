@@ -1,19 +1,19 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.entity.SnowBall;
 import dev.arakiel.fargosoulfabric.common.entity.TrackingBlood;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Set;
 
-import static dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister.*;
+import static dev.arakiel.fargosoulfabric.register.FSFItemRegister.*;
 
 public class ForestPower extends SoulItem {
 
@@ -44,14 +44,14 @@ public class ForestPower extends SoulItem {
 
     @Override
     public void tick(Player player) {
-        Info info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.FOREST_POWER_INFO);
+        Info info = SoulStates.getSoulState(player, SoulStateRegister.FOREST_POWER_INFO);
         if (info == null) {
             info = new Info();
-            SoulInfoData.putSoulInfo(player, info);
+            SoulStates.putSoulState(player, info);
         }
         if (player.tickCount % 40 == 0) {
             Vec3 eye = player.getEyePosition();
-            List<LivingEntity> targets = SoulTargetCache.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 12, null);
+            List<LivingEntity> targets = SoulTargets.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 12, null);
             if (!targets.isEmpty()) {
                 LivingEntity target = targets.get(player.getRandom().nextInt(targets.size()));
                 Vec3 dir = target.getBoundingBox().getCenter().subtract(eye).normalize();
@@ -64,10 +64,10 @@ public class ForestPower extends SoulItem {
             }
         }
         if (player.tickCount % 20 == 0) {
-            List<LivingEntity> enemies = SoulTargetCache.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 12, null);
+            List<LivingEntity> enemies = SoulTargets.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 12, null);
             for (LivingEntity enemy : enemies) {
                 enemy.addEffect(new MobEffectInstance(MobEffects.WITHER, 200));
-                enemy.addEffect(new MobEffectInstance(FargoSoulMobEffectRegister.Bleeding, 200));
+                enemy.addEffect(new MobEffectInstance(FSFMobEffectRegister.Bleeding, 200));
             }
         }
     }
@@ -77,11 +77,11 @@ public class ForestPower extends SoulItem {
         if (target.hasEffect(MobEffects.WITHER)) {
             modifiers.add(new ValueModifier(8, ValueOperation.ADD_VALUE));
         }
-        if (target.hasEffect(FargoSoulMobEffectRegister.Bleeding)) {
-            Info info = SoulInfoData.getSoulInfo(attacker, FargoSoulSoulInfoRegister.FOREST_POWER_INFO);
+        if (target.hasEffect(FSFMobEffectRegister.Bleeding)) {
+            Info info = SoulStates.getSoulState(attacker, SoulStateRegister.FOREST_POWER_INFO);
             if (info == null) {
                 info = new Info();
-                SoulInfoData.putSoulInfo(attacker, info);
+                SoulStates.putSoulState(attacker, info);
             }
             if (info.cooldown <= 0) {
                 info.cooldown = 20;
@@ -100,7 +100,7 @@ public class ForestPower extends SoulItem {
 
     @Override
     public void criticalHit(Player player, LivingEntity target, List<ValueModifier> modifiers) {
-        Info info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.FOREST_POWER_INFO);
+        Info info = SoulStates.getSoulState(player, SoulStateRegister.FOREST_POWER_INFO);
         if (info != null && info.burstTime > 0) {
             modifiers.add(new ValueModifier(0.4f, ValueOperation.ADD_MULTIPLIED_BASE));
         }
@@ -108,10 +108,10 @@ public class ForestPower extends SoulItem {
 
     @Override
     public void pickup(Player player, ItemStack itemStack) {
-        Info info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.FOREST_POWER_INFO);
+        Info info = SoulStates.getSoulState(player, SoulStateRegister.FOREST_POWER_INFO);
         if (info == null) {
             info = new Info();
-            SoulInfoData.putSoulInfo(player, info);
+            SoulStates.putSoulState(player, info);
         }
         info.burstTime = 160;
     }
@@ -121,19 +121,19 @@ public class ForestPower extends SoulItem {
         modifiers.add(new ValueModifier(-0.5f, ValueOperation.ADD_MULTIPLIED_TOTAL));
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public int cooldown = 0;
         public int burstTime = 0;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.FOREST_POWER_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.FOREST_POWER_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (!SoulItemData.isEquipped(living, FargoSoulItemRegister.ForestPowerItem)) {
+            if (!PlayerSouls.isEquipped(living, FSFItemRegister.ForestPowerItem)) {
                 setRemove(true);
             }
             if (cooldown > 0) {

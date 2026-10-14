@@ -1,7 +1,7 @@
 package dev.arakiel.fargosoulfabric.mixin;
 
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
@@ -17,6 +17,6 @@ public class PlayerEatMixin {
     @Inject(method = "eat", at = @At("HEAD"))
     public void eat(Level level, ItemStack food, FoodProperties foodProperties, CallbackInfoReturnable<ItemStack> cir) {
         Player player = Player.class.cast(this);
-        SoulItemData.forEach(player, SoulItemData -> SoulItemData.eat(player, food));
+        PlayerSouls.forEach(player, PlayerSouls -> PlayerSouls.eat(player, food));
     }
 }

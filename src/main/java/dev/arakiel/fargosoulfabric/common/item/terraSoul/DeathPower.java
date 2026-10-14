@@ -1,11 +1,11 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.IEntityCollision;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
+import dev.arakiel.fargosoulfabric.common.summon.IEntityCollision;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Set;
 
-import static dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister.*;
+import static dev.arakiel.fargosoulfabric.register.FSFItemRegister.*;
 
 public class DeathPower extends SoulItem {
 
@@ -36,13 +36,13 @@ public class DeathPower extends SoulItem {
     public void sprintCollision(Player player, List<IEntityCollision.HitContext> list, Set<LivingEntity> hits) {
         for (IEntityCollision.HitContext context : list) {
             LivingEntity living = context.entity();
-            living.addEffect(new MobEffectInstance(FargoSoulMobEffectRegister.DeathMark, 200));
+            living.addEffect(new MobEffectInstance(FSFMobEffectRegister.DeathMark, 200));
         }
     }
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        if (target.hasEffect(FargoSoulMobEffectRegister.DeathMark)) {
+        if (target.hasEffect(FSFMobEffectRegister.DeathMark)) {
             modifiers.add(new ValueModifier(2, ValueOperation.ADD_MULTIPLIED_BASE));
         }
         if (target.getHealth() < target.getMaxHealth() * 0.12f) {
@@ -52,7 +52,7 @@ public class DeathPower extends SoulItem {
 
     @Override
     public boolean effectApplicable(Player player, MobEffectInstance effectInstance) {
-        if (effectInstance.is(FargoSoulMobEffectRegister.DeathMark)) {
+        if (effectInstance.is(FSFMobEffectRegister.DeathMark)) {
             return false;
         }
         return super.effectApplicable(player, effectInstance);

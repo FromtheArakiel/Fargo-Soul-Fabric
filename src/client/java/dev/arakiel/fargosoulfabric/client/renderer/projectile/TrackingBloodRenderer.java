@@ -1,13 +1,13 @@
 package dev.arakiel.fargosoulfabric.client.renderer.projectile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import dev.arakiel.fargosoulfabric.client.render.AbstractAttachmentEntityRenderer;
+import dev.arakiel.fargosoulfabric.client.render.AbstractSummonRenderer;
 import dev.arakiel.fargosoulfabric.client.render.rendererHelper.SphereRendererHelper;
 import dev.arakiel.fargosoulfabric.common.entity.TrackingBlood;
 import net.minecraft.client.renderer.MultiBufferSource;
 
 /** The blood a hemorrhage leaves behind, which flies to the next target. */
-public class TrackingBloodRenderer extends AbstractAttachmentEntityRenderer<TrackingBlood> {
+public class TrackingBloodRenderer extends AbstractSummonRenderer<TrackingBlood> {
 
     @Override
     protected void renderModel(PoseStack poseStack, MultiBufferSource bufferSource) {

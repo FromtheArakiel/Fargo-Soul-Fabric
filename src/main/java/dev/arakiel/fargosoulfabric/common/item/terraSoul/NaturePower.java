@@ -1,14 +1,14 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import dev.arakiel.fargosoulfabric.common.entity.ChlorophyteOrb;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.api.FargoSoulHelper;
-import dev.arakiel.fargosoulfabric.common.attachment.AttachmentEntityData;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntityDamageSource;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.FSFPlayerSummons;
+import dev.arakiel.fargosoulfabric.common.attachment.SummonData;
+import dev.arakiel.fargosoulfabric.common.summon.SummonDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Set;
 
-import static dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister.*;
+import static dev.arakiel.fargosoulfabric.register.FSFItemRegister.*;
 
 public class NaturePower extends SoulItem {
 
@@ -33,17 +33,17 @@ public class NaturePower extends SoulItem {
 
     @Override
     public void tick(Player player) {
-        List<ChlorophyteOrb> orbs = FargoSoulHelper.get(player).getEntityData().get(SummonerAttachmentEntityRegister.CHLOROPHYTE_ORB).stream().filter(orb -> orb.getKind() == ChlorophyteOrb.NATURE).toList();
+        List<ChlorophyteOrb> orbs = FSFPlayerSummons.get(player).getSummons().get(SummonTypeRegister.CHLOROPHYTE_ORB).stream().filter(orb -> orb.getKind() == ChlorophyteOrb.NATURE).toList();
         if (orbs.size() < 5) {
             ChlorophyteOrb orb = new ChlorophyteOrb();
             orb.setKind(ChlorophyteOrb.NATURE);
-            FargoSoulHelper.get(player).add(orb);
+            FSFPlayerSummons.get(player).add(orb);
         }
     }
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        if (container.getSource() instanceof AttachmentEntityDamageSource damageSource && damageSource.getAttachmentEntity().getType() == SummonerAttachmentEntityRegister.CHLOROPHYTE_ORB) {
+        if (container.getSource() instanceof SummonDamageSource damageSource && damageSource.getSummon().getType() == SummonTypeRegister.CHLOROPHYTE_ORB) {
             modifiers.add(new ValueModifier(3, ValueOperation.ADD_MULTIPLIED_BASE));
         }
     }

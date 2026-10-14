@@ -1,10 +1,8 @@
 package dev.arakiel.fargosoulfabric.common.summonMark;
 
 import com.mojang.datafixers.util.Function5;
-import dev.arakiel.fargosoulfabric.common.attachment.SummonMarkTracker;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntityDamageSource;
-import dev.arakiel.fargosoulfabric.common.consumer.Consumer4;
-import dev.arakiel.fargosoulfabric.common.consumer.Consumer5;
+import dev.arakiel.fargosoulfabric.common.attachment.SummonMarks;
+import dev.arakiel.fargosoulfabric.common.summon.SummonDamageSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -20,20 +18,20 @@ public record SummonMarkType(
    float additionalDamage,
    float additionalArmorPierce,
    float criticalHitRate,
-   @Nullable Consumer4<SummonMarkTracker, SummonMarkInstance, LivingEntity, Player> tickConsumer,
-   @Nullable Function5<SummonMarkTracker, SummonMarkInstance, LivingEntity, AttachmentEntityDamageSource, Float, Float> damagePre,
-   @Nullable Consumer5<SummonMarkTracker, SummonMarkInstance, LivingEntity, AttachmentEntityDamageSource, Float> damagePost,
-   @Nullable Consumer4<SummonMarkTracker, SummonMarkInstance, LivingEntity, AttachmentEntityDamageSource> killConsumer
+   @Nullable Consumer4<SummonMarks, SummonMarkInstance, LivingEntity, Player> tickConsumer,
+   @Nullable Function5<SummonMarks, SummonMarkInstance, LivingEntity, SummonDamageSource, Float, Float> damagePre,
+   @Nullable Consumer5<SummonMarks, SummonMarkInstance, LivingEntity, SummonDamageSource, Float> damagePost,
+   @Nullable Consumer4<SummonMarks, SummonMarkInstance, LivingEntity, SummonDamageSource> killConsumer
 ) {
    public SummonMarkType(
       ResourceLocation location,
       float additionalDamage,
       float additionalArmorPierce,
       float criticalHitRate,
-      @Nullable Consumer4<SummonMarkTracker, SummonMarkInstance, LivingEntity, Player> tickConsumer,
-      @Nullable Function5<SummonMarkTracker, SummonMarkInstance, LivingEntity, AttachmentEntityDamageSource, Float, Float> damagePre,
-      @Nullable Consumer5<SummonMarkTracker, SummonMarkInstance, LivingEntity, AttachmentEntityDamageSource, Float> damagePost,
-      @Nullable Consumer4<SummonMarkTracker, SummonMarkInstance, LivingEntity, AttachmentEntityDamageSource> killConsumer
+      @Nullable Consumer4<SummonMarks, SummonMarkInstance, LivingEntity, Player> tickConsumer,
+      @Nullable Function5<SummonMarks, SummonMarkInstance, LivingEntity, SummonDamageSource, Float, Float> damagePre,
+      @Nullable Consumer5<SummonMarks, SummonMarkInstance, LivingEntity, SummonDamageSource, Float> damagePost,
+      @Nullable Consumer4<SummonMarks, SummonMarkInstance, LivingEntity, SummonDamageSource> killConsumer
    ) {
       this.location = location;
       this.additionalDamage = additionalDamage;
@@ -78,25 +76,39 @@ public record SummonMarkType(
       return tooltips;
    }
 
-   public void tick(SummonMarkTracker tracker, SummonMarkInstance instance, LivingEntity target, Player owner) {
+   public void tick(SummonMarks tracker, SummonMarkInstance instance, LivingEntity target, Player owner) {
       if (this.tickConsumer != null) {
          this.tickConsumer.accept(tracker, instance, target, owner);
       }
    }
 
-   public float damagePre(SummonMarkTracker tracker, SummonMarkInstance instance, LivingEntity target, AttachmentEntityDamageSource source, float damage) {
+   public float damagePre(SummonMarks tracker, SummonMarkInstance instance, LivingEntity target, SummonDamageSource source, float damage) {
       return this.damagePre != null ? this.damagePre.apply(tracker, instance, target, source, damage) : damage;
    }
 
-   public void damagePost(SummonMarkTracker tracker, SummonMarkInstance instance, LivingEntity target, AttachmentEntityDamageSource source, float damage) {
+   public void damagePost(SummonMarks tracker, SummonMarkInstance instance, LivingEntity target, SummonDamageSource source, float damage) {
       if (this.damagePost != null) {
          this.damagePost.accept(tracker, instance, target, source, damage);
       }
    }
 
-   public void kill(SummonMarkTracker tracker, SummonMarkInstance instance, LivingEntity target, AttachmentEntityDamageSource source) {
+   public void kill(SummonMarks tracker, SummonMarkInstance instance, LivingEntity target, SummonDamageSource source) {
       if (this.killConsumer != null) {
          this.killConsumer.accept(tracker, instance, target, source);
       }
    }
+
+
+@FunctionalInterface
+public interface Consumer4<T1, T2, T3, T4> {
+   void accept(T1 var1, T2 var2, T3 var3, T4 var4);
 }
+
+
+@FunctionalInterface
+public interface Consumer5<T1, T2, T3, T4, T5> {
+   void accept(T1 var1, T2 var2, T3 var3, T4 var4, T5 var5);
+}
+}
+
+

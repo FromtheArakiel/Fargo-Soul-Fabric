@@ -2,7 +2,7 @@ package dev.arakiel.fargosoulfabric.client.renderer.projectile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.arakiel.fargosoulfabric.client.dynamicLight.DynamicLightDispatcher;
-import dev.arakiel.fargosoulfabric.client.render.AbstractAttachmentEntityRenderer;
+import dev.arakiel.fargosoulfabric.client.render.AbstractSummonRenderer;
 import dev.arakiel.fargosoulfabric.client.render.rendererHelper.LightningRendererHelper;
 import dev.arakiel.fargosoulfabric.client.render.rendererHelper.SphereRendererHelper;
 import dev.arakiel.fargosoulfabric.common.entity.LightningOrb;
@@ -17,7 +17,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 /** The thunder orb of the terra enchantment, which arcs to the entities it hit. */
-public class LightningOrbRenderer extends AbstractAttachmentEntityRenderer<LightningOrb> {
+public class LightningOrbRenderer extends AbstractSummonRenderer<LightningOrb> {
 
     @Override
     protected void renderModel(PoseStack poseStack, MultiBufferSource bufferSource) {

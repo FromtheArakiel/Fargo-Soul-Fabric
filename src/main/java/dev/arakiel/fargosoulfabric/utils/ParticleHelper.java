@@ -1,8 +1,8 @@
 package dev.arakiel.fargosoulfabric.utils;
 
-import dev.arakiel.fargosoulfabric.register.FargoSoulAttachmentRegister;
-import dev.arakiel.fargosoulfabric.api.Attachments;
-import dev.arakiel.fargosoulfabric.common.attachment.ParticlesData;
+import dev.arakiel.fargosoulfabric.register.FSFAttachmentRegister;
+import dev.arakiel.fargosoulfabric.common.Attachments;
+import dev.arakiel.fargosoulfabric.common.attachment.ParticleBatch;
 import dev.arakiel.fargosoulfabric.common.particle.genericParticle.GenericParticleBuilder;
 import java.util.Random;
 import java.util.function.Consumer;
@@ -113,7 +113,7 @@ public class ParticleHelper {
          throw new IllegalStateException("Particle type not set. Call type() or generic() first.");
       } else {
          boolean server = !this.level.isClientSide();
-         ParticlesData batch = server ? Attachments.get(this.level, FargoSoulAttachmentRegister.BATCHED_PARTICLES) : null;
+         ParticleBatch batch = server ? Attachments.get(this.level, FSFAttachmentRegister.BATCHED_PARTICLES) : null;
          if (this.count <= 0) {
             ParticleOptions options = (this.genericBuilder != null ? this.genericBuilder.build() : this.particleType);
             if (server) {

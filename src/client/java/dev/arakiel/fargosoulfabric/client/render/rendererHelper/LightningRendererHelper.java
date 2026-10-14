@@ -2,7 +2,7 @@ package dev.arakiel.fargosoulfabric.client.render.rendererHelper;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import dev.arakiel.fargosoulfabric.client.render.FargoSoulRenderTypes;
+import dev.arakiel.fargosoulfabric.client.render.FSFRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.RandomSource;
@@ -95,7 +95,7 @@ public class LightningRendererHelper {
    }
 
    public void render(PoseStack poseStack, MultiBufferSource bufferSource, RandomSource random) {
-      VertexConsumer consumer = bufferSource.getBuffer(FargoSoulRenderTypes.getTrail());
+      VertexConsumer consumer = bufferSource.getBuffer(FSFRenderTypes.getTrail());
       Matrix4f pose = poseStack.last().pose();
       Vector3f sLocal = worldToLocal(this.start, this.renderOrigin);
       Vector3f eLocal = worldToLocal(this.end, this.renderOrigin);

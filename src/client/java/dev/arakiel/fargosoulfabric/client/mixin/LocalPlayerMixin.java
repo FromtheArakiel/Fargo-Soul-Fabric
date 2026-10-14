@@ -1,6 +1,6 @@
 package dev.arakiel.fargosoulfabric.client.mixin;
 
-import dev.arakiel.fargosoulfabric.client.api.FargoSoulClientHooks;
+import dev.arakiel.fargosoulfabric.client.FSFClientHooks;
 import net.minecraft.client.player.LocalPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,8 +13,8 @@ public class LocalPlayerMixin {
 
     @Inject(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/Input;tick(ZF)V",
             shift = At.Shift.AFTER))
-    private void fargoSoul$movementInput(CallbackInfo ci) {
+    private void fsf$movementInput(CallbackInfo ci) {
         LocalPlayer self = (LocalPlayer) (Object) this;
-        FargoSoulClientHooks.MOVEMENT_INPUT.invoker().onMovementInput(self, self.input);
+        FSFClientHooks.MOVEMENT_INPUT.invoker().onMovementInput(self, self.input);
     }
 }

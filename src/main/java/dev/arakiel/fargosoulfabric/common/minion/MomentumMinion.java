@@ -1,16 +1,16 @@
 package dev.arakiel.fargosoulfabric.common.minion;
 
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntityType;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.IMomentumAttachmentEntity;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PathNode;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PlannedPath;
+import dev.arakiel.fargosoulfabric.common.summon.SummonType;
+import dev.arakiel.fargosoulfabric.common.summon.IMomentumSummon;
+import dev.arakiel.fargosoulfabric.common.summon.PathNode;
+import dev.arakiel.fargosoulfabric.common.summon.PlannedPath;
 import java.util.Collections;
 import net.minecraft.core.Holder;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class MomentumMinion extends Minion implements IMomentumAttachmentEntity {
+public abstract class MomentumMinion extends Minion implements IMomentumSummon {
    private float desiredYaw = 0.0F;
    private float desiredPitch = 0.0F;
    private float desiredRoll = 0.0F;
@@ -19,7 +19,7 @@ public abstract class MomentumMinion extends Minion implements IMomentumAttachme
    private float drag = 0.92F;
    private float gravity = -0.08F;
 
-   public MomentumMinion(AttachmentEntityType<?> type) {
+   public MomentumMinion(SummonType<?> type) {
       super(type);
    }
 

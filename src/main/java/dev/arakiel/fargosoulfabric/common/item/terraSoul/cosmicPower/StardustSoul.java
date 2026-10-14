@@ -1,15 +1,18 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.cosmicPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.api.SoulKey;
-import dev.arakiel.fargosoulfabric.FargoSoul;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
+import dev.arakiel.fargosoulfabric.utils.FSFEffects;
+import net.minecraft.core.particles.ParticleTypes;
+
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.SoulKey;
+import dev.arakiel.fargosoulfabric.FSF;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -30,11 +33,11 @@ public class StardustSoul extends SoulItem {
     }
 
     @Override
-    public ResourceLocation keyPressed(Player player, SoulKey key) {
+    public ResourceLocation keyAction(Player player, SoulKey key) {
         if (key == SoulKey.Stardust) {
-            return FargoSoul.rl("stardust_soul");
+            return FSF.rl("stardust_soul");
         }
-        return super.keyPressed(player, key);
+        return super.keyAction(player, key);
     }
 
     @Override
@@ -45,15 +48,17 @@ public class StardustSoul extends SoulItem {
     }
 
     @Override
-    public void keyHandle(Player player, ResourceLocation key) {
-        if (key.equals(FargoSoul.rl("stardust_soul")) && player.getServer() instanceof MinecraftServer server) {
+    public void handleKeyAction(Player player, ResourceLocation key) {
+        if (key.equals(FSF.rl("stardust_soul")) && player.getServer() instanceof MinecraftServer server) {
             ServerTickRateManager serverTickRateManager = server.tickRateManager();
             if (!serverTickRateManager.isFrozen()) {
                 Info soulInfo = new Info();
                 soulInfo.cooldown = 120 * 20;
-                SoulInfoData.putSoulInfo(player, soulInfo);
+                SoulStates.putSoulState(player, soulInfo);
                 serverTickRateManager.setFrozen(true);
                 frozenRemaining = 6 * 20;
+                // 冻结: snow drifting out of the frozen world.
+                FSFEffects.aura(player.level(), player, ParticleTypes.SNOWFLAKE, 100, 4.0D, 0.05D);
             }
         }
     }
@@ -64,13 +69,13 @@ public class StardustSoul extends SoulItem {
         }
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public int cooldown = 0;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.STARDUST_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.STARDUST_SOUL_INFO;
         }
 
         @Override

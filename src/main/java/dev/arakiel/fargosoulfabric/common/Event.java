@@ -1,17 +1,17 @@
 package dev.arakiel.fargosoulfabric.common;
 
-import dev.arakiel.fargosoulfabric.api.Attachments;
+import dev.arakiel.fargosoulfabric.common.Attachments;
 import dev.arakiel.curios.api.event.CurioChangeEvent;
 import dev.arakiel.curios.api.event.CuriosEventBus;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.terraSoul.cosmicPower.StardustSoul;
-import dev.arakiel.fargosoulfabric.register.FargoSoulAttachmentRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulAttributeRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
-import dev.arakiel.fargosoulfabric.api.FargoSoulHooks;
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.register.FSFAttachmentRegister;
+import dev.arakiel.fargosoulfabric.register.FSFAttributeRegister;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
+import dev.arakiel.fargosoulfabric.common.FSFHooks;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import java.util.ArrayList;
 import java.util.List;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -35,31 +35,31 @@ public final class Event {
         // after a respawn as well, not only when a curio changes.
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             Player player = handler.getPlayer();
-            Attachments.get(player, FargoSoulAttachmentRegister.SOUL_ITEM_DATA).update(player);
+            Attachments.get(player, FSFAttachmentRegister.SOUL_ITEM_DATA).update(player);
         });
         ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) ->
-                Attachments.get(newPlayer, FargoSoulAttachmentRegister.SOUL_ITEM_DATA).update(newPlayer));
+                Attachments.get(newPlayer, FSFAttachmentRegister.SOUL_ITEM_DATA).update(newPlayer));
 
-        FargoSoulHooks.ENTITY_TICK.register(entity -> {
+        FSFHooks.ENTITY_TICK.register(entity -> {
             if (entity instanceof Player player && !player.level().isClientSide()) {
-                Attachments.get(player, FargoSoulAttachmentRegister.SOUL_ITEM_DATA).tick(player);
-                SoulTargetCache.get(player).tick(player);
-                SoulItemData.forEach(player, soulItem -> soulItem.tick(player));
+                Attachments.get(player, FSFAttachmentRegister.SOUL_ITEM_DATA).tick(player);
+                SoulTargets.get(player).tick(player);
+                PlayerSouls.forEach(player, soulItem -> soulItem.tick(player));
             }
         });
 
         CuriosEventBus.register(CurioChangeEvent.class, event -> {
             if (event.getEntity() instanceof Player player && !player.level().isClientSide()) {
-                Attachments.get(player, FargoSoulAttachmentRegister.SOUL_ITEM_DATA).update(player);
+                Attachments.get(player, FSFAttachmentRegister.SOUL_ITEM_DATA).update(player);
             }
         });
 
-        FargoSoulHooks.INCOMING_DAMAGE.register(Event::incomingDamage);
-        FargoSoulHooks.CRITICAL_HIT.register(Event::criticalHit);
-        FargoSoulHooks.ITEM_PICKUP.register(Event::pickup);
-        FargoSoulHooks.HEAL.register(Event::heal);
-        FargoSoulHooks.SHIELD_BLOCK.register(Event::shieldBlock);
-        FargoSoulHooks.MOB_EFFECT_APPLICABLE.register(Event::effectApplicable);
+        FSFHooks.INCOMING_DAMAGE.register(Event::incomingDamage);
+        FSFHooks.CRITICAL_HIT.register(Event::criticalHit);
+        FSFHooks.ITEM_PICKUP.register(Event::pickup);
+        FSFHooks.HEAL.register(Event::heal);
+        FSFHooks.SHIELD_BLOCK.register(Event::shieldBlock);
+        FSFHooks.MOB_EFFECT_APPLICABLE.register(Event::effectApplicable);
 
         ServerLivingEntityEvents.ALLOW_DEATH.register((entity, source, amount) -> allowDeath(entity, source));
         ServerLivingEntityEvents.AFTER_DEATH.register(Event::afterDeath);
@@ -72,16 +72,16 @@ public final class Event {
         if (target.level().isClientSide()) {
             return;
         }
-        if (target.hasEffect(FargoSoulMobEffectRegister.Oiled)
+        if (target.hasEffect(FSFMobEffectRegister.Oiled)
                 && container.getSource().is(DamageTypeTags.IS_FIRE)) {
             container.setNewDamage(container.getNewDamage() * 3.0F);
         }
         List<ValueModifier> modifiers = new ArrayList<>();
         if (attacker instanceof Player player) {
-            SoulItemData.forEach(player, soulItem -> soulItem.attack(player, target, container, modifiers));
+            PlayerSouls.forEach(player, soulItem -> soulItem.attack(player, target, container, modifiers));
         }
         if (target instanceof Player player) {
-            SoulItemData.forEach(player, soulItem -> soulItem.hurt(attacker, player, container, modifiers));
+            PlayerSouls.forEach(player, soulItem -> soulItem.hurt(attacker, player, container, modifiers));
         }
         float damage = ValueModifier.getModifierAfter(container.getNewDamage(), modifiers);
         container.setNewDamage(damage);
@@ -90,35 +90,35 @@ public final class Event {
         }
     }
 
-    private static void criticalHit(Player player, Entity target, boolean critical, FargoSoulHooks.Value multiplier) {
+    private static void criticalHit(Player player, Entity target, boolean critical, FSFHooks.Value multiplier) {
         if (!player.level().isClientSide() && critical && target instanceof LivingEntity living) {
             List<ValueModifier> modifiers = new ArrayList<>();
-            SoulItemData.forEach(player, soulItem -> soulItem.criticalHit(player, living, modifiers));
+            PlayerSouls.forEach(player, soulItem -> soulItem.criticalHit(player, living, modifiers));
             multiplier.set(ValueModifier.getModifierAfter(multiplier.get(), modifiers));
         }
     }
 
     private static void pickup(Player player, net.minecraft.world.entity.item.ItemEntity itemEntity) {
         if (!player.level().isClientSide()) {
-            SoulItemData.forEach(player, soulItem -> soulItem.pickup(player, itemEntity.getItem()));
+            PlayerSouls.forEach(player, soulItem -> soulItem.pickup(player, itemEntity.getItem()));
         }
     }
 
     /** Bleeding and hemorrhage reduce the healing the player receives. */
-    private static void heal(LivingEntity entity, FargoSoulHooks.Value amount) {
+    private static void heal(LivingEntity entity, FSFHooks.Value amount) {
         if (entity.level().isClientSide()) {
             return;
         }
         float base = amount.get();
         if (entity instanceof Player player) {
             List<ValueModifier> modifiers = new ArrayList<>();
-            SoulItemData.forEach(player, soulItem -> soulItem.healAmount(player, base, modifiers));
+            PlayerSouls.forEach(player, soulItem -> soulItem.healAmount(player, base, modifiers));
             amount.set(ValueModifier.getModifierAfter(base, modifiers));
         }
-        if (entity.hasEffect(FargoSoulMobEffectRegister.Hemorrhage)) {
+        if (entity.hasEffect(FSFMobEffectRegister.Hemorrhage)) {
             amount.multiply(0.3F);
         }
-        if (entity.hasEffect(FargoSoulMobEffectRegister.Bleeding)) {
+        if (entity.hasEffect(FSFMobEffectRegister.Bleeding)) {
             amount.multiply(0.5F);
         }
     }
@@ -126,14 +126,14 @@ public final class Event {
     private static void shieldBlock(Player player, net.minecraft.world.damagesource.DamageSource source,
                                     float blockedDamage) {
         if (!player.level().isClientSide()) {
-            SoulItemData.forEach(player, soulItem -> soulItem.shieldBlock(player, source, blockedDamage));
+            PlayerSouls.forEach(player, soulItem -> soulItem.shieldBlock(player, source, blockedDamage));
         }
     }
 
     private static void effectApplicable(LivingEntity entity, net.minecraft.world.effect.MobEffectInstance effect,
-                                         FargoSoulHooks.Value canceled) {
+                                         FSFHooks.Value canceled) {
         if (entity instanceof Player player && !player.level().isClientSide()) {
-            SoulItemData.forEach(player, soulItem -> {
+            PlayerSouls.forEach(player, soulItem -> {
                 if (!soulItem.effectApplicable(player, effect)) {
                     canceled.cancel();
                 }
@@ -146,10 +146,10 @@ public final class Event {
         if (!(entity instanceof Player player) || player.level().isClientSide()) {
             return true;
         }
-        FargoSoulHooks.Value canceled = new FargoSoulHooks.Value(0.0F);
-        FargoSoulHooks.DEATH.invoker().onDeath(player, source, canceled);
+        FSFHooks.Value canceled = new FSFHooks.Value(0.0F);
+        FSFHooks.DEATH.invoker().onDeath(player, source, canceled);
         boolean[] alive = {!canceled.isCanceled()};
-        SoulItemData.forEach(player, soulItem -> {
+        PlayerSouls.forEach(player, soulItem -> {
             if (!soulItem.death(player, source, false)) {
                 alive[0] = false;
             }
@@ -159,12 +159,12 @@ public final class Event {
 
     private static void afterDeath(LivingEntity entity, net.minecraft.world.damagesource.DamageSource source) {
         if (source.getEntity() instanceof Player player && !player.level().isClientSide()) {
-            SoulItemData.forEach(player, soulItem -> soulItem.kill(player, entity, source));
+            PlayerSouls.forEach(player, soulItem -> soulItem.kill(player, entity, source));
         }
     }
 
     /** The attribute the player uses to pierce armor, added by the attribute patch. */
     public static net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> armorPierce() {
-        return FargoSoulAttributeRegister.ArmorPierce;
+        return FSFAttributeRegister.ArmorPierce;
     }
 }

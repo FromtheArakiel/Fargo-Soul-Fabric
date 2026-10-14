@@ -1,6 +1,6 @@
 package dev.arakiel.fargosoulfabric.common.builder;
 
-import dev.arakiel.fargosoulfabric.FargoSoul;
+import dev.arakiel.fargosoulfabric.FSF;
 import java.util.function.Consumer;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -42,7 +42,7 @@ public class AttributeArmorItemBuilder {
    }
 
    public AttributeArmorItemBuilder modifier(Holder<Attribute> attribute, double value, Operation operation) {
-      return this.modifier(attribute, new AttributeModifier(FargoSoul.rl("armor_" + this.type.getName()), value, operation));
+      return this.modifier(attribute, new AttributeModifier(FSF.rl("armor_" + this.type.getName()), value, operation));
    }
 
    public AttributeArmorItemBuilder properties(Consumer<Properties> customizer) {

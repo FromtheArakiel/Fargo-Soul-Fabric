@@ -1,10 +1,10 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.willPower;
 
-import dev.arakiel.fargosoulfabric.register.FargoSoulAttributeRegister;
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.register.FSFAttributeRegister;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import dev.arakiel.fargosoulfabric.FargoSoul;
+import dev.arakiel.fargosoulfabric.FSF;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
@@ -28,8 +28,8 @@ public class ValhallaKnightSoul extends SoulItem {
     public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(Player player) {
         Multimap<Holder<Attribute>, AttributeModifier> map = HashMultimap.create();
         if (player.getVehicle() != null) {
-            map.put(Attributes.ARMOR, new AttributeModifier(FargoSoul.rl("valhalla_armor"), 0.5, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
-            map.put(FargoSoulAttributeRegister.HealthRegen, new AttributeModifier(FargoSoul.rl("valhalla_regen"), 2, AttributeModifier.Operation.ADD_VALUE));
+            map.put(Attributes.ARMOR, new AttributeModifier(FSF.rl("valhalla_armor"), 0.5, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+            map.put(FSFAttributeRegister.HealthRegen, new AttributeModifier(FSF.rl("valhalla_regen"), 2, AttributeModifier.Operation.ADD_VALUE));
         }
         return map;
     }

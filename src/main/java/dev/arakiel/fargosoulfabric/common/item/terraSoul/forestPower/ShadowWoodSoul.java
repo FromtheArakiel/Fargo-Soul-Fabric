@@ -1,17 +1,17 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.forestPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.entity.BloodDrop;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -32,25 +32,25 @@ public class ShadowWoodSoul extends SoulItem {
     @Override
     public void tick(Player player) {
         if (player.tickCount % 20 == 0) {
-            List<LivingEntity> enemies = SoulTargetCache.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 6, null);
+            List<LivingEntity> enemies = SoulTargets.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 6, null);
             for (LivingEntity enemy : enemies) {
-                enemy.addEffect(new MobEffectInstance(FargoSoulMobEffectRegister.Hemorrhage, 120));
+                enemy.addEffect(new MobEffectInstance(FSFMobEffectRegister.Hemorrhage, 120));
             }
         }
     }
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        if (target.hasEffect(FargoSoulMobEffectRegister.Hemorrhage)) {
-            Info info = SoulInfoData.getSoulInfo(attacker, FargoSoulSoulInfoRegister.SHADOW_WOOD_SOUL_INFO);
+        if (target.hasEffect(FSFMobEffectRegister.Hemorrhage)) {
+            Info info = SoulStates.getSoulState(attacker, SoulStateRegister.SHADOW_WOOD_SOUL_INFO);
             if (info == null) {
                 info = new Info();
-                SoulInfoData.putSoulInfo(attacker, info);
+                SoulStates.putSoulState(attacker, info);
             }
             if (info.cooldown <= 0) {
                 info.cooldown = 10;
                 Vec3 from = target.getBoundingBox().getCenter();
-                List<LivingEntity> others = SoulTargetCache.get(attacker).getEntitiesInRadius(target.getBoundingBox().getCenter(), 8, other -> other != target);
+                List<LivingEntity> others = SoulTargets.get(attacker).getEntitiesInRadius(target.getBoundingBox().getCenter(), 8, other -> other != target);
                 if (!others.isEmpty()) {
                     RandomSource random = attacker.getRandom();
                     int count = 2 + random.nextInt(2);
@@ -69,18 +69,18 @@ public class ShadowWoodSoul extends SoulItem {
         }
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public int cooldown = 0;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.SHADOW_WOOD_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.SHADOW_WOOD_SOUL_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (SoulItemData.isEquipped(living, FargoSoulItemRegister.ShadowWoodSoulItem)) {
+            if (PlayerSouls.isEquipped(living, FSFItemRegister.ShadowWoodSoulItem)) {
                 if (cooldown > 0) {
                     cooldown--;
                 }

@@ -1,15 +1,18 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.spiritPower;
 
-import dev.arakiel.fargosoulfabric.FargoSoul;
-import dev.arakiel.fargosoulfabric.api.SoulKey;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
+import dev.arakiel.fargosoulfabric.utils.FSFEffects;
+import net.minecraft.core.particles.ParticleTypes;
+
+import dev.arakiel.fargosoulfabric.FSF;
+import dev.arakiel.fargosoulfabric.common.SoulKey;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.entity.Vortex;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -29,20 +32,20 @@ public class ForbiddenSoul extends SoulItem {
     }
 
     @Override
-    public @Nullable ResourceLocation keyPressed(Player player, SoulKey key) {
+    public @Nullable ResourceLocation keyAction(Player player, SoulKey key) {
         if (key == SoulKey.Forbidden) {
-            return FargoSoul.rl("forbidden_storm");
+            return FSF.rl("forbidden_storm");
         }
-        return super.keyPressed(player, key);
+        return super.keyAction(player, key);
     }
 
     @Override
-    public void keyHandle(Player player, ResourceLocation location) {
-        if (location.equals(FargoSoul.rl("forbidden_storm"))) {
-            Info info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.FORBIDDEN_SOUL_INFO);
+    public void handleKeyAction(Player player, ResourceLocation location) {
+        if (location.equals(FSF.rl("forbidden_storm"))) {
+            Info info = SoulStates.getSoulState(player, SoulStateRegister.FORBIDDEN_SOUL_INFO);
             if (info == null) {
                 info = new Info();
-                SoulInfoData.putSoulInfo(player, info);
+                SoulStates.putSoulState(player, info);
             }
             if (info.cooldown <= 0) {
                 info.cooldown = 600;
@@ -55,22 +58,25 @@ public class ForbiddenSoul extends SoulItem {
                 vortex.setPos(pos);
                 vortex.setDamage(0);
                 vortex.join(player);
+                // 风暴: the storm rips open where the vortex lands.
+                FSFEffects.burst(player.level(), pos, ParticleTypes.CLOUD, 40, 1.0D, 0.15D);
+                FSFEffects.burst(player.level(), pos, ParticleTypes.ELECTRIC_SPARK, 30, 0.6D, 0.5D);
             }
         }
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public int cooldown = 0;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.FORBIDDEN_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.FORBIDDEN_SOUL_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (SoulItemData.isEquipped(living, FargoSoulItemRegister.ForbiddenSoulItem)) {
+            if (PlayerSouls.isEquipped(living, FSFItemRegister.ForbiddenSoulItem)) {
                 if (cooldown > 0) {
                     cooldown--;
                 }

@@ -3,16 +3,16 @@ package dev.arakiel.fargosoulfabric.client.render.trail;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.PoseStack.Pose;
-import dev.arakiel.fargosoulfabric.client.render.FargoSoulRenderTypes;
+import dev.arakiel.fargosoulfabric.client.render.FSFRenderTypes;
 import dev.arakiel.fargosoulfabric.client.render.RenderContext;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntity;
+import dev.arakiel.fargosoulfabric.common.summon.Summon;
 import java.util.List;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
-public class RibbonTrailContext<T extends AttachmentEntity> extends TrailContext<T> {
+public class RibbonTrailContext<T extends Summon> extends TrailContext<T> {
    public float upOffset = 0.0F;
    public float downOffset = 0.0F;
    public RenderContext.AlphaBoostFunction<T> tipAlphaBoost = (entity, progress) -> (1.0F - progress) * 20.0F;
@@ -46,7 +46,7 @@ public class RibbonTrailContext<T extends AttachmentEntity> extends TrailContext
       List<TrailContext.InterpolatedNode> nodes = this.buildSmoothNodes(context.entity, context.visualNode, context.partialTick);
       int nodeCount = nodes.size();
       if (nodeCount > 1) {
-         VertexConsumer buffer = bufferSource.getBuffer(FargoSoulRenderTypes.getTrail());
+         VertexConsumer buffer = bufferSource.getBuffer(FSFRenderTypes.getTrail());
          Pose pose = poseStack.last();
          Vec3 renderPos = context.visualNode.pos();
          Vector3f currTip = new Vector3f();

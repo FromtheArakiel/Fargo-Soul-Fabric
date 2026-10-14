@@ -1,7 +1,7 @@
 package dev.arakiel.fargosoulfabric.mixin;
 
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +28,7 @@ public class VillagerMixin {
         Villager villager = Villager.class.cast(this);
         MerchantOffers offers = villager.getOffers();
         List<ValueModifier> modifiers = new ArrayList<>();
-        SoulItemData.forEach(player, soulItem -> soulItem.updateSpecialPrices(player, villager, modifiers));
+        PlayerSouls.forEach(player, soulItem -> soulItem.updateSpecialPrices(player, villager, modifiers));
         float modifierAfter = ValueModifier.getModifierAfter(1, modifiers);
         for (MerchantOffer offer : offers) {
             MerchantOfferAccessor accessor = (MerchantOfferAccessor) offer;

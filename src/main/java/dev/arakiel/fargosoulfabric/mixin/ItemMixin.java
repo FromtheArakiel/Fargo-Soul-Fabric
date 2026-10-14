@@ -1,6 +1,6 @@
 package dev.arakiel.fargosoulfabric.mixin;
 
-import dev.arakiel.fargosoulfabric.common.dataComponent.FargoSoulRarity;
+import dev.arakiel.fargosoulfabric.common.dataComponent.FSFRarity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
@@ -20,9 +20,9 @@ public class ItemMixin {
       at = {@At("TAIL")},
       cancellable = true
    )
-   private void fargoSoul$getName(ItemStack stack, CallbackInfoReturnable<Component> cir) {
+   private void fsf$getName(ItemStack stack, CallbackInfoReturnable<Component> cir) {
       if (cir.getReturnValue() instanceof MutableComponent mutableComponent) {
-         cir.setReturnValue(FargoSoulRarity.handler(stack, mutableComponent));
+         cir.setReturnValue(FSFRarity.handler(stack, mutableComponent));
       }
    }
 }

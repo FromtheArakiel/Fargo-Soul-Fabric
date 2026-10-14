@@ -1,11 +1,11 @@
 package dev.arakiel.fargosoulfabric.common.entity.goal.terrablade;
 
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntityGoal;
+import dev.arakiel.fargosoulfabric.common.summon.SummonGoal;
 import dev.arakiel.fargosoulfabric.common.entity.TerraBlade;
 
 import java.util.Collections;
 
-public class BladeIdleGoal extends AttachmentEntityGoal<TerraBlade> {
+public class BladeIdleGoal extends SummonGoal<TerraBlade> {
 
     public BladeIdleGoal(TerraBlade minion) {
         super(minion);

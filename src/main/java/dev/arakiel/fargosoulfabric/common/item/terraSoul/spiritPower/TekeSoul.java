@@ -1,14 +1,14 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.spiritPower;
 
-import dev.arakiel.fargosoulfabric.register.FargoSoulAttributeRegister;
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.register.FSFAttributeRegister;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import dev.arakiel.fargosoulfabric.FargoSoul;
+import dev.arakiel.fargosoulfabric.FSF;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntityDamageSource;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
+import dev.arakiel.fargosoulfabric.common.summon.SummonDamageSource;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,14 +28,14 @@ public class TekeSoul extends SoulItem {
     @Override
     public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(Player player) {
         Multimap<Holder<Attribute>, AttributeModifier> map = HashMultimap.create();
-        map.put(FargoSoulAttributeRegister.SummonDamage, new AttributeModifier(FargoSoul.rl("teke_damage"), 0.35, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+        map.put(FSFAttributeRegister.SummonDamage, new AttributeModifier(FSF.rl("teke_damage"), 0.35, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
         return map;
     }
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        if (container.getSource() instanceof AttachmentEntityDamageSource) {
-            target.addEffect(new MobEffectInstance(FargoSoulMobEffectRegister.TekeMist, 240));
+        if (container.getSource() instanceof SummonDamageSource) {
+            target.addEffect(new MobEffectInstance(FSFMobEffectRegister.TekeMist, 240));
         }
     }
 }

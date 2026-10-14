@@ -1,6 +1,6 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.forestPower;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.entity.SnowBall;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,7 +18,7 @@ public class PineWoodSoul extends SoulItem {
     @Override
     public void tick(Player player) {
         if (player.tickCount % 100 == 0) {
-            List<LivingEntity> targets = SoulTargetCache.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 12, null);
+            List<LivingEntity> targets = SoulTargets.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 12, null);
             if (!targets.isEmpty()) {
                 Vec3 pos = player.position().add(0, player.getBoundingBox().getYsize(), 0).offsetRandom(player.getRandom(), 4);
                 LivingEntity target = targets.get(player.getRandom().nextInt(targets.size()));

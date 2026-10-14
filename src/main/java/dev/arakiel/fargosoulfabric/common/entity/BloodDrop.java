@@ -1,9 +1,9 @@
 package dev.arakiel.fargosoulfabric.common.entity;
 
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.common.attachment.InvincibleData;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.IEntityCollision;
-import dev.arakiel.fargosoulfabric.common.projectile.Projectile;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
+import dev.arakiel.fargosoulfabric.common.summon.IEntityCollision;
+import dev.arakiel.fargosoulfabric.common.projectile.SummonProjectile;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
@@ -13,12 +13,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @SuppressWarnings("this-escape")
-public class BloodDrop extends Projectile implements IEntityCollision<BloodDrop> {
+public class BloodDrop extends SummonProjectile implements IEntityCollision<BloodDrop> {
 
     private LivingEntity chaseTarget = null;
 
     public BloodDrop() {
-        super(SummonerAttachmentEntityRegister.BLOOD_DROP);
+        super(SummonTypeRegister.BLOOD_DROP);
         setDrag(0.8f);
         setMaxLife(60);
     }
@@ -38,7 +38,7 @@ public class BloodDrop extends Projectile implements IEntityCollision<BloodDrop>
         DamageSource source = getDamageSource();
         HitContext first = hitContexts.getFirst();
         if (source != null) {
-            InvincibleData.attack(first.entity())
+            Invulnerability.attack(first.entity())
                     .attacker(getUuid())
                     .damageSource(source)
                     .damageAmount(getDamage())

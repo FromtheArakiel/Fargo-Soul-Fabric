@@ -4,7 +4,7 @@ import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 
 import java.util.Set;
 
-import static dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister.*;
+import static dev.arakiel.fargosoulfabric.register.FSFItemRegister.*;
 
 public class TerraSoul extends SoulItem {
 

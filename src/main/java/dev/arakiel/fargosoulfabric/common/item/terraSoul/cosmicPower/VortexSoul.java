@@ -1,13 +1,16 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.cosmicPower;
 
-import dev.arakiel.fargosoulfabric.api.SoulKey;
-import dev.arakiel.fargosoulfabric.FargoSoul;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
+import dev.arakiel.fargosoulfabric.utils.FSFEffects;
+import net.minecraft.core.particles.ParticleTypes;
+
+import dev.arakiel.fargosoulfabric.common.SoulKey;
+import dev.arakiel.fargosoulfabric.FSF;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
 import dev.arakiel.fargosoulfabric.common.entity.Vortex;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import dev.arakiel.fargosoulfabric.common.sound.Playable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,21 +35,21 @@ public class VortexSoul extends SoulItem {
     }
 
     @Override
-    public ResourceLocation keyPressed(Player player, SoulKey key) {
+    public ResourceLocation keyAction(Player player, SoulKey key) {
         if (key == SoulKey.Vortex) {
-            return FargoSoul.rl("vortex_soul");
+            return FSF.rl("vortex_soul");
         }
         return null;
     }
 
     @Override
-    public void keyHandle(Player player, ResourceLocation key) {
-        if (key.equals(FargoSoul.rl("vortex_soul"))) {
-            Info info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.VORTEX_SOUL_INFO);
+    public void handleKeyAction(Player player, ResourceLocation key) {
+        if (key.equals(FSF.rl("vortex_soul"))) {
+            Info info = SoulStates.getSoulState(player, SoulStateRegister.VORTEX_SOUL_INFO);
             if (info == null) {
                 info = new Info();
                 info.cooldown = 20;
-                SoulInfoData.putSoulInfo(player, info);
+                SoulStates.putSoulState(player, info);
                 Level level = player.level();
                 ClipContext clipContext = new ClipContext(player.getEyePosition(), player.getEyePosition().add(player.getLookAngle().scale(256)), ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player);
                 HitResult hitResult = player.level().clip(clipContext);
@@ -59,6 +62,9 @@ public class VortexSoul extends SoulItem {
                         double adjustZ = pos.getZ() + hitFace.getStepZ();
                         player.teleportTo(adjustX, adjustY, adjustZ);
                         Playable.play(SoundEvents.ENDERMAN_TELEPORT, level, player.position(), player.getSoundSource());
+                        // 传送: leave a swirl where the player came out.
+                        FSFEffects.burst(level, new Vec3(adjustX, adjustY + 0.5D, adjustZ),
+                                ParticleTypes.PORTAL, 60, 0.5D, 0.4D);
                         Vortex vortex = new Vortex();
                         vortex.setDamageSourceSupplier(owner -> owner.damageSources().playerAttack(owner));
                         vortex.setPos(new Vec3(adjustX, adjustY, adjustZ));
@@ -70,13 +76,13 @@ public class VortexSoul extends SoulItem {
         }
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public int cooldown = 0;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.VORTEX_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.VORTEX_SOUL_INFO;
         }
 
         @Override

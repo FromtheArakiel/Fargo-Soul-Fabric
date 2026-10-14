@@ -1,12 +1,12 @@
 package dev.arakiel.fargosoulfabric.common.item;
 
-import dev.arakiel.fargosoulfabric.register.FargoSoulAttributeRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulRegisters;
-import dev.arakiel.fargosoulfabric.api.FargoSoulHelper;
-import dev.arakiel.fargosoulfabric.common.attachment.AttachmentEntityData;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntity;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntityType;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PathNode;
+import dev.arakiel.fargosoulfabric.register.FSFAttributeRegister;
+import dev.arakiel.fargosoulfabric.register.FSFRegisters;
+import dev.arakiel.fargosoulfabric.common.FSFPlayerSummons;
+import dev.arakiel.fargosoulfabric.common.attachment.SummonData;
+import dev.arakiel.fargosoulfabric.common.summon.Summon;
+import dev.arakiel.fargosoulfabric.common.summon.SummonType;
+import dev.arakiel.fargosoulfabric.common.summon.PathNode;
 import dev.arakiel.fargosoulfabric.common.dataComponent.MinionWeapon;
 import dev.arakiel.fargosoulfabric.common.minion.Minion;
 import dev.arakiel.fargosoulfabric.common.minion.MinionSlotType;
@@ -36,13 +36,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class SummonerWeaponItem<T extends Minion> extends Item {
-   private final Supplier<AttachmentEntityType<T>> typeSupplier;
+   private final Supplier<SummonType<T>> typeSupplier;
    private final TriConsumer<SummonerWeaponItem<T>, Player, ItemStack> summonConsumer;
    private final TriConsumer<SummonerWeaponItem<T>, Player, ItemStack> removeConsumer;
 
    public SummonerWeaponItem(
       Properties properties,
-      Supplier<AttachmentEntityType<T>> typeSupplier,
+      Supplier<SummonType<T>> typeSupplier,
       @Nullable TriConsumer<SummonerWeaponItem<T>, Player, ItemStack> summonAction,
       TriConsumer<SummonerWeaponItem<T>, Player, ItemStack> removeConsumer
    ) {
@@ -50,26 +50,26 @@ public class SummonerWeaponItem<T extends Minion> extends Item {
       this.typeSupplier = typeSupplier;
       this.summonConsumer = summonAction != null ? summonAction : (weapon, player, itemStack) -> {
          T minion = weapon.createMinion(player, itemStack);
-         FargoSoulHelper fargoSoulHelper = FargoSoulHelper.get(player);
+         FSFPlayerSummons fsfHelper = FSFPlayerSummons.get(player);
          MinionSlotType slotType = weapon.getSlotType(itemStack);
-         if (fargoSoulHelper.canSummon(slotType, minion.getSlotCost())) {
+         if (fsfHelper.canSummon(slotType, minion.getSlotCost())) {
             AABB box = player.getBoundingBox();
             Vec3 pos = box.getCenter();
             minion.init(new PathNode(pos.offsetRandom(player.getRandom(), 2.0F), 0.0F, 0.0F, 0.0F));
-            fargoSoulHelper.add(minion);
+            fsfHelper.add(minion);
          }
       };
       this.removeConsumer = removeConsumer != null
          ? removeConsumer
          : (weapon, player, itemStack) -> {
-            AttachmentEntityData entityData = FargoSoulHelper.get(player).getEntityData();
+            SummonData entityData = FSFPlayerSummons.get(player).getSummons();
             entityData.getGroups()
                .getOrDefault(this.getEntityType(), List.of())
                .stream()
                .filter(entity -> entity instanceof Minion minion)
                .map(entity -> (Minion)entity)
                .filter(minion -> minion.getOwner() == player && !minion.isRemove())
-               .forEach(AttachmentEntity::setRemove);
+               .forEach(Summon::setRemove);
          };
    }
 
@@ -93,19 +93,19 @@ public class SummonerWeaponItem<T extends Minion> extends Item {
    }
 
    @NotNull
-   public AttachmentEntityType<T> getEntityType() {
+   public SummonType<T> getEntityType() {
       return this.typeSupplier.get();
    }
 
    @NotNull
    public MinionSlotType getSlotType(ItemStack itemStack) {
-      return (itemStack.getOrDefault(FargoSoulRegisters.MINION_WEAPON, MinionWeapon.Empty)).type();
+      return (itemStack.getOrDefault(FSFRegisters.MINION_WEAPON, MinionWeapon.Empty)).type();
    }
 
    public float getSummonDamage(@Nullable Player player, @NotNull ItemStack itemStack) {
-      float damage = (itemStack.getOrDefault(FargoSoulRegisters.MINION_WEAPON, MinionWeapon.Empty)).damage();
+      float damage = (itemStack.getOrDefault(FSFRegisters.MINION_WEAPON, MinionWeapon.Empty)).damage();
       if (player != null) {
-         AttributeInstance attribute = player.getAttribute(FargoSoulAttributeRegister.SummonDamage);
+         AttributeInstance attribute = player.getAttribute(FSFAttributeRegister.SummonDamage);
          if (attribute != null) {
             damage = (float)((double)damage * attribute.getValue());
          }
@@ -115,9 +115,9 @@ public class SummonerWeaponItem<T extends Minion> extends Item {
    }
 
    public float getSummonKnockback(@Nullable Player player, @NotNull ItemStack itemStack) {
-      float knockback = (itemStack.getOrDefault(FargoSoulRegisters.MINION_WEAPON, MinionWeapon.Empty)).knockback();
+      float knockback = (itemStack.getOrDefault(FSFRegisters.MINION_WEAPON, MinionWeapon.Empty)).knockback();
       if (player != null) {
-         AttributeInstance attribute = player.getAttribute(FargoSoulAttributeRegister.SummonKnockback);
+         AttributeInstance attribute = player.getAttribute(FSFAttributeRegister.SummonKnockback);
          if (attribute != null) {
             knockback = (float)((double)knockback * attribute.getValue());
          }
@@ -127,18 +127,18 @@ public class SummonerWeaponItem<T extends Minion> extends Item {
    }
 
    public float getSummonArmorPierce(@Nullable Player player, @NotNull ItemStack itemStack) {
-      return (itemStack.getOrDefault(FargoSoulRegisters.MINION_WEAPON, MinionWeapon.Empty)).armorPierce();
+      return (itemStack.getOrDefault(FSFRegisters.MINION_WEAPON, MinionWeapon.Empty)).armorPierce();
    }
 
    @Nullable
    public SoundEvent getSoundEvent(ItemStack itemStack) {
-      Holder<SoundEvent> event = (itemStack.getOrDefault(FargoSoulRegisters.MINION_WEAPON, MinionWeapon.Empty)).soundEvent();
+      Holder<SoundEvent> event = (itemStack.getOrDefault(FSFRegisters.MINION_WEAPON, MinionWeapon.Empty)).soundEvent();
       return event != null ? event.value() : null;
    }
 
    @NotNull
    public T createMinion(@NotNull Player player, @NotNull ItemStack itemStack) {
-      AttachmentEntityType<T> type = this.getEntityType();
+      SummonType<T> type = this.getEntityType();
       T minion = type.factory().get();
       minion.setOwner(player);
       minion.setSlotType(this.getSlotType(itemStack));
@@ -159,8 +159,8 @@ public class SummonerWeaponItem<T extends Minion> extends Item {
    @NotNull
    public List<Component> getTooltips(ItemStack itemStack, Player player) {
       List<Component> toolTips = new ArrayList<>();
-      AttachmentEntityType<?> type = this.getEntityType();
-      ResourceLocation location = FargoSoulRegisters.ATTACHMENT_ENTITY_TYPES.getKey(type);
+      SummonType<?> type = this.getEntityType();
+      ResourceLocation location = FSFRegisters.ATTACHMENT_ENTITY_TYPES.getKey(type);
       if (location == null) {
          return toolTips;
       } else {
@@ -197,7 +197,7 @@ public class SummonerWeaponItem<T extends Minion> extends Item {
                )
                .withStyle(ChatFormatting.GRAY)
          );
-         FargoSoulHelper fargoSoulHelper = FargoSoulHelper.get(player);
+         FSFPlayerSummons fsfHelper = FSFPlayerSummons.get(player);
          MinionSlotType slotType = this.getSlotType(itemStack);
          switch (slotType) {
             case Minion:
@@ -205,8 +205,8 @@ public class SummonerWeaponItem<T extends Minion> extends Item {
                   Component.translatable(
                         "item.fargosoul.tooltip.minion_slots",
                         new Object[]{
-                           Component.literal(String.valueOf(fargoSoulHelper.getUsedSlots(MinionSlotType.Minion))).withStyle(ChatFormatting.BLUE),
-                           Component.literal(String.valueOf(fargoSoulHelper.getMaxCount(MinionSlotType.Minion))).withStyle(ChatFormatting.BLUE)
+                           Component.literal(String.valueOf(fsfHelper.getUsedSlots(MinionSlotType.Minion))).withStyle(ChatFormatting.BLUE),
+                           Component.literal(String.valueOf(fsfHelper.getMaxCount(MinionSlotType.Minion))).withStyle(ChatFormatting.BLUE)
                         }
                      )
                      .withStyle(ChatFormatting.GRAY)
@@ -217,8 +217,8 @@ public class SummonerWeaponItem<T extends Minion> extends Item {
                   Component.translatable(
                         "item.fargosoul.tooltip.sentry_slots",
                         new Object[]{
-                           Component.literal(String.valueOf(fargoSoulHelper.getUsedSlots(MinionSlotType.Sentry))).withStyle(ChatFormatting.BLUE),
-                           Component.literal(String.valueOf(fargoSoulHelper.getMaxCount(MinionSlotType.Sentry))).withStyle(ChatFormatting.BLUE)
+                           Component.literal(String.valueOf(fsfHelper.getUsedSlots(MinionSlotType.Sentry))).withStyle(ChatFormatting.BLUE),
+                           Component.literal(String.valueOf(fsfHelper.getMaxCount(MinionSlotType.Sentry))).withStyle(ChatFormatting.BLUE)
                         }
                      )
                      .withStyle(ChatFormatting.GRAY)

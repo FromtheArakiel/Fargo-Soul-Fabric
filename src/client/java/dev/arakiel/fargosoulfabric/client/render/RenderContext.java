@@ -1,11 +1,11 @@
 package dev.arakiel.fargosoulfabric.client.render;
 
 import dev.arakiel.fargosoulfabric.client.render.trail.TrailContext;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntity;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PathNode;
+import dev.arakiel.fargosoulfabric.common.summon.Summon;
+import dev.arakiel.fargosoulfabric.common.summon.PathNode;
 import software.bernie.geckolib.util.Color;
 
-public class RenderContext<T extends AttachmentEntity> {
+public class RenderContext<T extends Summon> {
    public final T entity;
    public final PathNode visualNode;
    public final float partialTick;
@@ -46,17 +46,17 @@ public class RenderContext<T extends AttachmentEntity> {
    }
 
    @FunctionalInterface
-   public interface AlphaBoostFunction<T extends AttachmentEntity> {
+   public interface AlphaBoostFunction<T extends Summon> {
       float getBoost(T var1, float var2);
    }
 
    @FunctionalInterface
-   public interface BrightnessBoostFunction<T extends AttachmentEntity> {
+   public interface BrightnessBoostFunction<T extends Summon> {
       float getBoost(T var1, float var2);
    }
 
    @FunctionalInterface
-   public interface ColorFunction<T extends AttachmentEntity> {
+   public interface ColorFunction<T extends Summon> {
       int getColor(T var1, float var2, float var3);
    }
 

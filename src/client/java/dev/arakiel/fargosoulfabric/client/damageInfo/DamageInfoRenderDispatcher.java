@@ -1,10 +1,11 @@
 package dev.arakiel.fargosoulfabric.client.damageInfo;
 
-import dev.arakiel.fargosoulfabric.register.FargoSoulAttachmentRegister;
-import dev.arakiel.fargosoulfabric.api.Attachments;
+import dev.arakiel.fargosoulfabric.client.config.FSFClientConfig;
+import dev.arakiel.fargosoulfabric.register.FSFAttachmentRegister;
+import dev.arakiel.fargosoulfabric.common.Attachments;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import dev.arakiel.fargosoulfabric.common.attachment.DamageInfoData;
+import dev.arakiel.fargosoulfabric.common.attachment.DamageNumbers;
 import dev.arakiel.fargosoulfabric.common.damageInfo.DamageInfo;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +25,12 @@ public class DamageInfoRenderDispatcher {
    }
 
    public static void render(Level level, Camera camera, MultiBufferSource bufferSource, float partialTick) {
+
+      if (!FSFClientConfig.damageNumbers()) {
+         return;
+      }
       Minecraft minecraft = Minecraft.getInstance();
-      DamageInfoData data = Attachments.get(level, FargoSoulAttachmentRegister.DAMAGE_INFO_DATA);
+      DamageNumbers data = Attachments.get(level, FSFAttachmentRegister.DAMAGE_INFO_DATA);
       Map<ResourceLocation, List<DamageInfo>> infos = data.getActiveInfos();
       if (!infos.isEmpty()) {
          Vec3 camPos = camera.getPosition();

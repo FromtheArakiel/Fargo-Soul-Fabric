@@ -1,15 +1,15 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.terraPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
@@ -28,10 +28,10 @@ public class TinSoul extends SoulItem {
 
     @Override
     public void criticalHit(Player player, LivingEntity target, List<ValueModifier> modifiers) {
-        Info soulInfo = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.TIN_SOUL_INFO);
+        Info soulInfo = SoulStates.getSoulState(player, SoulStateRegister.TIN_SOUL_INFO);
         if (soulInfo == null) {
             soulInfo = new Info();
-            SoulInfoData.putSoulInfo(player, soulInfo);
+            SoulStates.putSoulState(player, soulInfo);
         }
         modifiers.add(new ValueModifier(0.2f + soulInfo.extraCritDamage * 0.01f, ValueOperation.ADD_MULTIPLIED_BASE));
         soulInfo.extraCritDamage = Math.min(soulInfo.extraCritDamage + 10, soulInfo.maxExtraCritDamage);
@@ -39,25 +39,25 @@ public class TinSoul extends SoulItem {
 
     @Override
     public void hurt(@Nullable Entity attacker, @NotNull Player target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        Info soulInfo = SoulInfoData.getSoulInfo(target, FargoSoulSoulInfoRegister.TIN_SOUL_INFO);
+        Info soulInfo = SoulStates.getSoulState(target, SoulStateRegister.TIN_SOUL_INFO);
         if (soulInfo != null) {
             soulInfo.extraCritDamage = soulInfo.extraCritDamage / 2;
         }
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public float extraCritDamage = 0;
         public float maxExtraCritDamage = 80;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.TIN_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.TIN_SOUL_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (!SoulItemData.isEquipped(living, FargoSoulItemRegister.TinSoulItem)) {
+            if (!PlayerSouls.isEquipped(living, FSFItemRegister.TinSoulItem)) {
                 setRemove(true);
             }
         }

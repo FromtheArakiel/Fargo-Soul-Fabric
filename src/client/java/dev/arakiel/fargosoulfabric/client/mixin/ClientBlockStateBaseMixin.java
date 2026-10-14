@@ -1,8 +1,8 @@
 package dev.arakiel.fargosoulfabric.client.mixin;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.soulInfo.PenetratingSoulInfo;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.soulInfo.PenetratingSoulState;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
@@ -28,7 +28,7 @@ public class ClientBlockStateBaseMixin {
     private void getCollisionShape(BlockGetter level, BlockPos pos, CollisionContext context, CallbackInfoReturnable<VoxelShape> cir) {
         if (context instanceof EntityCollisionContext entityCollisionContext && entityCollisionContext.getEntity() instanceof LocalPlayer localPlayer) {
             if (localPlayer.connection instanceof ClientPacketListener && pos.getCenter().y() >= localPlayer.position().y()) {
-                PenetratingSoulInfo info = SoulInfoData.getSoulInfo(localPlayer, FargoSoulSoulInfoRegister.PENETRATING_SOUL_INFO);
+                PenetratingSoulState info = SoulStates.getSoulState(localPlayer, SoulStateRegister.PENETRATING_SOUL_INFO);
                 if (info != null && info.penetrate > 0) {
                     cir.setReturnValue(Shapes.empty());
                 }

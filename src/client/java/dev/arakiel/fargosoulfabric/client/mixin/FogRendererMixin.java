@@ -1,8 +1,8 @@
 package dev.arakiel.fargosoulfabric.client.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import dev.arakiel.fargosoulfabric.api.FargoSoulHooks;
-import dev.arakiel.fargosoulfabric.client.api.FargoSoulClientHooks;
+import dev.arakiel.fargosoulfabric.common.FSFHooks;
+import dev.arakiel.fargosoulfabric.client.FSFClientHooks;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.FogRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class FogRendererMixin {
 
     @Inject(method = "setupFog", at = @At("TAIL"))
-    private static void fargoSoul$setupFog(Camera camera, FogRenderer.FogMode mode, float renderDistance,
+    private static void fsf$setupFog(Camera camera, FogRenderer.FogMode mode, float renderDistance,
                                            boolean thickFog, float partialTick, CallbackInfo ci) {
-        FargoSoulHooks.Value nearPlane = new FargoSoulHooks.Value(RenderSystem.getShaderFogStart());
-        FargoSoulHooks.Value farPlane = new FargoSoulHooks.Value(RenderSystem.getShaderFogEnd());
-        FargoSoulHooks.Value cancel = new FargoSoulHooks.Value(0.0F);
-        FargoSoulClientHooks.FOG.invoker().onFog(camera, nearPlane, farPlane, cancel);
+        FSFHooks.Value nearPlane = new FSFHooks.Value(RenderSystem.getShaderFogStart());
+        FSFHooks.Value farPlane = new FSFHooks.Value(RenderSystem.getShaderFogEnd());
+        FSFHooks.Value cancel = new FSFHooks.Value(0.0F);
+        FSFClientHooks.FOG.invoker().onFog(camera, nearPlane, farPlane, cancel);
         if (cancel.isCanceled()) {
             RenderSystem.setShaderFogStart(nearPlane.get());
             RenderSystem.setShaderFogEnd(farPlane.get());

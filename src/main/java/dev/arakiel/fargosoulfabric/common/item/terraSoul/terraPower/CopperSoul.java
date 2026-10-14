@@ -1,16 +1,16 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.terraPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.entity.LightningOrb;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -29,10 +29,10 @@ public class CopperSoul extends SoulItem {
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        Info soulInfo = SoulInfoData.getSoulInfo(attacker, FargoSoulSoulInfoRegister.COPPER_SOUL_INFO);
+        Info soulInfo = SoulStates.getSoulState(attacker, SoulStateRegister.COPPER_SOUL_INFO);
         if (soulInfo == null) {
             soulInfo = new Info();
-            SoulInfoData.putSoulInfo(attacker, soulInfo);
+            SoulStates.putSoulState(attacker, soulInfo);
         }
         if (soulInfo.cooldown <= 0) {
             float chance = target.isInWaterOrRain() ? 0.3f : 0.1f;
@@ -45,25 +45,25 @@ public class CopperSoul extends SoulItem {
                 orb.setDamageSourceSupplier(owner -> owner.damageSources().lightningBolt());
                 orb.setPos(eye);
                 orb.setVelocity(dir);
-                float bonus = attacker.hasEffect(FargoSoulMobEffectRegister.TerraResonance) ? 1.8f : 1.0f;
+                float bonus = attacker.hasEffect(FSFMobEffectRegister.TerraResonance) ? 1.8f : 1.0f;
                 orb.setDamage(4 * bonus);
                 orb.join(attacker);
             }
         }
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public int cooldown = 0;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.COPPER_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.COPPER_SOUL_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (SoulItemData.isEquipped(living, FargoSoulItemRegister.CopperSoulItem)) {
+            if (PlayerSouls.isEquipped(living, FSFItemRegister.CopperSoulItem)) {
                 if (cooldown > 0) {
                     cooldown--;
                 }

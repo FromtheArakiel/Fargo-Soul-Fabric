@@ -1,13 +1,13 @@
 package dev.arakiel.fargosoulfabric.common.entity.goal.terrablade;
 
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PathNode;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntityGoal;
+import dev.arakiel.fargosoulfabric.common.summon.PathNode;
+import dev.arakiel.fargosoulfabric.common.summon.SummonGoal;
 import dev.arakiel.fargosoulfabric.common.entity.TerraBlade;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Collections;
 
-public class BladePrepGoal extends AttachmentEntityGoal<TerraBlade> {
+public class BladePrepGoal extends SummonGoal<TerraBlade> {
 
     private PathNode prep;
 

@@ -1,17 +1,17 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
-import dev.arakiel.fargosoulfabric.common.attachment.InvincibleData;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
+import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Set;
 
-import static dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister.*;
+import static dev.arakiel.fargosoulfabric.register.FSFItemRegister.*;
 
 public class CosmicPower extends SoulItem {
 
@@ -39,10 +39,10 @@ public class CosmicPower extends SoulItem {
 
     @Override
     public void tick(Player living) {
-        Info soulInfo = SoulInfoData.getSoulInfo(living, FargoSoulSoulInfoRegister.COSMIC_POWER_INFO);
+        Info soulInfo = SoulStates.getSoulState(living, SoulStateRegister.COSMIC_POWER_INFO);
         if (soulInfo == null) {
             soulInfo = new Info();
-            SoulInfoData.putSoulInfo(living, soulInfo);
+            SoulStates.putSoulState(living, soulInfo);
         }
         if (living.tickCount % 20 == 0 && soulInfo.cosmicPower < soulInfo.maxCosmicPower) {
             soulInfo.cosmicPower++;
@@ -51,17 +51,17 @@ public class CosmicPower extends SoulItem {
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        Info soulInfo = SoulInfoData.getSoulInfo(attacker, FargoSoulSoulInfoRegister.COSMIC_POWER_INFO);
+        Info soulInfo = SoulStates.getSoulState(attacker, SoulStateRegister.COSMIC_POWER_INFO);
         if (soulInfo == null) {
             soulInfo = new Info();
-            SoulInfoData.putSoulInfo(attacker, soulInfo);
+            SoulStates.putSoulState(attacker, soulInfo);
         }
         modifiers.add(new ValueModifier(0.8f * (soulInfo.cosmicPower / soulInfo.maxCosmicPower), ValueOperation.ADD_VALUE));
     }
 
     @Override
     public void hurt(@Nullable Entity attacker, @NotNull Player target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        Info soulInfo = SoulInfoData.getSoulInfo(target, FargoSoulSoulInfoRegister.COSMIC_POWER_INFO);
+        Info soulInfo = SoulStates.getSoulState(target, SoulStateRegister.COSMIC_POWER_INFO);
         if (soulInfo != null) {
             modifiers.add(new ValueModifier(-0.2f * (soulInfo.cosmicPower / soulInfo.maxCosmicPower), ValueOperation.ADD_MULTIPLIED_TOTAL));
             float damage = container.getOriginalDamage();
@@ -75,10 +75,10 @@ public class CosmicPower extends SoulItem {
 
     @Override
     public boolean death(Player player, DamageSource source, boolean canceled) {
-        SoulTargetCache targetCache = SoulTargetCache.get(player);
+        SoulTargets targetCache = SoulTargets.get(player);
         List<LivingEntity> list = targetCache.getEntitiesInRadius(player.getBoundingBox().getCenter(), 6, null);
         for (LivingEntity living : list) {
-            InvincibleData.attack(living)
+            Invulnerability.attack(living)
                     .damageSource(player.damageSources().magic())
                     .damageAmount(player.getMaxHealth() * 36f)
                     .apply();
@@ -86,19 +86,19 @@ public class CosmicPower extends SoulItem {
         return super.death(player, source, canceled);
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public float cosmicPower = 0;
         public final float maxCosmicPower = 100;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.COSMIC_POWER_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.COSMIC_POWER_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (!SoulItemData.isEquipped(living, FargoSoulItemRegister.CosmicPowerItem)) {
+            if (!PlayerSouls.isEquipped(living, FSFItemRegister.CosmicPowerItem)) {
                 setRemove(true);
             }
         }

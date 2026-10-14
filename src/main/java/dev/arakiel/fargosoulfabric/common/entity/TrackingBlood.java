@@ -1,15 +1,15 @@
 package dev.arakiel.fargosoulfabric.common.entity;
 
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PathNode;
-import dev.arakiel.fargosoulfabric.common.projectile.Projectile;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.summon.PathNode;
+import dev.arakiel.fargosoulfabric.common.projectile.SummonProjectile;
 import net.minecraft.world.phys.Vec3;
 
 @SuppressWarnings("this-escape")
-public class TrackingBlood extends Projectile {
+public class TrackingBlood extends SummonProjectile {
 
     public TrackingBlood() {
-        super(SummonerAttachmentEntityRegister.TRACKING_BLOOD);
+        super(SummonTypeRegister.TRACKING_BLOOD);
         setDrag(0.75f);
         setMaxLife(60);
     }

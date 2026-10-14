@@ -1,8 +1,8 @@
 package dev.arakiel.fargosoulfabric.client.mixin;
 
-import dev.arakiel.fargosoulfabric.api.FargoSoulHooks;
-import dev.arakiel.fargosoulfabric.api.SoulKey;
-import dev.arakiel.fargosoulfabric.client.register.FargoSoulKeyRegister;
+import dev.arakiel.fargosoulfabric.common.FSFHooks;
+import dev.arakiel.fargosoulfabric.common.SoulKey;
+import dev.arakiel.fargosoulfabric.client.register.FSFKeyRegister;
 import net.minecraft.client.KeyboardHandler;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class KeyboardHandlerMixin {
 
     @Inject(method = "keyPress", at = @At("HEAD"))
-    private void fargoSoul$keyPress(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
+    private void fsf$keyPress(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
         if (action != GLFW.GLFW_PRESS) {
             return;
         }
@@ -24,9 +24,9 @@ public class KeyboardHandlerMixin {
         if (minecraft.player == null) {
             return;
         }
-        SoulKey soulKey = FargoSoulKeyRegister.resolve(key);
+        SoulKey soulKey = FSFKeyRegister.resolve(key);
         if (soulKey != null) {
-            FargoSoulHooks.KEY_INPUT.invoker().onKeyInput(minecraft.player, soulKey);
+            FSFHooks.KEY_INPUT.invoker().onKeyInput(minecraft.player, soulKey);
         }
     }
 }

@@ -1,6 +1,6 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.cosmicPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import dev.arakiel.fargosoulfabric.common.entity.Meteor;
 import dev.arakiel.fargosoulfabric.common.MovementState;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;

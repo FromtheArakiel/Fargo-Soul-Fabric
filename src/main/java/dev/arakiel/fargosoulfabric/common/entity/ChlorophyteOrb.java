@@ -1,15 +1,15 @@
 package dev.arakiel.fargosoulfabric.common.entity;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.api.FargoSoulHelper;
-import dev.arakiel.fargosoulfabric.common.attachment.AttachmentEntityData;
-import dev.arakiel.fargosoulfabric.common.attachment.InvincibleData;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.IEntityCollision;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PathNode;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.SyncFieldDispatcher;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.FSFPlayerSummons;
+import dev.arakiel.fargosoulfabric.common.attachment.SummonData;
+import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
+import dev.arakiel.fargosoulfabric.common.summon.IEntityCollision;
+import dev.arakiel.fargosoulfabric.common.summon.PathNode;
+import dev.arakiel.fargosoulfabric.common.summon.SyncFieldDispatcher;
 import dev.arakiel.fargosoulfabric.common.minion.Minion;
 import dev.arakiel.fargosoulfabric.common.particle.genericParticle.GenericParticleBuilder;
 import dev.arakiel.fargosoulfabric.utils.ParticleHelper;
@@ -35,7 +35,7 @@ public class ChlorophyteOrb extends Minion implements IEntityCollision<Chlorophy
     private float laserLength = 0;
 
     public ChlorophyteOrb() {
-        super(SummonerAttachmentEntityRegister.CHLOROPHYTE_ORB);
+        super(SummonTypeRegister.CHLOROPHYTE_ORB);
         setDamage(6);
     }
 
@@ -57,7 +57,7 @@ public class ChlorophyteOrb extends Minion implements IEntityCollision<Chlorophy
     @Override
     public void tick() {
         if (!owner.level().isClientSide()) {
-            boolean equipped = kind == NATURE ? SoulItemData.isEquipped(owner, FargoSoulItemRegister.NaturePowerItem) : SoulItemData.isEquipped(owner, FargoSoulItemRegister.GreenSoulItem);
+            boolean equipped = kind == NATURE ? PlayerSouls.isEquipped(owner, FSFItemRegister.NaturePowerItem) : PlayerSouls.isEquipped(owner, FSFItemRegister.GreenSoulItem);
             if (!equipped) {
                 setRemove();
                 return;
@@ -136,15 +136,15 @@ public class ChlorophyteOrb extends Minion implements IEntityCollision<Chlorophy
 
     @Override
     public boolean isValidCollisionTarget(ChlorophyteOrb entity, LivingEntity target) {
-        return SoulTargetCache.isTarget(owner, target);
+        return SoulTargets.isTarget(owner, target);
     }
 
     @Override
     public void onCollisionAttack(List<HitContext> hitContexts) {
         for (HitContext context : hitContexts) {
             LivingEntity living = context.entity();
-            InvincibleData.get(living).recordHit(owner.getUUID(), 100);
-            InvincibleData.attack(living)
+            Invulnerability.get(living).recordHit(owner.getUUID(), 100);
+            Invulnerability.attack(living)
                     .attacker(getUuid())
                     .damageSource(getDamageSource())
                     .damageAmount(getDamage())
@@ -182,7 +182,7 @@ public class ChlorophyteOrb extends Minion implements IEntityCollision<Chlorophy
     }
 
     private List<ChlorophyteOrb> kindList() {
-        return FargoSoulHelper.get(owner).getEntityData().get(SummonerAttachmentEntityRegister.CHLOROPHYTE_ORB).stream().filter(orb -> orb.kind == this.kind).toList();
+        return FSFPlayerSummons.get(owner).getSummons().get(SummonTypeRegister.CHLOROPHYTE_ORB).stream().filter(orb -> orb.kind == this.kind).toList();
     }
 
     public int getTargetId() {

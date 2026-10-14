@@ -1,12 +1,12 @@
 package dev.arakiel.fargosoulfabric.common.entity;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.common.attachment.InvincibleData;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.IBlockCollision;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.IEntityCollision;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
+import dev.arakiel.fargosoulfabric.common.summon.IBlockCollision;
+import dev.arakiel.fargosoulfabric.common.summon.IEntityCollision;
 import dev.arakiel.fargosoulfabric.common.particle.genericParticle.GenericParticleBuilder;
-import dev.arakiel.fargosoulfabric.common.projectile.Projectile;
+import dev.arakiel.fargosoulfabric.common.projectile.SummonProjectile;
 import dev.arakiel.fargosoulfabric.utils.ParticleHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,10 +21,10 @@ import java.util.List;
  * 命中实体或落地时对命中点半径 3 格内所有目标造成伤害（伤害在创建时按 133% 结算伤害设置）。
  */
 @SuppressWarnings("this-escape")
-public class Meteor extends Projectile implements IEntityCollision<Meteor>, IBlockCollision<Meteor> {
+public class Meteor extends SummonProjectile implements IEntityCollision<Meteor>, IBlockCollision<Meteor> {
 
     public Meteor() {
-        super(SummonerAttachmentEntityRegister.METEOR);
+        super(SummonTypeRegister.METEOR);
         setDrag(1);
         setMaxLife(60);
     }
@@ -41,7 +41,7 @@ public class Meteor extends Projectile implements IEntityCollision<Meteor>, IBlo
 
     @Override
     public boolean isValidCollisionTarget(Meteor entity, LivingEntity target) {
-        return SoulTargetCache.isTarget(owner, target);
+        return SoulTargets.isTarget(owner, target);
     }
 
     @Override
@@ -57,9 +57,9 @@ public class Meteor extends Projectile implements IEntityCollision<Meteor>, IBlo
     private void explode(Vec3 pos) {
         DamageSource source = getDamageSource();
         if (source != null) {
-            List<LivingEntity> targets = SoulTargetCache.get(owner).getEntitiesInRadius(pos, 3, null);
+            List<LivingEntity> targets = SoulTargets.get(owner).getEntitiesInRadius(pos, 3, null);
             for (LivingEntity target : targets) {
-                InvincibleData.attack(target)
+                Invulnerability.attack(target)
                         .attacker(getUuid())
                         .damageSource(source)
                         .damageAmount(getDamage())

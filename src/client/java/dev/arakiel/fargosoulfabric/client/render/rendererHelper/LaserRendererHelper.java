@@ -2,7 +2,7 @@ package dev.arakiel.fargosoulfabric.client.render.rendererHelper;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import dev.arakiel.fargosoulfabric.client.render.FargoSoulRenderTypes;
+import dev.arakiel.fargosoulfabric.client.render.FSFRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.FastColor.ARGB32;
@@ -62,7 +62,7 @@ public class LaserRendererHelper {
    }
 
    public void render(PoseStack poseStack, MultiBufferSource bufferSource) {
-      VertexConsumer consumer = bufferSource.getBuffer(FargoSoulRenderTypes.getTrail());
+      VertexConsumer consumer = bufferSource.getBuffer(FSFRenderTypes.getTrail());
       Matrix4f pose = poseStack.last().pose();
       int baseR = ARGB32.red(this.colorRGB);
       int baseG = ARGB32.green(this.colorRGB);

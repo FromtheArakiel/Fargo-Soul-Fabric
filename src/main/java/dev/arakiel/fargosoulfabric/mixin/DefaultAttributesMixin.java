@@ -1,6 +1,6 @@
 package dev.arakiel.fargosoulfabric.mixin;
 
-import dev.arakiel.fargosoulfabric.common.FargoSoulAttributes;
+import dev.arakiel.fargosoulfabric.common.FSFEntityAttributes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class DefaultAttributesMixin {
 
     @Inject(method = "getSupplier", at = @At("RETURN"), cancellable = true)
-    private static void fargoSoul$getSupplier(EntityType<? extends LivingEntity> type,
+    private static void fsf$getSupplier(EntityType<? extends LivingEntity> type,
                                               CallbackInfoReturnable<AttributeSupplier> cir) {
-        AttributeSupplier patched = FargoSoulAttributes.patch(type, cir.getReturnValue());
+        AttributeSupplier patched = FSFEntityAttributes.patch(type, cir.getReturnValue());
         if (patched != null) {
             cir.setReturnValue(patched);
         }

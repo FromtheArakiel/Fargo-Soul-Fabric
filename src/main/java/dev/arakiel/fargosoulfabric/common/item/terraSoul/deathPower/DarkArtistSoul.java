@@ -1,16 +1,16 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.deathPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -29,43 +29,43 @@ public class DarkArtistSoul extends SoulItem {
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        if (target.hasEffect(FargoSoulMobEffectRegister.ShadowFire)) {
+        if (target.hasEffect(FSFMobEffectRegister.ShadowFire)) {
             modifiers.add(new ValueModifier(0.4f, ValueOperation.ADD_MULTIPLIED_BASE));
-            Info soulInfo = SoulInfoData.getSoulInfo(attacker, FargoSoulSoulInfoRegister.DARK_ARTIST_SOUL_INFO);
+            Info soulInfo = SoulStates.getSoulState(attacker, SoulStateRegister.DARK_ARTIST_SOUL_INFO);
             if (soulInfo == null) {
                 soulInfo = new Info();
-                SoulInfoData.putSoulInfo(attacker, soulInfo);
+                SoulStates.putSoulState(attacker, soulInfo);
             }
             soulInfo.darkPower = Math.min(soulInfo.darkPower + container.getOriginalDamage() * 0.2f, soulInfo.maxDarkPower);
             if (soulInfo.darkPower >= soulInfo.maxDarkPower){
                 soulInfo.darkPower = 0;
-                attacker.addEffect(new MobEffectInstance(FargoSoulMobEffectRegister.ShadowGift, 400));
+                attacker.addEffect(new MobEffectInstance(FSFMobEffectRegister.ShadowGift, 400));
             }
         }
     }
 
     @Override
     public boolean effectApplicable(Player player, MobEffectInstance effectInstance) {
-        if (player.hasEffect(FargoSoulMobEffectRegister.ShadowGift) && effectInstance.getEffect().value().getCategory() == MobEffectCategory.HARMFUL && player.getRandom().nextFloat() < 0.2f) {
+        if (player.hasEffect(FSFMobEffectRegister.ShadowGift) && effectInstance.getEffect().value().getCategory() == MobEffectCategory.HARMFUL && player.getRandom().nextFloat() < 0.2f) {
             player.heal(player.getMaxHealth() * 0.12f);
             return false;
         }
         return super.effectApplicable(player, effectInstance);
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public float darkPower = 0;
         public float maxDarkPower = 400;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.DARK_ARTIST_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.DARK_ARTIST_SOUL_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (!SoulItemData.isEquipped(living, FargoSoulItemRegister.DarkArtistSoulItem)) {
+            if (!PlayerSouls.isEquipped(living, FSFItemRegister.DarkArtistSoulItem)) {
                 setRemove(true);
             }
         }

@@ -1,21 +1,21 @@
 package dev.arakiel.fargosoulfabric.client;
 
-import dev.arakiel.fargosoulfabric.api.Attachments;
-import dev.arakiel.fargosoulfabric.api.SoulKey;
-import dev.arakiel.fargosoulfabric.client.api.FargoSoulClientHooks;
+import dev.arakiel.fargosoulfabric.common.Attachments;
+import dev.arakiel.fargosoulfabric.common.SoulKey;
+import dev.arakiel.fargosoulfabric.client.FSFClientHooks;
 import dev.arakiel.fargosoulfabric.common.MovementState;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
-import dev.arakiel.fargosoulfabric.common.soulInfo.FlySoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SprintSoulInfo;
+import dev.arakiel.fargosoulfabric.common.soulInfo.FlySoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SprintSoulState;
 import dev.arakiel.fargosoulfabric.network.KeyHandlePacket;
 import dev.arakiel.fargosoulfabric.network.SprintPacket;
-import dev.arakiel.fargosoulfabric.register.FargoSoulAttachmentRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.register.FSFAttachmentRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import dev.arakiel.fargosoulfabric.client.utils.KeyUtils;
-import dev.arakiel.fargosoulfabric.api.FargoSoulHooks;
+import dev.arakiel.fargosoulfabric.common.FSFHooks;
 import java.util.ArrayList;
 import java.util.List;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
@@ -42,10 +42,10 @@ public final class ClientEvent {
     }
 
     public static void init() {
-        FargoSoulHooks.KEY_INPUT.register(ClientEvent::keyInput);
-        FargoSoulClientHooks.MOVEMENT_INPUT.register(ClientEvent::movementInput);
-        FargoSoulClientHooks.FOG.register(ClientEvent::renderFog);
-        FargoSoulHooks.FIRE_OVERLAY.register(ClientEvent::fireOverlay);
+        FSFHooks.KEY_INPUT.register(ClientEvent::keyInput);
+        FSFClientHooks.MOVEMENT_INPUT.register(ClientEvent::movementInput);
+        FSFClientHooks.FOG.register(ClientEvent::renderFog);
+        FSFHooks.FIRE_OVERLAY.register(ClientEvent::fireOverlay);
         ItemTooltipCallback.EVENT.register(ClientEvent::addSoulTooltips);
     }
 
@@ -66,17 +66,17 @@ public final class ClientEvent {
 
     private static void movementInput(Player player, Input input) {
         MovementState state = new MovementState(input.up, input.jumping, input.shiftKeyDown);
-        SoulItemData.forEach(player, soulItem -> soulItem.movement(player, state));
-        SoulItemData soulItemData = Attachments.get(player, FargoSoulAttachmentRegister.SOUL_ITEM_DATA);
+        PlayerSouls.forEach(player, soulItem -> soulItem.movement(player, state));
+        PlayerSouls soulItemData = Attachments.get(player, FSFAttachmentRegister.SOUL_ITEM_DATA);
 
         if (KeyUtils.isDoubleTappingForward(input) && soulItemData.isCanSprint()) {
-            SprintSoulInfo info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.SPRINT_SOUL_INFO);
+            SprintSoulState info = SoulStates.getSoulState(player, SoulStateRegister.SPRINT_SOUL_INFO);
             if (info == null) {
-                info = new SprintSoulInfo();
-                SoulInfoData.putSoulInfo(player, info);
+                info = new SprintSoulState();
+                SoulStates.putSoulState(player, info);
 
                 List<ValueModifier> modifiers = new ArrayList<>();
-                SoulItemData.forEach(player, soulItem -> soulItem.sprintClient(player, modifiers));
+                PlayerSouls.forEach(player, soulItem -> soulItem.sprintClient(player, modifiers));
                 float scale = ValueModifier.getModifierAfter(1f, modifiers);
                 Vec3 lookAngle = player.getLookAngle();
                 player.addDeltaMovement(new Vec3(lookAngle.x, lookAngle.y * 0.25f, lookAngle.z).scale(scale));
@@ -87,10 +87,10 @@ public final class ClientEvent {
         if (soulItemData.getMaxFlyTime() > 0) {
             player.fallDistance = 0;
             if (input.jumping) {
-                FlySoulInfo info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.FLY_SOUL_INFO);
+                FlySoulState info = SoulStates.getSoulState(player, SoulStateRegister.FLY_SOUL_INFO);
                 if (info == null) {
-                    info = new FlySoulInfo();
-                    SoulInfoData.putSoulInfo(player, info);
+                    info = new FlySoulState();
+                    SoulStates.putSoulState(player, info);
                 }
                 Vec3 deltaMovement = player.getDeltaMovement();
                 double addedX = 0;
@@ -116,8 +116,8 @@ public final class ClientEvent {
         }
     }
 
-    private static void renderFog(Camera camera, FargoSoulHooks.Value nearPlane, FargoSoulHooks.Value farPlane,
-                                  FargoSoulHooks.Value cancel) {
+    private static void renderFog(Camera camera, FSFHooks.Value nearPlane, FSFHooks.Value farPlane,
+                                  FSFHooks.Value cancel) {
         Minecraft minecraft = Minecraft.getInstance();
         BlockPos blockPos = camera.getBlockPosition();
         if (!(minecraft.level instanceof net.minecraft.world.level.Level level)) {
@@ -129,7 +129,7 @@ public final class ClientEvent {
         if (camera.getEntity().isSpectator()) {
             return;
         }
-        SoulItemData soulItemData = Attachments.get(player, FargoSoulAttachmentRegister.SOUL_ITEM_DATA);
+        PlayerSouls soulItemData = Attachments.get(player, FSFAttachmentRegister.SOUL_ITEM_DATA);
         FluidState fluidState = level.getFluidState(blockPos);
         Fluid fluid = fluidState.getType();
         if (!soulItemData.isRenderLavaFog() && fluid.isSame(Fluids.LAVA)
@@ -140,8 +140,8 @@ public final class ClientEvent {
         }
     }
 
-    private static void fireOverlay(Player player, FargoSoulHooks.Value cancel) {
-        SoulItemData soulItemData = Attachments.get(player, FargoSoulAttachmentRegister.SOUL_ITEM_DATA);
+    private static void fireOverlay(Player player, FSFHooks.Value cancel) {
+        PlayerSouls soulItemData = Attachments.get(player, FSFAttachmentRegister.SOUL_ITEM_DATA);
         if (!soulItemData.isRenderFireOverlay()) {
             cancel.cancel();
         }

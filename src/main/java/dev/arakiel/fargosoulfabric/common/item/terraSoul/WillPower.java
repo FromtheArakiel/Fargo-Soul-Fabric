@@ -1,16 +1,16 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Set;
 
-import static dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister.*;
+import static dev.arakiel.fargosoulfabric.register.FSFItemRegister.*;
 
 public class WillPower extends SoulItem {
 
@@ -42,10 +42,10 @@ public class WillPower extends SoulItem {
     @Override
     public void kill(Player player, LivingEntity target, DamageSource source) {
         if (player.getRandom().nextFloat() < 0.4f) {
-            Info info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.WILL_POWER_INFO);
+            Info info = SoulStates.getSoulState(player, SoulStateRegister.WILL_POWER_INFO);
             if (info == null) {
                 info = new Info();
-                SoulInfoData.putSoulInfo(player, info);
+                SoulStates.putSoulState(player, info);
             }
             info.dropScale = 16;
         }
@@ -53,7 +53,7 @@ public class WillPower extends SoulItem {
 
     @Override
     public float dropFromLootTableScale(Player attacker, LivingEntity target, float scale) {
-        Info info = SoulInfoData.getSoulInfo(attacker, FargoSoulSoulInfoRegister.WILL_POWER_INFO);
+        Info info = SoulStates.getSoulState(attacker, SoulStateRegister.WILL_POWER_INFO);
         if (info != null && info.dropScale > 1) {
             scale *= info.dropScale;
             info.dropScale = 1;
@@ -63,23 +63,23 @@ public class WillPower extends SoulItem {
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        if (target.hasEffect(FargoSoulMobEffectRegister.Midas)) {
+        if (target.hasEffect(FSFMobEffectRegister.Midas)) {
             modifiers.add(new ValueModifier(0.8f, ValueOperation.ADD_MULTIPLIED_BASE));
         }
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public float dropScale = 1;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.WILL_POWER_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.WILL_POWER_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (!SoulItemData.isEquipped(living, FargoSoulItemRegister.WillPowerItem)) {
+            if (!PlayerSouls.isEquipped(living, FSFItemRegister.WillPowerItem)) {
                 setRemove(true);
             }
         }

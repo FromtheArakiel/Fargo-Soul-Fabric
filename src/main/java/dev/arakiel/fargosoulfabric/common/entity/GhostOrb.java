@@ -1,10 +1,10 @@
 package dev.arakiel.fargosoulfabric.common.entity;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.common.attachment.InvincibleData;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.IEntityCollision;
-import dev.arakiel.fargosoulfabric.common.projectile.Projectile;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
+import dev.arakiel.fargosoulfabric.common.summon.IEntityCollision;
+import dev.arakiel.fargosoulfabric.common.projectile.SummonProjectile;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
@@ -14,12 +14,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @SuppressWarnings("this-escape")
-public class GhostOrb extends Projectile implements IEntityCollision<GhostOrb> {
+public class GhostOrb extends SummonProjectile implements IEntityCollision<GhostOrb> {
 
     private LivingEntity chaseTarget = null;
 
     public GhostOrb() {
-        super(SummonerAttachmentEntityRegister.GHOST_ORB);
+        super(SummonTypeRegister.GHOST_ORB);
         setDrag(0.8f);
         setMaxLife(80);
     }
@@ -31,14 +31,14 @@ public class GhostOrb extends Projectile implements IEntityCollision<GhostOrb> {
 
     @Override
     public boolean isValidCollisionTarget(GhostOrb entity, LivingEntity target) {
-        return SoulTargetCache.isTarget(owner, target);
+        return SoulTargets.isTarget(owner, target);
     }
 
     @Override
     public void onCollisionAttack(List<HitContext> hitContexts) {
         DamageSource source = getDamageSource();
         if (source != null) {
-            InvincibleData.attack(hitContexts.getFirst().entity())
+            Invulnerability.attack(hitContexts.getFirst().entity())
                     .attacker(getUuid())
                     .damageSource(source)
                     .damageAmount(getDamage())

@@ -1,14 +1,14 @@
 package dev.arakiel.fargosoulfabric.client.renderer.projectile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import dev.arakiel.fargosoulfabric.client.render.AbstractAttachmentEntityRenderer;
+import dev.arakiel.fargosoulfabric.client.render.AbstractSummonRenderer;
 import dev.arakiel.fargosoulfabric.client.render.ModelContext;
 import dev.arakiel.fargosoulfabric.client.render.RenderContext;
 import dev.arakiel.fargosoulfabric.client.render.RenderUtil;
 import dev.arakiel.fargosoulfabric.client.render.rendererHelper.LaserRendererHelper;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PathNode;
+import dev.arakiel.fargosoulfabric.common.summon.PathNode;
 import dev.arakiel.fargosoulfabric.common.entity.ChlorophyteOrb;
-import dev.arakiel.fargosoulfabric.client.register.FargoSoulModelRegister;
+import dev.arakiel.fargosoulfabric.client.register.FSFModelRegister;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,7 +17,7 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 /** The chlorophyte crystals of the nature enchantment, which fire a laser at their target. */
-public class ChlorophyteOrbRenderer extends AbstractAttachmentEntityRenderer<ChlorophyteOrb> {
+public class ChlorophyteOrbRenderer extends AbstractSummonRenderer<ChlorophyteOrb> {
 
     @Override
     protected RenderContext<ChlorophyteOrb> createContext(ChlorophyteOrb orb, PathNode visualNode, float partialTick,
@@ -29,7 +29,7 @@ public class ChlorophyteOrbRenderer extends AbstractAttachmentEntityRenderer<Chl
 
     @Override
     protected void renderModel(PoseStack poseStack, MultiBufferSource bufferSource) {
-        RenderUtil.renderStandalone(FargoSoulModelRegister.CHLOROPHYTE_CRYSTAL, poseStack, bufferSource,
+        RenderUtil.renderStandalone(FSFModelRegister.CHLOROPHYTE_CRYSTAL, poseStack, bufferSource,
                 FastColor.ARGB32.color((int) (this.getAlpha() * 255), 255, 255, 255), RenderUtil.FULL_LIGHT);
     }
 

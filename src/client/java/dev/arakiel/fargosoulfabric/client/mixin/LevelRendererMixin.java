@@ -22,7 +22,7 @@ public class LevelRendererMixin {
       method = {"getLightColor(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)I"},
       at = {@At("RETURN")}
    )
-   private static int fargoSoul$getLightColor(int original, BlockAndTintGetter level, BlockState state, BlockPos pos) {
+   private static int fsf$getLightColor(int original, BlockAndTintGetter level, BlockState state, BlockPos pos) {
       return DynamicLightDispatcher.INSTANCE.getDynamicLight(level, state, pos, original);
    }
 
@@ -31,7 +31,7 @@ public class LevelRendererMixin {
       method = {"compileSections"},
       at = {@At("HEAD")}
    )
-   private void fargoSoul$compileSections(Camera camera, CallbackInfo ci) {
+   private void fsf$compileSections(Camera camera, CallbackInfo ci) {
       DynamicLightDispatcher.INSTANCE.update((LevelRendererAccessor)this);
    }
 }

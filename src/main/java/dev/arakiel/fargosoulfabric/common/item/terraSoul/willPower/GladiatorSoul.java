@@ -1,7 +1,7 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.willPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
@@ -21,7 +21,7 @@ public class GladiatorSoul extends SoulItem {
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        int count = SoulTargetCache.get(attacker).getEntitiesInRadius(attacker.getBoundingBox().getCenter(), 8, null).size();
+        int count = SoulTargets.get(attacker).getEntitiesInRadius(attacker.getBoundingBox().getCenter(), 8, null).size();
         if (count == 1) {
             modifiers.add(new ValueModifier(0.5f, ValueOperation.ADD_MULTIPLIED_BASE));
         } else if (count < 3) {
@@ -31,7 +31,7 @@ public class GladiatorSoul extends SoulItem {
 
     @Override
     public void hurt(@Nullable Entity attacker, @NotNull Player target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        int count = SoulTargetCache.get(target).getEntitiesInRadius(target.getBoundingBox().getCenter(), 8, null).size();
+        int count = SoulTargets.get(target).getEntitiesInRadius(target.getBoundingBox().getCenter(), 8, null).size();
         if (count == 1) {
             modifiers.add(new ValueModifier(0.5f, ValueOperation.ADD_MULTIPLIED_TOTAL));
         } else if (count >= 3) {

@@ -1,12 +1,12 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.deathPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import dev.arakiel.fargosoulfabric.common.entity.ShadowOrb;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.api.FargoSoulHelper;
-import dev.arakiel.fargosoulfabric.common.attachment.AttachmentEntityData;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.FSFPlayerSummons;
+import dev.arakiel.fargosoulfabric.common.attachment.SummonData;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,10 +35,10 @@ public class AncientShadowSoul extends SoulItem {
 
     @Override
     public void tick(Player player) {
-        List<ShadowOrb> orbs = FargoSoulHelper.get(player).getEntityData().get(SummonerAttachmentEntityRegister.SHADOW_ORB);
+        List<ShadowOrb> orbs = FSFPlayerSummons.get(player).getSummons().get(SummonTypeRegister.SHADOW_ORB);
         if (orbs.isEmpty()) {
             for (int i = 0; i < 3; i++) {
-                FargoSoulHelper.get(player).add(new ShadowOrb());
+                FSFPlayerSummons.get(player).add(new ShadowOrb());
             }
         }
     }

@@ -1,9 +1,9 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.lifePower;
 
-import dev.arakiel.fargosoulfabric.register.FargoSoulAttributeRegister;
+import dev.arakiel.fargosoulfabric.register.FSFAttributeRegister;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import dev.arakiel.fargosoulfabric.FargoSoul;
+import dev.arakiel.fargosoulfabric.FSF;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
@@ -38,7 +38,7 @@ public class BeeSoul extends SoulItem {
     public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(Player player) {
         Multimap<Holder<Attribute>, AttributeModifier> map = HashMultimap.create();
         if (hasFlowerNear(player)) {
-            map.put(FargoSoulAttributeRegister.HealthRegen, new AttributeModifier(FargoSoul.rl("bee_regen"), 2, AttributeModifier.Operation.ADD_VALUE));
+            map.put(FSFAttributeRegister.HealthRegen, new AttributeModifier(FSF.rl("bee_regen"), 2, AttributeModifier.Operation.ADD_VALUE));
         }
         return map;
     }

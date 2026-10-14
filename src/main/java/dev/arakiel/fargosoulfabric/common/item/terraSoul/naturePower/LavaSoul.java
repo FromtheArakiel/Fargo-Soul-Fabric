@@ -1,7 +1,7 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.naturePower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
@@ -23,7 +23,7 @@ public class LavaSoul extends SoulItem {
     @Override
     public void tick(Player player) {
         if (player.tickCount % 20 == 0) {
-            List<LivingEntity> enemies = SoulTargetCache.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 6, null);
+            List<LivingEntity> enemies = SoulTargets.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 6, null);
             for (LivingEntity enemy : enemies) {
                 enemy.igniteForTicks(100);
             }

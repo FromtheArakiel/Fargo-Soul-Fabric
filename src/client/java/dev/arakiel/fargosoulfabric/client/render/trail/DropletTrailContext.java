@@ -3,16 +3,16 @@ package dev.arakiel.fargosoulfabric.client.render.trail;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.PoseStack.Pose;
-import dev.arakiel.fargosoulfabric.client.render.FargoSoulRenderTypes;
+import dev.arakiel.fargosoulfabric.client.render.FSFRenderTypes;
 import dev.arakiel.fargosoulfabric.client.render.RenderContext;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntity;
+import dev.arakiel.fargosoulfabric.common.summon.Summon;
 import java.util.List;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
-public class DropletTrailContext<T extends AttachmentEntity> extends ConeTrailContext<T> {
+public class DropletTrailContext<T extends Summon> extends ConeTrailContext<T> {
    public DropletTrailContext() {
    }
 
@@ -27,7 +27,7 @@ public class DropletTrailContext<T extends AttachmentEntity> extends ConeTrailCo
    }
 
    private void renderHead(PoseStack poseStack, MultiBufferSource bufferSource, RenderContext<T> context, TrailContext.InterpolatedNode headNode) {
-      VertexConsumer buffer = bufferSource.getBuffer(FargoSoulRenderTypes.getTrail());
+      VertexConsumer buffer = bufferSource.getBuffer(FSFRenderTypes.getTrail());
       Pose pose = poseStack.last();
       float[] cosArr = getCosArray(this.resolution);
       float[] sinArr = getSinArray(this.resolution);

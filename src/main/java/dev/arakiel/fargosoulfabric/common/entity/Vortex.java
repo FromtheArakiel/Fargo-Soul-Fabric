@@ -1,10 +1,10 @@
 package dev.arakiel.fargosoulfabric.common.entity;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.common.attachment.InvincibleData;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
 import dev.arakiel.fargosoulfabric.common.particle.genericParticle.GenericParticleBuilder;
-import dev.arakiel.fargosoulfabric.common.projectile.Projectile;
+import dev.arakiel.fargosoulfabric.common.projectile.SummonProjectile;
 import dev.arakiel.fargosoulfabric.utils.ParticleHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
@@ -18,10 +18,10 @@ import java.util.List;
  * 无渲染，通过多层同心圆切向 + 径向向内粒子模拟漩涡旋转效果。
  */
 @SuppressWarnings("this-escape")
-public class Vortex extends Projectile {
+public class Vortex extends SummonProjectile {
 
     public Vortex() {
-        super(SummonerAttachmentEntityRegister.VORTEX);
+        super(SummonTypeRegister.VORTEX);
         setMaxLife(100);
         setDrag(1);
     }
@@ -33,12 +33,12 @@ public class Vortex extends Projectile {
     public void tick() {
         Vec3 center = getPos();
         if (!owner.level().isClientSide()) {
-            List<LivingEntity> targets = SoulTargetCache.get(owner).getEntitiesInRadius(center, 6, null);
+            List<LivingEntity> targets = SoulTargets.get(owner).getEntitiesInRadius(center, 6, null);
             for (LivingEntity target : targets) {
                 Vec3 normalize = center.subtract(target.getBoundingBox().getCenter()).normalize();
                 target.addDeltaMovement(normalize);
                 target.hurtMarked = true;
-                InvincibleData.attack(target)
+                Invulnerability.attack(target)
                         .attacker(getUuid())
                         .damageSource(getDamageSource())
                         .damageAmount(getDamage())

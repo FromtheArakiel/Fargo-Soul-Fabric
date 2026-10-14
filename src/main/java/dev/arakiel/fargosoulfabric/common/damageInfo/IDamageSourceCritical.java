@@ -1,7 +1,7 @@
 package dev.arakiel.fargosoulfabric.common.damageInfo;
 
 public interface IDamageSourceCritical {
-   boolean fargoSoul$isCritical();
+   boolean fsf$isCritical();
 
-   void fargoSoul$setCritical(boolean var1);
+   void fsf$setCritical(boolean var1);
 }

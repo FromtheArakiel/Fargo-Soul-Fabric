@@ -1,15 +1,15 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.deathPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,36 +26,36 @@ public class NinjaSoul extends SoulItem {
 
     @Override
     public void tick(Player player) {
-        Info soulInfo = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.NINJA_SOUL_INFO);
+        Info soulInfo = SoulStates.getSoulState(player, SoulStateRegister.NINJA_SOUL_INFO);
         if (soulInfo == null) {
             soulInfo = new Info();
-            SoulInfoData.putSoulInfo(player, soulInfo);
+            SoulStates.putSoulState(player, soulInfo);
         }
         soulInfo.ambushPower = Math.min(soulInfo.ambushPower + 1, soulInfo.maxAmbushPower);
     }
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        Info soulInfo = SoulInfoData.getSoulInfo(attacker, FargoSoulSoulInfoRegister.NINJA_SOUL_INFO);
+        Info soulInfo = SoulStates.getSoulState(attacker, SoulStateRegister.NINJA_SOUL_INFO);
         if (soulInfo != null) {
             modifiers.add(new ValueModifier(soulInfo.ambushPower * 0.01f, ValueOperation.ADD_MULTIPLIED_BASE));
             soulInfo.ambushPower = 0;
         }
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public float ambushPower = 0;
         public float maxAmbushPower = 600;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.NINJA_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.NINJA_SOUL_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (!SoulItemData.isEquipped(living, FargoSoulItemRegister.NinjaSoulItem)) {
+            if (!PlayerSouls.isEquipped(living, FSFItemRegister.NinjaSoulItem)) {
                 setRemove(true);
             }
         }

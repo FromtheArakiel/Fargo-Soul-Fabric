@@ -2,8 +2,8 @@ package dev.arakiel.fargosoulfabric.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntityDamageSource;
-import dev.arakiel.fargosoulfabric.register.FargoSoulAttributeRegister;
+import dev.arakiel.fargosoulfabric.common.summon.SummonDamageSource;
+import dev.arakiel.fargosoulfabric.register.FSFAttributeRegister;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,21 +20,21 @@ public class CombatRulesMixin {
    @WrapMethod(
       method = {"getDamageAfterAbsorb"}
    )
-   private static float fargoSoul$modifyArmorValue(LivingEntity victim, float damage, DamageSource source,
+   private static float fsf$modifyArmorValue(LivingEntity victim, float damage, DamageSource source,
                                                    float totalArmor, float armorToughness,
                                                    Operation<Float> original) {
-      if (source instanceof AttachmentEntityDamageSource damageSource) {
+      if (source instanceof SummonDamageSource damageSource) {
          totalArmor -= damageSource.getArmorPierce();
          Player owner = damageSource.getOwner();
          if (owner != null) {
-            AttributeInstance instance = owner.getAttribute(FargoSoulAttributeRegister.SummonArmorPierce);
+            AttributeInstance instance = owner.getAttribute(FSFAttributeRegister.SummonArmorPierce);
             if (instance != null) {
                totalArmor -= (float)instance.getValue();
             }
          }
       }
       if (source.getEntity() instanceof LivingEntity attacker) {
-         AttributeInstance instance = attacker.getAttribute(FargoSoulAttributeRegister.ArmorPierce);
+         AttributeInstance instance = attacker.getAttribute(FSFAttributeRegister.ArmorPierce);
          if (instance != null) {
             totalArmor -= (float)instance.getValue();
          }

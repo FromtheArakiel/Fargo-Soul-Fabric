@@ -1,6 +1,6 @@
 package dev.arakiel.fargosoulfabric.common.particle.genericParticle;
 
-import dev.arakiel.fargosoulfabric.register.FargoSoulRegisters;
+import dev.arakiel.fargosoulfabric.register.FSFRegisters;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -42,6 +42,6 @@ public record GenericParticleOptions(int centerColor, int edgeColor, int lifetim
 
    @NotNull
    public ParticleType<GenericParticleOptions> getType() {
-      return FargoSoulRegisters.GENERIC_PARTICLE;
+      return FSFRegisters.GENERIC_PARTICLE;
    }
 }

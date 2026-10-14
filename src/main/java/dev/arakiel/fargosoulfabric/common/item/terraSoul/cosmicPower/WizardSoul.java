@@ -1,7 +1,7 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.cosmicPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
-import dev.arakiel.fargosoulfabric.FargoSoul;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.FSF;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
@@ -18,7 +18,7 @@ public class WizardSoul extends SoulItem {
 
     /** The damage types the enchantment counts as magic. */
     private static final TagKey<DamageType> IS_MAGIC =
-            TagKey.create(Registries.DAMAGE_TYPE, FargoSoul.rl("is_magic"));
+            TagKey.create(Registries.DAMAGE_TYPE, FSF.rl("is_magic"));
 
     public WizardSoul(Properties properties) {
         super(properties);

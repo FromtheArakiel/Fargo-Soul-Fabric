@@ -25,7 +25,7 @@ public final class RenderUtil {
       ResourceLocation texture, Vec3 center, float width, float height, MultiBufferSource bufferSource, boolean alwaysVisible, int tintColor
    ) {
       Camera camera = Minecraft.getInstance().getEntityRenderDispatcher().camera;
-      VertexConsumer consumer = bufferSource.getBuffer(FargoSoulRenderTypes.texture(texture, alwaysVisible));
+      VertexConsumer consumer = bufferSource.getBuffer(FSFRenderTypes.texture(texture, alwaysVisible));
       Vec3 camPos = camera.getPosition();
       Quaternionf rotation = new Quaternionf(camera.rotation()).mul(Axis.XN.rotationDegrees(180.0F), new Quaternionf());
       Matrix4f matrix = new Matrix4f()
@@ -51,7 +51,7 @@ public final class RenderUtil {
    public static void renderStandalone(ModelResourceLocation modelLocation, PoseStack poseStack,
                                        MultiBufferSource bufferSource, int tintColor, int packedLight) {
       BakedModel model = Minecraft.getInstance().getModelManager().getModel(modelLocation);
-      renderModel(model, poseStack, bufferSource.getBuffer(FargoSoulRenderTypes.getModel()), packedLight);
+      renderModel(model, poseStack, bufferSource.getBuffer(FSFRenderTypes.getModel()), packedLight);
    }
 
    /** Draws a baked model that is already positioned by {@code poseStack}. */

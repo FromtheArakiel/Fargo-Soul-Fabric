@@ -1,8 +1,8 @@
 package dev.arakiel.fargosoulfabric.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntity;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PathNode;
+import dev.arakiel.fargosoulfabric.common.summon.Summon;
+import dev.arakiel.fargosoulfabric.common.summon.PathNode;
 import net.minecraft.client.renderer.MultiBufferSource;
 
 /**
@@ -11,11 +11,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
  *
  * @param <T> the summon type
  */
-public class SimpleRenderer<T extends AttachmentEntity> extends AbstractAttachmentEntityRenderer<T> {
+public class SimpleRenderer<T extends Summon> extends AbstractSummonRenderer<T> {
 
     /** Called once per frame for the summon that is being rendered. */
     @FunctionalInterface
-    public interface Callback<T extends AttachmentEntity> {
+    public interface Callback<T extends Summon> {
         void render(T entity, PoseStack poseStack, MultiBufferSource bufferSource, PathNode visualNode,
                     RenderContext<T> context, float partialTick, float alpha);
     }

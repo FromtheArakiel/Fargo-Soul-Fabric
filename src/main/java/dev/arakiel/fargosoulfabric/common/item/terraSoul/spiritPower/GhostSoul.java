@@ -1,19 +1,19 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.spiritPower;
 
-import dev.arakiel.fargosoulfabric.api.damage.DamageContainer;
+import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import dev.arakiel.fargosoulfabric.FargoSoul;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulInfoData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
+import dev.arakiel.fargosoulfabric.FSF;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.entity.GhostOrb;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfo;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulInfoType;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.FargoSoulSoulInfoRegister;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -41,19 +41,19 @@ public class GhostSoul extends SoulItem {
     @Override
     public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(Player player) {
         Multimap<Holder<Attribute>, AttributeModifier> map = HashMultimap.create();
-        Info info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.GHOST_SOUL_INFO);
+        Info info = SoulStates.getSoulState(player, SoulStateRegister.GHOST_SOUL_INFO);
         if (info != null && info.soul > 0) {
-            map.put(Attributes.MAX_HEALTH, new AttributeModifier(FargoSoul.rl("ghost_soul"), Math.min(info.soul, 100) * 0.02f, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+            map.put(Attributes.MAX_HEALTH, new AttributeModifier(FSF.rl("ghost_soul"), Math.min(info.soul, 100) * 0.02f, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
         }
         return map;
     }
 
     @Override
     public void tick(Player player) {
-        Info info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.GHOST_SOUL_INFO);
+        Info info = SoulStates.getSoulState(player, SoulStateRegister.GHOST_SOUL_INFO);
         if (info == null) {
             info = new Info();
-            SoulInfoData.putSoulInfo(player, info);
+            SoulStates.putSoulState(player, info);
         }
         if (info.reviveCd > 0) {
             info.reviveCd--;
@@ -62,7 +62,7 @@ public class GhostSoul extends SoulItem {
             float overflow = info.soul - 100;
             info.soul = 100;
             Vec3 from = player.getBoundingBox().getCenter();
-            List<LivingEntity> targets = SoulTargetCache.get(player).getEntitiesInRadius(from, 16, null);
+            List<LivingEntity> targets = SoulTargets.get(player).getEntitiesInRadius(from, 16, null);
             if (!targets.isEmpty()) {
                 RandomSource random = player.getRandom();
                 LivingEntity chase = targets.get(random.nextInt(targets.size()));
@@ -79,17 +79,17 @@ public class GhostSoul extends SoulItem {
 
     @Override
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
-        Info info = SoulInfoData.getSoulInfo(attacker, FargoSoulSoulInfoRegister.GHOST_SOUL_INFO);
+        Info info = SoulStates.getSoulState(attacker, SoulStateRegister.GHOST_SOUL_INFO);
         if (info == null) {
             info = new Info();
-            SoulInfoData.putSoulInfo(attacker, info);
+            SoulStates.putSoulState(attacker, info);
         }
         info.soul++;
     }
 
     @Override
     public boolean death(Player player, DamageSource source, boolean canceled) {
-        Info info = SoulInfoData.getSoulInfo(player, FargoSoulSoulInfoRegister.GHOST_SOUL_INFO);
+        Info info = SoulStates.getSoulState(player, SoulStateRegister.GHOST_SOUL_INFO);
         if (!canceled && info != null && info.soul >= 100 && info.reviveCd <= 0) {
             info.soul = 0;
             info.reviveCd = 12000;
@@ -106,19 +106,19 @@ public class GhostSoul extends SoulItem {
         return super.death(player, source, canceled);
     }
 
-    public static final class Info extends SoulInfo {
+    public static final class Info extends SoulState {
 
         public float soul = 0;
         public int reviveCd = 0;
 
         @Override
-        public SoulInfoType<? extends SoulInfo> getType() {
-            return FargoSoulSoulInfoRegister.GHOST_SOUL_INFO;
+        public SoulStateType<? extends SoulState> getType() {
+            return SoulStateRegister.GHOST_SOUL_INFO;
         }
 
         @Override
         public void tick(LivingEntity living) {
-            if (!SoulItemData.isEquipped(living, FargoSoulItemRegister.GhostSoulItem)) {
+            if (!PlayerSouls.isEquipped(living, FSFItemRegister.GhostSoulItem)) {
                 setRemove(true);
             }
         }

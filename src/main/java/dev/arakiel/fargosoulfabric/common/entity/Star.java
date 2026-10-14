@@ -1,12 +1,12 @@
 package dev.arakiel.fargosoulfabric.common.entity;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.common.attachment.InvincibleData;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.IEntityCollision;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
+import dev.arakiel.fargosoulfabric.common.summon.IEntityCollision;
 import dev.arakiel.fargosoulfabric.common.particle.genericParticle.GenericParticleBuilder;
-import dev.arakiel.fargosoulfabric.common.projectile.Projectile;
+import dev.arakiel.fargosoulfabric.common.projectile.SummonProjectile;
 import dev.arakiel.fargosoulfabric.utils.ParticleHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -18,12 +18,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @SuppressWarnings("this-escape")
-public class Star extends Projectile implements IEntityCollision<Star> {
+public class Star extends SummonProjectile implements IEntityCollision<Star> {
 
     private LivingEntity chaseTarget = null;
 
     public Star() {
-        super(SummonerAttachmentEntityRegister.STAR);
+        super(SummonTypeRegister.STAR);
         setDrag(0.8f);
         setMaxLife(100);
     }
@@ -43,16 +43,16 @@ public class Star extends Projectile implements IEntityCollision<Star> {
         DamageSource source = getDamageSource();
         if (source != null) {
             Vec3 pos = getPos();
-            List<LivingEntity> entities = SoulTargetCache.get(owner).getEntitiesInRadius(pos, 3, null);
+            List<LivingEntity> entities = SoulTargets.get(owner).getEntitiesInRadius(pos, 3, null);
             for (LivingEntity entity : entities) {
-                InvincibleData.attack(entity)
+                Invulnerability.attack(entity)
                         .attacker(getUuid())
                         .damageSource(source)
                         .damageAmount(getDamage())
                         .invincibleTime(5)
                         .apply();
             }
-            owner.addEffect(new MobEffectInstance(FargoSoulMobEffectRegister.Starlight, 200));
+            owner.addEffect(new MobEffectInstance(FSFMobEffectRegister.Starlight, 200));
             ParticleHelper.create(owner.level())
                     .generic(GenericParticleBuilder.create()
                                      .centerColor(0xe7db09)

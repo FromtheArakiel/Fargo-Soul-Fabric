@@ -1,11 +1,11 @@
 package dev.arakiel.fargosoulfabric.common.entity;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulTargetCache;
-import dev.arakiel.fargosoulfabric.register.FargoSoulMobEffectRegister;
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.common.attachment.InvincibleData;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.IEntityCollision;
-import dev.arakiel.fargosoulfabric.common.projectile.Projectile;
+import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
+import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
+import dev.arakiel.fargosoulfabric.common.summon.IEntityCollision;
+import dev.arakiel.fargosoulfabric.common.projectile.SummonProjectile;
 import dev.arakiel.fargosoulfabric.utils.ParticleHelper;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
@@ -19,10 +19,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @SuppressWarnings("this-escape")
-public class SnowBall extends Projectile implements IEntityCollision<SnowBall> {
+public class SnowBall extends SummonProjectile implements IEntityCollision<SnowBall> {
 
     public SnowBall() {
-        super(SummonerAttachmentEntityRegister.SNOW_BALL);
+        super(SummonTypeRegister.SNOW_BALL);
         setDrag(0.97f);
         setMaxLife(60);
     }
@@ -51,7 +51,7 @@ public class SnowBall extends Projectile implements IEntityCollision<SnowBall> {
 
     @Override
     public boolean isValidCollisionTarget(SnowBall entity, LivingEntity target) {
-        return SoulTargetCache.isTarget(owner, target);
+        return SoulTargets.isTarget(owner, target);
     }
 
     @Override
@@ -59,9 +59,9 @@ public class SnowBall extends Projectile implements IEntityCollision<SnowBall> {
         DamageSource source = getDamageSource();
         HitContext first = hitContexts.getFirst();
         LivingEntity living = first.entity();
-        living.addEffect(new MobEffectInstance(FargoSoulMobEffectRegister.Chill, 70));
+        living.addEffect(new MobEffectInstance(FSFMobEffectRegister.Chill, 70));
         if (source != null) {
-            InvincibleData.attack(living)
+            Invulnerability.attack(living)
                     .attacker(getUuid())
                     .damageSource(source)
                     .damageAmount(getDamage())

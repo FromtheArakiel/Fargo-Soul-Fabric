@@ -1,20 +1,20 @@
 package dev.arakiel.fargosoulfabric.common.entity;
 
-import dev.arakiel.fargosoulfabric.common.attachment.SoulItemData;
+import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.entity.goal.terrablade.BladeAttackGoal;
 import dev.arakiel.fargosoulfabric.common.entity.goal.terrablade.BladeIdleGoal;
 import dev.arakiel.fargosoulfabric.common.entity.goal.terrablade.BladePrepGoal;
-import dev.arakiel.fargosoulfabric.register.FargoSoulItemRegister;
-import dev.arakiel.fargosoulfabric.register.SummonerAttachmentEntityRegister;
-import dev.arakiel.fargosoulfabric.api.FargoSoulHelper;
-import dev.arakiel.fargosoulfabric.common.attachment.AttachmentEntityData;
-import dev.arakiel.fargosoulfabric.common.attachment.InvincibleData;
-import dev.arakiel.fargosoulfabric.common.attachment.TargetCache;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.IEntityCollision;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PathNode;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.SyncFieldDispatcher;
+import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
+import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
+import dev.arakiel.fargosoulfabric.common.FSFPlayerSummons;
+import dev.arakiel.fargosoulfabric.common.attachment.SummonData;
+import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
+import dev.arakiel.fargosoulfabric.common.attachment.RecentTargets;
+import dev.arakiel.fargosoulfabric.common.summon.IEntityCollision;
+import dev.arakiel.fargosoulfabric.common.summon.PathNode;
+import dev.arakiel.fargosoulfabric.common.summon.SyncFieldDispatcher;
 import dev.arakiel.fargosoulfabric.common.minion.Minion;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntityGoalSelector;
+import dev.arakiel.fargosoulfabric.common.summon.SummonGoalSelector;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -39,7 +39,7 @@ public class TerraBlade extends Minion implements IEntityCollision<TerraBlade> {
     public boolean ancientHolySoul = false;
 
     public TerraBlade() {
-        super(SummonerAttachmentEntityRegister.TERRA_BLADE);
+        super(SummonTypeRegister.TERRA_BLADE);
         setDamage(8);
     }
 
@@ -51,7 +51,7 @@ public class TerraBlade extends Minion implements IEntityCollision<TerraBlade> {
     }
 
     @Override
-    public void registerGoals(AttachmentEntityGoalSelector goalSelector) {
+    public void registerGoals(SummonGoalSelector goalSelector) {
         goalSelector.addGoal(0, new BladeAttackGoal(this));
         goalSelector.addGoal(1, new BladePrepGoal(this));
         goalSelector.addGoal(2, new BladeIdleGoal(this));
@@ -61,8 +61,8 @@ public class TerraBlade extends Minion implements IEntityCollision<TerraBlade> {
     public LivingEntity searchTarget() {
         int distance = this.getSearchDistance();
         if (distance > 0) {
-            FargoSoulHelper helper = FargoSoulHelper.get(this.owner);
-            TargetCache targetCache = helper.getTargetCache();
+            FSFPlayerSummons helper = FSFPlayerSummons.get(this.owner);
+            RecentTargets targetCache = helper.getRecentTargets();
             if (!targetCache.isEmpty()) {
                 List<LivingEntity> targets = targetCache.getEntitiesInRadius(this.getPos(), targetCache.getSummonSearchRange(this.getOwner(), (float) distance), (living) -> (attacking || targetCache.isVisibility(this.owner, living)) && this.isTarget(living));
                 if (!targets.isEmpty()) {
@@ -92,7 +92,7 @@ public class TerraBlade extends Minion implements IEntityCollision<TerraBlade> {
     public void onCollisionAttack(List<HitContext> hitContexts) {
         for (HitContext hit : hitContexts) {
             if (this.hitTargets.add(hit.entity())) {
-                InvincibleData.attack(hit.entity())
+                Invulnerability.attack(hit.entity())
                         .attacker(getUuid())
                         .damageSource(getDamageSource())
                         .damageAmount(getDamage())
@@ -118,10 +118,10 @@ public class TerraBlade extends Minion implements IEntityCollision<TerraBlade> {
                 idleBlend = Math.min(1.0f, idleBlend + 0.1f);
             }
         } else {
-            if (spiritPower && !SoulItemData.isEquipped(getOwner(), FargoSoulItemRegister.SpiritPowerItem)){
+            if (spiritPower && !PlayerSouls.isEquipped(getOwner(), FSFItemRegister.SpiritPowerItem)){
                 setRemove();
             }
-            if (ancientHolySoul && !SoulItemData.isEquipped(getOwner(), FargoSoulItemRegister.AncientHolySoulItem)){
+            if (ancientHolySoul && !PlayerSouls.isEquipped(getOwner(), FSFItemRegister.AncientHolySoulItem)){
                 setRemove();
             }
         }
@@ -154,11 +154,11 @@ public class TerraBlade extends Minion implements IEntityCollision<TerraBlade> {
 
     @Override
     public int getOrder() {
-        return FargoSoulHelper.get(this.owner).getEntityData().get(this.getType()).indexOf(this);
+        return FSFPlayerSummons.get(this.owner).getSummons().get(this.getType()).indexOf(this);
     }
 
     @Override
     public int getSameSize() {
-        return FargoSoulHelper.get(this.owner).getEntityData().get(this.getType()).size();
+        return FSFPlayerSummons.get(this.owner).getSummons().get(this.getType()).size();
     }
 }

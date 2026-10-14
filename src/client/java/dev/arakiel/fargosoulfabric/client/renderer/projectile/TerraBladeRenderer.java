@@ -2,19 +2,19 @@ package dev.arakiel.fargosoulfabric.client.renderer.projectile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.arakiel.fargosoulfabric.client.dynamicLight.DynamicLightDispatcher;
-import dev.arakiel.fargosoulfabric.client.render.AbstractAttachmentEntityRenderer;
+import dev.arakiel.fargosoulfabric.client.render.AbstractSummonRenderer;
 import dev.arakiel.fargosoulfabric.client.render.ModelContext;
 import dev.arakiel.fargosoulfabric.client.render.RenderContext;
 import dev.arakiel.fargosoulfabric.client.render.RenderUtil;
 import dev.arakiel.fargosoulfabric.client.render.trail.RibbonTrailContext;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PathNode;
+import dev.arakiel.fargosoulfabric.common.summon.PathNode;
 import dev.arakiel.fargosoulfabric.common.entity.TerraBlade;
-import dev.arakiel.fargosoulfabric.client.register.FargoSoulModelRegister;
+import dev.arakiel.fargosoulfabric.client.register.FSFModelRegister;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.util.FastColor;
 
 /** The blade of sorrows, with the ribbon trail it leaves while it attacks. */
-public class TerraBladeRenderer extends AbstractAttachmentEntityRenderer<TerraBlade> {
+public class TerraBladeRenderer extends AbstractSummonRenderer<TerraBlade> {
 
     @Override
     protected RenderContext<TerraBlade> createContext(TerraBlade blade, PathNode visualNode, float partialTick,
@@ -36,7 +36,7 @@ public class TerraBladeRenderer extends AbstractAttachmentEntityRenderer<TerraBl
 
     @Override
     protected void renderModel(PoseStack poseStack, MultiBufferSource bufferSource) {
-        RenderUtil.renderStandalone(FargoSoulModelRegister.TERRA_BLADE, poseStack, bufferSource,
+        RenderUtil.renderStandalone(FSFModelRegister.TERRA_BLADE, poseStack, bufferSource,
                 FastColor.ARGB32.color((int) (this.getAlpha() * 255), 255, 255, 255), RenderUtil.FULL_LIGHT);
     }
 

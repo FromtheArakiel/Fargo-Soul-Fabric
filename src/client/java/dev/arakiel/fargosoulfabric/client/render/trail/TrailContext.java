@@ -2,8 +2,8 @@ package dev.arakiel.fargosoulfabric.client.render.trail;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.arakiel.fargosoulfabric.client.render.RenderContext;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.AttachmentEntity;
-import dev.arakiel.fargosoulfabric.common.attachmentEntity.PathNode;
+import dev.arakiel.fargosoulfabric.common.summon.Summon;
+import dev.arakiel.fargosoulfabric.common.summon.PathNode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +13,7 @@ import net.minecraft.util.FastColor.ARGB32;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionf;
 
-public abstract class TrailContext<T extends AttachmentEntity> {
+public abstract class TrailContext<T extends Summon> {
    public int timer = 0;
    public int historyLength = 4;
    public int segmentsPerNode = 8;
