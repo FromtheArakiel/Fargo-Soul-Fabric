@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.arakiel.fargosoulfabric.client.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ClientBlockStateBaseMixin",
+    "EntityRendererMixin",
+    "FogRendererMixin",
+    "KeyboardHandlerMixin",
+    "KeyMappingAccessor",
+    "LevelRendererAccessor",
+    "LevelRendererMixin",
+    "LocalPlayerMixin",
+    "ScreenEffectRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

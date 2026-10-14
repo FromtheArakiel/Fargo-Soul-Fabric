@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fargosoulfabric:forbidden_soul"
+    },
+    {
+      "item": "fargosoulfabric:holy_soul"
+    },
+    {
+      "item": "fargosoulfabric:ancient_holy_soul"
+    },
+    {
+      "item": "fargosoulfabric:teke_soul"
+    },
+    {
+      "item": "fargosoulfabric:ghost_soul"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "fargosoulfabric:spirit_power"
+  }
+}

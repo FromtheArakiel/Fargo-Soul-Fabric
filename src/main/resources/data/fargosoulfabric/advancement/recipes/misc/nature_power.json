@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fargosoulfabric:crimson_soul": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fargosoulfabric:crimson_soul"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fargosoulfabric:nature_power"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_fargosoulfabric:crimson_soul"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fargosoulfabric:nature_power"
+    ]
+  }
+}

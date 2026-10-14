@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fargosoulfabric:cobalt_soul"
+    },
+    {
+      "item": "fargosoulfabric:palladium_soul"
+    },
+    {
+      "item": "fargosoulfabric:mithril_soul"
+    },
+    {
+      "item": "fargosoulfabric:orichalcum_soul"
+    },
+    {
+      "item": "fargosoulfabric:adamantite_soul"
+    },
+    {
+      "item": "fargosoulfabric:titanium_soul"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "fargosoulfabric:earth_power"
+  }
+}

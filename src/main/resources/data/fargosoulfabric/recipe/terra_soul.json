@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fargosoulfabric:cosmic_power"
+    },
+    {
+      "item": "fargosoulfabric:death_power"
+    },
+    {
+      "item": "fargosoulfabric:terra_power"
+    },
+    {
+      "item": "fargosoulfabric:forest_power"
+    },
+    {
+      "item": "fargosoulfabric:earth_power"
+    },
+    {
+      "item": "fargosoulfabric:nature_power"
+    },
+    {
+      "item": "fargosoulfabric:life_power"
+    },
+    {
+      "item": "fargosoulfabric:spirit_power"
+    },
+    {
+      "item": "fargosoulfabric:will_power"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "fargosoulfabric:terra_soul"
+  }
+}

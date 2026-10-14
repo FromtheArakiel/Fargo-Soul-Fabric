@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fargosoulfabric:wood_soul"
+    },
+    {
+      "item": "fargosoulfabric:pine_wood_soul"
+    },
+    {
+      "item": "fargosoulfabric:rose_wood_soul"
+    },
+    {
+      "item": "fargosoulfabric:ebony_wood_soul"
+    },
+    {
+      "item": "fargosoulfabric:shadow_wood_soul"
+    },
+    {
+      "item": "fargosoulfabric:palm_wood_soul"
+    },
+    {
+      "item": "fargosoulfabric:pearl_wood_soul"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "fargosoulfabric:forest_power"
+  }
+}

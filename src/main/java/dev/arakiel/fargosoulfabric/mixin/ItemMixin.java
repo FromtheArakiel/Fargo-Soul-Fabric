@@ -1,0 +1,28 @@
+package dev.arakiel.fargosoulfabric.mixin;
+
+import dev.arakiel.fargosoulfabric.common.dataComponent.FargoSoulRarity;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin({Item.class})
+public class ItemMixin {
+   public ItemMixin() {
+   }
+
+   @Inject(
+      method = {"getName"},
+      at = {@At("TAIL")},
+      cancellable = true
+   )
+   private void fargoSoul$getName(ItemStack stack, CallbackInfoReturnable<Component> cir) {
+      if (cir.getReturnValue() instanceof MutableComponent mutableComponent) {
+         cir.setReturnValue(FargoSoulRarity.handler(stack, mutableComponent));
+      }
+   }
+}

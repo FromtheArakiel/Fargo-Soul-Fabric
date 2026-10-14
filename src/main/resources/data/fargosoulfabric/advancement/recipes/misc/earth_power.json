@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fargosoulfabric:cobalt_soul": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fargosoulfabric:cobalt_soul"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fargosoulfabric:earth_power"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_fargosoulfabric:cobalt_soul"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fargosoulfabric:earth_power"
+    ]
+  }
+}

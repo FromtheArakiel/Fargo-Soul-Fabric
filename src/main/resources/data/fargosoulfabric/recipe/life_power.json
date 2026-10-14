@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fargosoulfabric:bee_soul"
+    },
+    {
+      "item": "fargosoulfabric:beetle_soul"
+    },
+    {
+      "item": "fargosoulfabric:pumpkin_soul"
+    },
+    {
+      "item": "fargosoulfabric:spider_soul"
+    },
+    {
+      "item": "fargosoulfabric:turtle_soul"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "fargosoulfabric:life_power"
+  }
+}

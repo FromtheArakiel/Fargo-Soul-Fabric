@@ -1,0 +1,7 @@
+{
+  "order": 21,
+  "size": 9,
+  "validators": [
+    "curiosfabric:tag"
+  ]
+}

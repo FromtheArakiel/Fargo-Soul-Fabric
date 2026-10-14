@@ -1,0 +1,15 @@
+{
+  "sources": [
+    {
+      "type": "directory",
+      "source": "fargosoul_model/json",
+      "prefix": "fargosoul_model/json/"
+    },
+    {
+      "comment": "The path the library used before it was merged into this mod; kept so packs that still ship their models there keep working.",
+      "type": "directory",
+      "source": "lyra_model/json",
+      "prefix": "lyra_model/json/"
+    }
+  ]
+}

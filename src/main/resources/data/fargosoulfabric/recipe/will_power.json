@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fargosoulfabric:gold_soul"
+    },
+    {
+      "item": "fargosoulfabric:platinum_soul"
+    },
+    {
+      "item": "fargosoulfabric:gladiator_soul"
+    },
+    {
+      "item": "fargosoulfabric:red_riding_soul"
+    },
+    {
+      "item": "fargosoulfabric:valhalla_knight_soul"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "fargosoulfabric:will_power"
+  }
+}

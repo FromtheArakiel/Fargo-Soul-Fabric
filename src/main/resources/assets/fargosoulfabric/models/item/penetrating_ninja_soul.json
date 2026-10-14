@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "fargosoulfabric:item/penetrating_ninja_soul"
+  }
+}

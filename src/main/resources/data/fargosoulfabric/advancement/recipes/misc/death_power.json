@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fargosoulfabric:ancient_shadow_soul": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fargosoulfabric:ancient_shadow_soul"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fargosoulfabric:death_power"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_fargosoulfabric:ancient_shadow_soul"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fargosoulfabric:death_power"
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+accessWidener v2 named
+
+# The summon renderers build their own render types, which needs the vanilla state shards.
+accessible class net/minecraft/client/renderer/RenderStateShard$TextureStateShard
+accessible class net/minecraft/client/renderer/RenderType$CompositeState

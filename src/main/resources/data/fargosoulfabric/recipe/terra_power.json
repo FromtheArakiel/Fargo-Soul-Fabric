@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fargosoulfabric:copper_soul"
+    },
+    {
+      "item": "fargosoulfabric:tin_soul"
+    },
+    {
+      "item": "fargosoulfabric:iron_soul"
+    },
+    {
+      "item": "fargosoulfabric:lead_soul"
+    },
+    {
+      "item": "fargosoulfabric:silver_soul"
+    },
+    {
+      "item": "fargosoulfabric:tungsten_soul"
+    },
+    {
+      "item": "fargosoulfabric:obsidian_soul"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "fargosoulfabric:terra_power"
+  }
+}

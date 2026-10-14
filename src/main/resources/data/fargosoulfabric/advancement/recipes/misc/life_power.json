@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fargosoulfabric:bee_soul": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fargosoulfabric:bee_soul"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fargosoulfabric:life_power"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_fargosoulfabric:bee_soul"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fargosoulfabric:life_power"
+    ]
+  }
+}

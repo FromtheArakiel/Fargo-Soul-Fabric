@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fargosoulfabric:gold_soul": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fargosoulfabric:gold_soul"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fargosoulfabric:will_power"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_fargosoulfabric:gold_soul"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fargosoulfabric:will_power"
+    ]
+  }
+}

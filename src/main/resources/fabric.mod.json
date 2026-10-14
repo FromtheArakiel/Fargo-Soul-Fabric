@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "First-Sight"
+  ],
+  "contributors": [
+    "FromtheArakiel (Fabric port)"
+  ],
+  "license": "${mod_license}",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.arakiel.fargosoulfabric.FargoSoul"
+    ],
+    "client": [
+      "dev.arakiel.fargosoulfabric.client.FargoSoulClient"
+    ]
+  },
+  "mixins": [
+    "fargosoulfabric.mixins.json",
+    {
+      "config": "fargosoulfabric.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "accessWidener": "fargosoulfabric.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*",
+    "curiosfabric": ">=9.5.1",
+    "geckolib": ">=4.9.3"
+  }
+}
