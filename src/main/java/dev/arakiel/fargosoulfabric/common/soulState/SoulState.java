@@ -1,4 +1,4 @@
-package dev.arakiel.fargosoulfabric.common.soulInfo;
+package dev.arakiel.fargosoulfabric.common.soulState;
 
 import dev.arakiel.fargosoulfabric.common.NbtSerializable;
 import net.minecraft.core.HolderLookup;

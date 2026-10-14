@@ -10,7 +10,7 @@ import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.common.soulInfo.PenetratingSoulState;
+import dev.arakiel.fargosoulfabric.common.soulState.PenetratingSoulState;
 import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;

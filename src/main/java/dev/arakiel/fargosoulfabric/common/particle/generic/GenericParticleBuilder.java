@@ -1,4 +1,4 @@
-package dev.arakiel.fargosoulfabric.common.particle.genericParticle;
+package dev.arakiel.fargosoulfabric.common.particle.generic;
 
 import java.util.Random;
 

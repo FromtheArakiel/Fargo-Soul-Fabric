@@ -12,7 +12,7 @@ import dev.arakiel.fargosoulfabric.client.render.SummonRenderDispatcher;
 import dev.arakiel.fargosoulfabric.client.render.ISummonRenderer;
 import dev.arakiel.fargosoulfabric.client.render.RenderUtil;
 import dev.arakiel.fargosoulfabric.client.render.SimpleRenderer;
-import dev.arakiel.fargosoulfabric.client.render.rendererHelper.SphereRendererHelper;
+import dev.arakiel.fargosoulfabric.client.render.helper.SphereRendererHelper;
 import dev.arakiel.fargosoulfabric.common.summon.Summon;
 import dev.arakiel.fargosoulfabric.common.summon.SummonType;
 import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
@@ -54,7 +54,8 @@ public final class SummonRenderRegister {
                                 .radius(0.12f)
                                 .layers(2)
                                 .sides(6)
-                                .color(0xFFF2A2C4)
+                                // 花瓣是紫的
+                                .color(0xFFA855F7)
                                 .alpha(0.85f)
                                 .innerRatio(0.5f)
                                 .render(poseStack, bufferSource)));

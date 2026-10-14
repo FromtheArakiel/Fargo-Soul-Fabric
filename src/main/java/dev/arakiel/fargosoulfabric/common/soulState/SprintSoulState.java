@@ -1,21 +1,21 @@
-package dev.arakiel.fargosoulfabric.common.soulInfo;
+package dev.arakiel.fargosoulfabric.common.soulState;
 
 import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.world.entity.LivingEntity;
 
-public class FlySoulState extends SoulState {
+public class SprintSoulState extends SoulState {
 
-    public int flyTime = 0;
+    public int cooldown = 40;
 
     @Override
     public void tick(LivingEntity living) {
-        if (living.onGround()) {
+        if (--cooldown <= 0) {
             setRemove(true);
         }
     }
 
     @Override
     public SoulStateType<? extends SoulState> getType() {
-        return SoulStateRegister.FLY_SOUL_INFO;
+        return SoulStateRegister.SPRINT_SOUL_INFO;
     }
 }

@@ -1,5 +1,8 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.cosmicPower;
 
+import dev.arakiel.fargosoulfabric.utils.FSFEffects;
+import net.minecraft.core.particles.ParticleTypes;
+
 import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import dev.arakiel.fargosoulfabric.FSF;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
@@ -28,6 +31,7 @@ public class WizardSoul extends SoulItem {
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
         if (container.getSource().is(IS_MAGIC)) {
             modifiers.add(new ValueModifier(0.6f, ValueOperation.ADD_MULTIPLIED_BASE));
+           FSFEffects.aura(attacker.level(), attacker, ParticleTypes.ENCHANT, 25, 0.5D, 0.5D);
         }
     }
 }

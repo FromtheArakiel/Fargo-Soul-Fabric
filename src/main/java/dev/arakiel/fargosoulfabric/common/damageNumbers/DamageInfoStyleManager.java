@@ -1,4 +1,4 @@
-package dev.arakiel.fargosoulfabric.common.damageInfo;
+package dev.arakiel.fargosoulfabric.common.damageNumbers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

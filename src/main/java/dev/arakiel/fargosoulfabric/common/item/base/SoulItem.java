@@ -7,7 +7,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import dev.arakiel.fargosoulfabric.common.MovementState;
 import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
-import dev.arakiel.fargosoulfabric.common.dataComponent.FSFRarity;
+import dev.arakiel.fargosoulfabric.common.component.FSFRarity;
 import dev.arakiel.fargosoulfabric.common.summon.IEntityCollision;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;

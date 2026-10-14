@@ -1,5 +1,8 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.deathPower;
 
+import dev.arakiel.fargosoulfabric.utils.FSFEffects;
+import net.minecraft.core.particles.ParticleTypes;
+
 import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
@@ -22,6 +25,7 @@ public class GloomySoul extends SoulItem {
         if (target.hasEffect(FSFMobEffectRegister.ShadowFire)) {
             if (attacker.getRandom().nextFloat() < 0.05f) {
                 target.addEffect(new MobEffectInstance(FSFMobEffectRegister.DeathMark, 40));
+               FSFEffects.burst(attacker.level(), target.getBoundingBox().getCenter(), ParticleTypes.SCULK_SOUL, 12, 0.3D, 0.02D);
             }
         } else {
             target.addEffect(new MobEffectInstance(FSFMobEffectRegister.ShadowFire, 200));

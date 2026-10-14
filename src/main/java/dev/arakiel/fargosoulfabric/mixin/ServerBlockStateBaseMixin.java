@@ -1,7 +1,7 @@
 package dev.arakiel.fargosoulfabric.mixin;
 
 import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
-import dev.arakiel.fargosoulfabric.common.soulInfo.PenetratingSoulState;
+import dev.arakiel.fargosoulfabric.common.soulState.PenetratingSoulState;
 import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;

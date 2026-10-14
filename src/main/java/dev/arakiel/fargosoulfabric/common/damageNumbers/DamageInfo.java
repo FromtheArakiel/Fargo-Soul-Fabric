@@ -1,4 +1,4 @@
-package dev.arakiel.fargosoulfabric.common.damageInfo;
+package dev.arakiel.fargosoulfabric.common.damageNumbers;
 
 import dev.arakiel.fargosoulfabric.utils.EasingCurve;
 import java.util.Locale;

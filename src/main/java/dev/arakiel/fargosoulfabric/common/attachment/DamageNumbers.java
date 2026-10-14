@@ -2,8 +2,8 @@ package dev.arakiel.fargosoulfabric.common.attachment;
 
 import dev.arakiel.fargosoulfabric.register.FSFAttachmentRegister;
 import dev.arakiel.fargosoulfabric.common.Attachments;
-import dev.arakiel.fargosoulfabric.common.damageInfo.DamageInfo;
-import dev.arakiel.fargosoulfabric.common.damageInfo.IDamageSourceCritical;
+import dev.arakiel.fargosoulfabric.common.damageNumbers.DamageInfo;
+import dev.arakiel.fargosoulfabric.common.damageNumbers.IDamageSourceCritical;
 import dev.arakiel.fargosoulfabric.common.network.DamageNumbersPayload;
 import java.util.ArrayList;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

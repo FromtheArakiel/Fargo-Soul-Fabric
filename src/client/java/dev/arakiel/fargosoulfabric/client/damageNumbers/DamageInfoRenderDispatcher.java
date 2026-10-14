@@ -1,4 +1,4 @@
-package dev.arakiel.fargosoulfabric.client.damageInfo;
+package dev.arakiel.fargosoulfabric.client.damageNumbers;
 
 import dev.arakiel.fargosoulfabric.client.config.FSFClientConfig;
 import dev.arakiel.fargosoulfabric.register.FSFAttachmentRegister;
@@ -6,7 +6,7 @@ import dev.arakiel.fargosoulfabric.common.Attachments;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import dev.arakiel.fargosoulfabric.common.attachment.DamageNumbers;
-import dev.arakiel.fargosoulfabric.common.damageInfo.DamageInfo;
+import dev.arakiel.fargosoulfabric.common.damageNumbers.DamageInfo;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;

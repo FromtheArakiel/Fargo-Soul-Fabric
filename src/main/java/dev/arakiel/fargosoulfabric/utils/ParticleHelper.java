@@ -3,7 +3,7 @@ package dev.arakiel.fargosoulfabric.utils;
 import dev.arakiel.fargosoulfabric.register.FSFAttachmentRegister;
 import dev.arakiel.fargosoulfabric.common.Attachments;
 import dev.arakiel.fargosoulfabric.common.attachment.ParticleBatch;
-import dev.arakiel.fargosoulfabric.common.particle.genericParticle.GenericParticleBuilder;
+import dev.arakiel.fargosoulfabric.common.particle.generic.GenericParticleBuilder;
 import java.util.Random;
 import java.util.function.Consumer;
 import net.minecraft.core.particles.ParticleOptions;

@@ -1,6 +1,6 @@
 package dev.arakiel.fargosoulfabric.client.particle.genericParticle;
 
-import dev.arakiel.fargosoulfabric.common.particle.genericParticle.GenericParticleOptions;
+import dev.arakiel.fargosoulfabric.common.particle.generic.GenericParticleOptions;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;

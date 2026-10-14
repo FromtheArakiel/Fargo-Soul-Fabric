@@ -1,8 +1,8 @@
-package dev.arakiel.fargosoulfabric.client.damageInfo;
+package dev.arakiel.fargosoulfabric.client.damageNumbers;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import dev.arakiel.fargosoulfabric.common.damageInfo.DamageInfo;
-import dev.arakiel.fargosoulfabric.common.damageInfo.DamageInfoStyle;
+import dev.arakiel.fargosoulfabric.common.damageNumbers.DamageInfo;
+import dev.arakiel.fargosoulfabric.common.damageNumbers.DamageInfoStyle;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.phys.Vec3;

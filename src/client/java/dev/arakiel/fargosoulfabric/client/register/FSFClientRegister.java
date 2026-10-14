@@ -3,7 +3,7 @@ package dev.arakiel.fargosoulfabric.client.register;
 import dev.arakiel.fargosoulfabric.register.FSFRegisters;
 import dev.arakiel.fargosoulfabric.client.network.FSFClientPackets;
 import dev.arakiel.fargosoulfabric.client.particle.genericParticle.GenericParticleProvider;
-import dev.arakiel.fargosoulfabric.common.dataComponent.RarityAnimation;
+import dev.arakiel.fargosoulfabric.common.component.RarityAnimation;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.Minecraft;
 

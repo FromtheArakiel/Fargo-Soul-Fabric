@@ -1,4 +1,4 @@
-package dev.arakiel.fargosoulfabric.common.dataComponent;
+package dev.arakiel.fargosoulfabric.common.component;
 
 import dev.arakiel.fargosoulfabric.register.FSFRegisters;
 import com.mojang.serialization.Codec;

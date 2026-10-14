@@ -1,4 +1,4 @@
-package dev.arakiel.fargosoulfabric.common.soulInfo;
+package dev.arakiel.fargosoulfabric.common.soulState;
 
 import java.util.function.Supplier;
 

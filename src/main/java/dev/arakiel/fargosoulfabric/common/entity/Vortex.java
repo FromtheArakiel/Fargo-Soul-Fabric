@@ -3,7 +3,7 @@ package dev.arakiel.fargosoulfabric.common.entity;
 import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;
 import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
-import dev.arakiel.fargosoulfabric.common.particle.genericParticle.GenericParticleBuilder;
+import dev.arakiel.fargosoulfabric.common.particle.generic.GenericParticleBuilder;
 import dev.arakiel.fargosoulfabric.common.projectile.SummonProjectile;
 import dev.arakiel.fargosoulfabric.utils.ParticleHelper;
 import net.minecraft.world.entity.LivingEntity;

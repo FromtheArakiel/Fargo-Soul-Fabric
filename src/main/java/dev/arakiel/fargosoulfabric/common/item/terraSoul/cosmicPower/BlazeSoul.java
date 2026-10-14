@@ -1,5 +1,7 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.cosmicPower;
 
+import dev.arakiel.fargosoulfabric.common.FSFConfig;
+
 import dev.arakiel.fargosoulfabric.utils.FSFEffects;
 import net.minecraft.core.particles.ParticleTypes;
 
@@ -12,14 +14,14 @@ import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.common.soulState.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulState.SoulStateType;
 import dev.arakiel.fargosoulfabric.register.*;
 import dev.arakiel.fargosoulfabric.common.FSFPlayerSummons;
 import dev.arakiel.fargosoulfabric.common.attachment.SummonData;
 import dev.arakiel.fargosoulfabric.common.attachment.Invulnerability;
 import dev.arakiel.fargosoulfabric.common.summon.IEntityCollision;
-import dev.arakiel.fargosoulfabric.common.particle.genericParticle.GenericParticleBuilder;
+import dev.arakiel.fargosoulfabric.common.particle.generic.GenericParticleBuilder;
 import dev.arakiel.fargosoulfabric.utils.ParticleHelper;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

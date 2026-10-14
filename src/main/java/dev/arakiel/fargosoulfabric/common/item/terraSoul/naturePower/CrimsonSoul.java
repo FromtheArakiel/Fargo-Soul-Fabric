@@ -1,5 +1,9 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.naturePower;
 
+import dev.arakiel.fargosoulfabric.utils.FSFEffects;
+import net.minecraft.core.particles.ParticleTypes;
+import dev.arakiel.fargosoulfabric.common.FSFConfig;
+
 import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
 import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
@@ -7,8 +11,8 @@ import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.entity.TrackingBlood;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.common.soulState.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulState.SoulStateType;
 import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
 import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
@@ -34,6 +38,9 @@ public class CrimsonSoul extends SoulItem {
             List<LivingEntity> enemies = SoulTargets.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 4, null);
             float amount = player.getMaxHealth() * (enemies.isEmpty() ? 0.03f : 0.01f);
             player.heal(amount);
+           if (player.tickCount % 200 == 0 && FSFConfig.auraRings()) {
+               FSFEffects.ring(player.level(), player.getBoundingBox().getCenter(), 4.0D, ParticleTypes.CRIMSON_SPORE, 48, 0.02D);
+           }
         }
     }
 

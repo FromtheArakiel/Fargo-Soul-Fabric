@@ -5,7 +5,7 @@ import dev.arakiel.fargosoulfabric.client.render.AbstractSummonRenderer;
 import dev.arakiel.fargosoulfabric.client.render.ModelContext;
 import dev.arakiel.fargosoulfabric.client.render.RenderContext;
 import dev.arakiel.fargosoulfabric.client.render.RenderUtil;
-import dev.arakiel.fargosoulfabric.client.render.rendererHelper.LaserRendererHelper;
+import dev.arakiel.fargosoulfabric.client.render.helper.LaserRendererHelper;
 import dev.arakiel.fargosoulfabric.common.summon.PathNode;
 import dev.arakiel.fargosoulfabric.common.entity.ChlorophyteOrb;
 import dev.arakiel.fargosoulfabric.client.register.FSFModelRegister;

@@ -1,4 +1,4 @@
-package dev.arakiel.fargosoulfabric.common.dataComponent;
+package dev.arakiel.fargosoulfabric.common.component;
 
 import java.util.function.Supplier;
 

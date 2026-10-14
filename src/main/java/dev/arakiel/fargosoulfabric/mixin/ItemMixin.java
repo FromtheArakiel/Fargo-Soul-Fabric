@@ -1,6 +1,6 @@
 package dev.arakiel.fargosoulfabric.mixin;
 
-import dev.arakiel.fargosoulfabric.common.dataComponent.FSFRarity;
+import dev.arakiel.fargosoulfabric.common.component.FSFRarity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;

@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
+  "icon": "assets/fargosoulfabric/icon.png",
   "id": "${mod_id}",
   "version": "${version}",
   "name": "${mod_name}",

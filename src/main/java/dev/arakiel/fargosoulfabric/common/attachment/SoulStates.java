@@ -1,7 +1,7 @@
 package dev.arakiel.fargosoulfabric.common.attachment;
 
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.common.soulState.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulState.SoulStateType;
 import dev.arakiel.fargosoulfabric.register.FSFAttachmentRegister;
 import dev.arakiel.fargosoulfabric.register.FSFRegisters;
 import dev.arakiel.fargosoulfabric.common.Attachments;

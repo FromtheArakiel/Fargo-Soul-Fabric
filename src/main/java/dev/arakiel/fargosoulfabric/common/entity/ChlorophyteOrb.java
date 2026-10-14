@@ -11,7 +11,7 @@ import dev.arakiel.fargosoulfabric.common.summon.IEntityCollision;
 import dev.arakiel.fargosoulfabric.common.summon.PathNode;
 import dev.arakiel.fargosoulfabric.common.summon.SyncFieldDispatcher;
 import dev.arakiel.fargosoulfabric.common.minion.Minion;
-import dev.arakiel.fargosoulfabric.common.particle.genericParticle.GenericParticleBuilder;
+import dev.arakiel.fargosoulfabric.common.particle.generic.GenericParticleBuilder;
 import dev.arakiel.fargosoulfabric.utils.ParticleHelper;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.util.Mth;

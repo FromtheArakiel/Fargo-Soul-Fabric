@@ -1,13 +1,18 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.spiritPower;
 
+import dev.arakiel.fargosoulfabric.common.FSFConfig;
+
+import dev.arakiel.fargosoulfabric.utils.FSFEffects;
+import net.minecraft.core.particles.ParticleTypes;
+
 import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
 import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.common.soulState.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulState.SoulStateType;
 import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
 import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
@@ -34,6 +39,11 @@ public class HolySoul extends SoulItem {
         }
         if (info.cooldown <= 0) {
             info.cooldown = 20;
+           if (player.tickCount % 200 == 0 && FSFConfig.auraRings()) {
+               FSFEffects.ring(player.level(), player.getBoundingBox().getCenter(), 6.0D, ParticleTypes.END_ROD, 56, 0.02D);
+           }
+           FSFEffects.aura(player.level(), player, ParticleTypes.HEART, 20, 1.0D, 0.05D);
+           FSFEffects.aura(player.level(), player, ParticleTypes.END_ROD, 25, 1.2D, 0.05D);
             Vec3 center = player.getBoundingBox().getCenter();
             List<LivingEntity> enemies = SoulTargets.get(player).getEntitiesInRadius(center, 6, null);
             for (LivingEntity enemy : enemies) {

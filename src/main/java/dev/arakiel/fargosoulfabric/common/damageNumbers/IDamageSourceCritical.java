@@ -1,4 +1,4 @@
-package dev.arakiel.fargosoulfabric.common.damageInfo;
+package dev.arakiel.fargosoulfabric.common.damageNumbers;
 
 public interface IDamageSourceCritical {
    boolean fsf$isCritical();

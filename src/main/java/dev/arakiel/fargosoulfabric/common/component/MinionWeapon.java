@@ -1,4 +1,4 @@
-package dev.arakiel.fargosoulfabric.common.dataComponent;
+package dev.arakiel.fargosoulfabric.common.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

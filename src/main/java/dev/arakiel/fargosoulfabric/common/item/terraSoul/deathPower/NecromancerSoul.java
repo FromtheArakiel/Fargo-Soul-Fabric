@@ -1,10 +1,13 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.deathPower;
 
+import dev.arakiel.fargosoulfabric.utils.FSFEffects;
+import net.minecraft.core.particles.ParticleTypes;
+
 import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
 import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.common.soulState.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulState.SoulStateType;
 import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
 import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
@@ -33,6 +36,7 @@ public class NecromancerSoul extends SoulItem {
                 SoulStates.putSoulState(attacker, soulInfo);
             }
             soulInfo.necromancerPower = Math.min(soulInfo.necromancerPower + 1, soulInfo.maxNecromancerPower);
+            FSFEffects.burst(attacker.level(), target.getBoundingBox().getCenter(), ParticleTypes.SCULK_SOUL, 25, 0.4D, 0.05D);
             if (target.getType() == EntityType.SKELETON || target.getType() == EntityType.WITHER_SKELETON) {
                 soulInfo.necromancerPower = Math.min(soulInfo.necromancerPower + 2, soulInfo.maxNecromancerPower);
                 ItemStack skull = target.getType() == EntityType.SKELETON ? Items.SKELETON_SKULL.getDefaultInstance() : Items.WITHER_SKELETON_SKULL.getDefaultInstance();

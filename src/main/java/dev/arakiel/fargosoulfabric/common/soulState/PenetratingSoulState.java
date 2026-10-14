@@ -1,4 +1,4 @@
-package dev.arakiel.fargosoulfabric.common.soulInfo;
+package dev.arakiel.fargosoulfabric.common.soulState;
 
 import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.register.FSFItemRegister;

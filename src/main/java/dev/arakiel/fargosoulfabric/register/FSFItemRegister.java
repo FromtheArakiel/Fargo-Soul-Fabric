@@ -12,7 +12,7 @@ import dev.arakiel.fargosoulfabric.common.item.terraSoul.naturePower.*;
 import dev.arakiel.fargosoulfabric.common.item.terraSoul.spiritPower.*;
 import dev.arakiel.fargosoulfabric.common.item.terraSoul.terraPower.*;
 import dev.arakiel.fargosoulfabric.common.item.terraSoul.willPower.*;
-import dev.arakiel.fargosoulfabric.common.dataComponent.FSFRarity;
+import dev.arakiel.fargosoulfabric.common.component.FSFRarity;
 import dev.arakiel.fargosoulfabric.register.FSFItemBuilder;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.RecipeCategory;

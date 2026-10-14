@@ -1,13 +1,16 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.lifePower;
 
+import dev.arakiel.fargosoulfabric.utils.FSFEffects;
+import net.minecraft.core.particles.ParticleTypes;
+
 import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
 import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.item.base.SoulItem;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueOperation;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulState;
-import dev.arakiel.fargosoulfabric.common.soulInfo.SoulStateType;
+import dev.arakiel.fargosoulfabric.common.soulState.SoulState;
+import dev.arakiel.fargosoulfabric.common.soulState.SoulStateType;
 import dev.arakiel.fargosoulfabric.register.FSFItemRegister;
 import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.core.HolderLookup;
@@ -69,6 +72,7 @@ public class BeetleSoul extends SoulItem {
             }
             if (info.endurance > 0) {
                 modifiers.add(new ValueModifier(-0.15f * info.endurance, ValueOperation.ADD_MULTIPLIED_TOTAL));
+               FSFEffects.aura(target.level(), target, ParticleTypes.CRIT, 12, 0.6D, 0.15D);
             }
         }
     }

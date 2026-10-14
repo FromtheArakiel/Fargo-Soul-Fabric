@@ -2,7 +2,7 @@ package dev.arakiel.fargosoulfabric.common.builder;
 
 import dev.arakiel.fargosoulfabric.register.FSFRegisters;
 import dev.arakiel.fargosoulfabric.common.summon.SummonType;
-import dev.arakiel.fargosoulfabric.common.dataComponent.MinionWeapon;
+import dev.arakiel.fargosoulfabric.common.component.MinionWeapon;
 import dev.arakiel.fargosoulfabric.common.item.SummonerWeaponItem;
 import dev.arakiel.fargosoulfabric.common.minion.Minion;
 import dev.arakiel.fargosoulfabric.common.minion.MinionSlotType;

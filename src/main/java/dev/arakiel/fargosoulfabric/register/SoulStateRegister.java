@@ -25,7 +25,7 @@ import dev.arakiel.fargosoulfabric.common.item.terraSoul.terraPower.TinSoul;
 import dev.arakiel.fargosoulfabric.common.item.terraSoul.willPower.GoldSoul;
 import dev.arakiel.fargosoulfabric.common.item.terraSoul.willPower.PlatinumSoul;
 import dev.arakiel.fargosoulfabric.common.item.terraSoul.willPower.RedRidingSoul;
-import dev.arakiel.fargosoulfabric.common.soulInfo.*;
+import dev.arakiel.fargosoulfabric.common.soulState.*;
 
 import java.util.function.Supplier;
 

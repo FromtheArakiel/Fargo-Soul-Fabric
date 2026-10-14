@@ -1,5 +1,8 @@
 package dev.arakiel.fargosoulfabric.common.item.terraSoul.spiritPower;
 
+import dev.arakiel.fargosoulfabric.utils.FSFEffects;
+import net.minecraft.core.particles.ParticleTypes;
+
 import dev.arakiel.fargosoulfabric.register.FSFAttributeRegister;
 import dev.arakiel.fargosoulfabric.common.damage.DamageContainer;
 import com.google.common.collect.HashMultimap;
@@ -36,6 +39,8 @@ public class TekeSoul extends SoulItem {
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
         if (container.getSource() instanceof SummonDamageSource) {
             target.addEffect(new MobEffectInstance(FSFMobEffectRegister.TekeMist, 240));
+           FSFEffects.burst(attacker.level(), target.getBoundingBox().getCenter(), ParticleTypes.REVERSE_PORTAL, 30, 0.4D, 0.1D);
+           FSFEffects.burst(attacker.level(), target.getBoundingBox().getCenter(), ParticleTypes.PORTAL, 15, 0.3D, 0.2D);
         }
     }
 }

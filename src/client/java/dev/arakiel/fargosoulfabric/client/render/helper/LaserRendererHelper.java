@@ -1,4 +1,4 @@
-package dev.arakiel.fargosoulfabric.client.render.rendererHelper;
+package dev.arakiel.fargosoulfabric.client.render.helper;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

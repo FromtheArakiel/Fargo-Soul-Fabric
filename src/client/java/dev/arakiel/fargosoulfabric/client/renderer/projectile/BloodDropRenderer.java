@@ -2,7 +2,7 @@ package dev.arakiel.fargosoulfabric.client.renderer.projectile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.arakiel.fargosoulfabric.client.render.AbstractSummonRenderer;
-import dev.arakiel.fargosoulfabric.client.render.rendererHelper.SphereRendererHelper;
+import dev.arakiel.fargosoulfabric.client.render.helper.SphereRendererHelper;
 import dev.arakiel.fargosoulfabric.common.entity.BloodDrop;
 import net.minecraft.client.renderer.MultiBufferSource;
 

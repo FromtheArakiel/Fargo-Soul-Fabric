@@ -1,6 +1,6 @@
 {
-  "order": 21,
-  "size": 9,
+  "order": 10000,
+  "size": 1,
   "validators": [
     "curiosfabric:tag"
   ]

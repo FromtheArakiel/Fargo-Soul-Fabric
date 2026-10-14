@@ -7,7 +7,7 @@ import dev.arakiel.fargosoulfabric.common.attachment.SummonData;
 import dev.arakiel.fargosoulfabric.common.summon.Summon;
 import dev.arakiel.fargosoulfabric.common.summon.SummonType;
 import dev.arakiel.fargosoulfabric.common.summon.PathNode;
-import dev.arakiel.fargosoulfabric.common.dataComponent.MinionWeapon;
+import dev.arakiel.fargosoulfabric.common.component.MinionWeapon;
 import dev.arakiel.fargosoulfabric.common.minion.Minion;
 import dev.arakiel.fargosoulfabric.common.minion.MinionSlotType;
 import dev.arakiel.fargosoulfabric.common.sound.Playable;

@@ -1,7 +1,7 @@
 package dev.arakiel.fargosoulfabric.client.mixin;
 
 import dev.arakiel.fargosoulfabric.common.attachment.SoulStates;
-import dev.arakiel.fargosoulfabric.common.soulInfo.PenetratingSoulState;
+import dev.arakiel.fargosoulfabric.common.soulState.PenetratingSoulState;
 import dev.arakiel.fargosoulfabric.register.SoulStateRegister;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.player.LocalPlayer;

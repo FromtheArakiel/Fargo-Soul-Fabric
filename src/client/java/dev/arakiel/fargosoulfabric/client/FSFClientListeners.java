@@ -2,11 +2,11 @@ package dev.arakiel.fargosoulfabric.client;
 
 import dev.arakiel.fargosoulfabric.register.FSFAttachmentRegister;
 import dev.arakiel.fargosoulfabric.common.Attachments;
-import dev.arakiel.fargosoulfabric.client.damageInfo.DamageInfoRenderDispatcher;
+import dev.arakiel.fargosoulfabric.client.damageNumbers.DamageInfoRenderDispatcher;
 import dev.arakiel.fargosoulfabric.client.tooltip.TooltipHandler;
 import dev.arakiel.fargosoulfabric.client.render.SummonRenderDispatcher;
 import dev.arakiel.fargosoulfabric.common.attachment.DamageNumbers;
-import dev.arakiel.fargosoulfabric.common.damageInfo.DamageInfoStyleManager;
+import dev.arakiel.fargosoulfabric.common.damageNumbers.DamageInfoStyleManager;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
