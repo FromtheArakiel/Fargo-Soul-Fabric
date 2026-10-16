@@ -158,7 +158,6 @@ public abstract class SoulItem extends Item implements ICurioItem {
     public void sprintServer(Player player) {
     }
 
-
     public void sprintClient(Player player, List<ValueModifier> modifiers) {
     }
 

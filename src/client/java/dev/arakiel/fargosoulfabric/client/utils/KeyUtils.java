@@ -2,7 +2,6 @@ package dev.arakiel.fargosoulfabric.client.utils;
 
 import net.minecraft.client.player.Input;
 
-
 public class KeyUtils {
     
     private static Movement zza = Movement.NONE;
@@ -14,12 +13,6 @@ public class KeyUtils {
         UP
     }
 
-    /**
-     * 检测玩家是否双击前进键（W键）
-     *
-     * @param input 玩家输入对象
-     * @return 是否触发双击
-     */
     public static boolean isDoubleTappingForward(Input input) {
         if (sprintingTime > 0) {
             sprintingTime--;

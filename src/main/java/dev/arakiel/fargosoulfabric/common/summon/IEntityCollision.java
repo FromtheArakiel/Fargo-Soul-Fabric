@@ -177,7 +177,6 @@ public interface IEntityCollision<T extends Summon> {
    public static record Sweep(List<IEntityCollision.SampledOBB> samples, AABB bounds) {
    }
 
-
 public static class OBB {
    public final Vector3f center;
    public final Vector3f extents;
@@ -266,4 +265,3 @@ public static class OBB {
    }
 }
 }
-

@@ -5,12 +5,6 @@ import dev.arakiel.fargosoulfabric.common.summon.Summon;
 import dev.arakiel.fargosoulfabric.common.summon.PathNode;
 import net.minecraft.client.renderer.MultiBufferSource;
 
-/**
- * A renderer that is built from a lambda, for the summons that just draw a sphere, an image or a
- * model without any extra state.
- *
- * @param <T> the summon type
- */
 public class SimpleRenderer<T extends Summon> extends AbstractSummonRenderer<T> {
 
     /** Called once per frame for the summon that is being rendered. */

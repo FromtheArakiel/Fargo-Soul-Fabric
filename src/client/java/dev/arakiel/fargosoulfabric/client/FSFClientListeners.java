@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.server.packs.PackType;
@@ -48,8 +49,12 @@ public final class FSFClientListeners {
         if (level == null) {
             return;
         }
+        PoseStack poseStack = context.matrixStack();
+        if (poseStack == null) {
+            return;
+        }
         float partialTick = context.tickCounter().getGameTimeDeltaPartialTick(true);
-        SummonRenderDispatcher.render(level, context.camera(), context.matrixStack(),
+        SummonRenderDispatcher.render(level, context.camera(), poseStack,
                 context.consumers(), partialTick);
         DamageInfoRenderDispatcher.render(level, context.camera(), context.consumers(), partialTick);
     }

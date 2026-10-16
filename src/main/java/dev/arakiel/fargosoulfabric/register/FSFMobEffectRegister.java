@@ -167,7 +167,6 @@ public class FSFMobEffectRegister {
         return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, id, factory.apply(id));
     }
 
-
 public static class SimpleMobEffectBuilder {
    private final MobEffectCategory category;
    private final int color;
@@ -227,6 +226,30 @@ public static class SimpleMobEffectBuilder {
                consumer.accept(entry.attribute(),
                        new net.minecraft.world.entity.ai.attributes.AttributeModifier(entry.id(),
                                entry.curve().apply(amplifier), entry.operation()));
+            }
+         }
+
+         @Override
+         public void addAttributeModifiers(net.minecraft.world.entity.ai.attributes.AttributeMap map, int amplifier) {
+            super.addAttributeModifiers(map, amplifier);
+            for (SimpleMobEffectBuilder.AttributeCurveEntry entry : SimpleMobEffectBuilder.this.attributeCurveModifiers) {
+               net.minecraft.world.entity.ai.attributes.AttributeInstance instance = map.getInstance(entry.attribute());
+               if (instance != null) {
+                  instance.removeModifier(entry.id());
+                  instance.addPermanentModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                          entry.id(), entry.curve().apply(amplifier), entry.operation()));
+               }
+            }
+         }
+
+         @Override
+         public void removeAttributeModifiers(net.minecraft.world.entity.ai.attributes.AttributeMap map) {
+            super.removeAttributeModifiers(map);
+            for (SimpleMobEffectBuilder.AttributeCurveEntry entry : SimpleMobEffectBuilder.this.attributeCurveModifiers) {
+               net.minecraft.world.entity.ai.attributes.AttributeInstance instance = map.getInstance(entry.attribute());
+               if (instance != null) {
+                  instance.removeModifier(entry.id());
+               }
             }
          }
       };

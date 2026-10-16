@@ -16,12 +16,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-/**
- * The client end of the packets the summon library sends.
- *
- * <p>The payload types themselves live on the common side; only the handlers that need a client are
- * here.
- */
 public final class FSFClientPackets {
 
     private FSFClientPackets() {

@@ -29,8 +29,8 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 
 public class SummonRenderDispatcher {
-   /** Set to true to render the summon hitboxes, the debug view of the original mod. */
-   public static boolean debugMode = false;
+   /** Renders the summon hitboxes; follows {@code debugSummons} in config/fargosoulfabric.json. */
+   public static boolean debugMode = dev.arakiel.fargosoulfabric.common.FSFConfig.debugSummons();
 
    private static final Map<SummonType<?>, ISummonRenderer<?>> renderers = new HashMap<>();
 

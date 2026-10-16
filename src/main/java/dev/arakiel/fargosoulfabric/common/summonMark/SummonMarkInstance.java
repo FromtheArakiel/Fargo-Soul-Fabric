@@ -10,7 +10,6 @@ public class SummonMarkInstance {
       this.duration = duration;
    }
 
-
    public SummonMarkType getType() {
       return this.type;
    }

@@ -13,7 +13,6 @@ import dev.arakiel.fargosoulfabric.client.register.FSFModelRegister;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.util.FastColor;
 
-/** The blade of sorrows, with the ribbon trail it leaves while it attacks. */
 public class TerraBladeRenderer extends AbstractSummonRenderer<TerraBlade> {
 
     @Override

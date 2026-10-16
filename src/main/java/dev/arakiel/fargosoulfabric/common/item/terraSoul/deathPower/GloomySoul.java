@@ -25,7 +25,6 @@ public class GloomySoul extends SoulItem {
         if (target.hasEffect(FSFMobEffectRegister.ShadowFire)) {
             if (attacker.getRandom().nextFloat() < 0.05f) {
                 target.addEffect(new MobEffectInstance(FSFMobEffectRegister.DeathMark, 40));
-               FSFEffects.burst(attacker.level(), target.getBoundingBox().getCenter(), ParticleTypes.SCULK_SOUL, 12, 0.3D, 0.02D);
             }
         } else {
             target.addEffect(new MobEffectInstance(FSFMobEffectRegister.ShadowFire, 200));

@@ -31,7 +31,6 @@ public class WizardSoul extends SoulItem {
     public void attack(@NotNull Player attacker, @NotNull LivingEntity target, @NotNull DamageContainer container, List<ValueModifier> modifiers) {
         if (container.getSource().is(IS_MAGIC)) {
             modifiers.add(new ValueModifier(0.6f, ValueOperation.ADD_MULTIPLIED_BASE));
-           FSFEffects.aura(attacker.level(), attacker, ParticleTypes.ENCHANT, 25, 0.5D, 0.5D);
         }
     }
 }

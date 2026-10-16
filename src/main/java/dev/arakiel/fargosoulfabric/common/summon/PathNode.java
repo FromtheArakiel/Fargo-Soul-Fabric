@@ -10,7 +10,6 @@ public record PathNode(Vec3 pos, float yaw, float pitch, float roll) {
       this(pos, yawFromDirection(direction), pitchFromDirection(direction), 0.0F);
    }
 
-
    public static float yawFromDirection(Vec3 direction) {
       return (float)Math.toDegrees(Math.atan2(-direction.x, direction.z));
    }

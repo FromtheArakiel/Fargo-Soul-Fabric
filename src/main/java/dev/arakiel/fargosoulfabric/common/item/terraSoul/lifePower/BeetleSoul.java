@@ -72,7 +72,6 @@ public class BeetleSoul extends SoulItem {
             }
             if (info.endurance > 0) {
                 modifiers.add(new ValueModifier(-0.15f * info.endurance, ValueOperation.ADD_MULTIPLIED_TOTAL));
-               FSFEffects.aura(target.level(), target, ParticleTypes.CRIT, 12, 0.6D, 0.15D);
             }
         }
     }

@@ -23,10 +23,6 @@ public final class FSFClientConfig {
 
     private static final FSFClientConfig INSTANCE = load();
 
-    /**
-     * Damage numbers are a taste thing rather than a mechanic, so they start switched off and are
-     * turned on in the config file.
-     */
     private boolean damageNumbers = false;
 
     /** How far away a damage number may be shown, in blocks. */

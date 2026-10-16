@@ -54,8 +54,7 @@ public final class SummonRenderRegister {
                                 .radius(0.12f)
                                 .layers(2)
                                 .sides(6)
-                                // 花瓣是紫的
-                                .color(0xFFA855F7)
+                                .color(0xFFF2A2C4)
                                 .alpha(0.85f)
                                 .innerRatio(0.5f)
                                 .render(poseStack, bufferSource)));

@@ -30,11 +30,6 @@ public final class FSFKeyRegister {
         }
     }
 
-    /**
-     * The soul key a raw key press belongs to.
-     *
-     * @return the soul key, or {@code null} when the press is none of ours
-     */
     @Nullable
     public static SoulKey resolve(int keyCode) {
         for (Map.Entry<SoulKey, KeyMapping> entry : BINDINGS.entrySet()) {

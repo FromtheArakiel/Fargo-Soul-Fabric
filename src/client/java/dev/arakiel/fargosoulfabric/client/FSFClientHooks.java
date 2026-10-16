@@ -6,12 +6,6 @@ import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.Camera;
 import net.minecraft.client.player.Input;
 
-/**
- * The client only hooks of the summon system.
- *
- * <p>They live in their own class because they reference client classes: a dedicated server must be
- * able to load the rest of the mod without ever touching them.
- */
 public final class FSFClientHooks {
 
     /** Fired while the fog of the client viewport is set up. */

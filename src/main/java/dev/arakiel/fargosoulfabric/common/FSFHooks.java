@@ -11,12 +11,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 
-/**
- * The hooks this mod needs and Fabric API does not offer.
- *
- * <p>They follow the usual Fabric shape: an {@link Event} that the mixins of this mod fire, and that
- * the gameplay code subscribes to. Client sided hooks only ever fire on the client.
- */
 public final class FSFHooks {
 
     /** A value a listener may change, optionally flagging it as cancelled. */

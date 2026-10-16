@@ -38,9 +38,6 @@ public class CrimsonSoul extends SoulItem {
             List<LivingEntity> enemies = SoulTargets.get(player).getEntitiesInRadius(player.getBoundingBox().getCenter(), 4, null);
             float amount = player.getMaxHealth() * (enemies.isEmpty() ? 0.03f : 0.01f);
             player.heal(amount);
-           if (player.tickCount % 200 == 0 && FSFConfig.auraRings()) {
-               FSFEffects.ring(player.level(), player.getBoundingBox().getCenter(), 4.0D, ParticleTypes.CRIMSON_SPORE, 48, 0.02D);
-           }
         }
     }
 

@@ -16,10 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-/**
- * 流星射弹（星坠）：从目标周围上方生成，向目标位置直线移动（无追踪），
- * 命中实体或落地时对命中点半径 3 格内所有目标造成伤害（伤害在创建时按 133% 结算伤害设置）。
- */
 @SuppressWarnings("this-escape")
 public class Meteor extends SummonProjectile implements IEntityCollision<Meteor>, IBlockCollision<Meteor> {
 

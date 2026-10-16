@@ -63,8 +63,8 @@ public abstract class AbstractSummonRenderer<T extends Summon> implements ISummo
       poseStack.scale(model.scaleX, model.scaleY, model.scaleZ);
       poseStack.translate(model.translateX, model.translateY, model.translateZ);
       this.renderModel(poseStack, bufferSource);
-      this.render(poseStack, bufferSource);
       poseStack.popPose();
+      this.render(poseStack, bufferSource);
    }
 
    protected void renderModel(PoseStack poseStack, MultiBufferSource bufferSource) {

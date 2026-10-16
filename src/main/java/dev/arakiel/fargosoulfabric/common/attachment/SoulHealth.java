@@ -34,6 +34,13 @@ public class SoulHealth implements Attachments.Bound {
 
    public void tick() {
       AttributeInstance instance = this.owner.getAttribute(FSFAttributeRegister.HealthRegen);
+      if (this.owner instanceof net.minecraft.world.entity.player.Player soulOwner) {
+         PlayerSouls souls = Attachments.get(soulOwner,
+                 dev.arakiel.fargosoulfabric.register.FSFAttachmentRegister.SOUL_ITEM_DATA);
+         if (souls.getCache().isEmpty()) {
+            souls.update(soulOwner);
+         }
+      }
       if (instance != null && instance.getValue() != 0.0) {
          this.amount = this.amount + (float)(instance.getValue() / 20.0);
          if (this.owner.tickCount % 10 == 0) {
@@ -43,7 +50,7 @@ public class SoulHealth implements Attachments.Bound {
                this.amount -= heal;
             } else if (this.amount < -1.0F) {
                float damage = -1.0F - this.amount;
-               Immunities.get(this.owner).attack(FSFDamageSources.getDamageSource(DamageTypes.GENERIC, this.owner.level()), damage);
+               this.owner.hurt(this.owner.damageSources().generic(), damage);
                this.amount += damage;
             }
          }

@@ -90,9 +90,6 @@ public class ChlorophyteOrb extends Minion implements IEntityCollision<Chlorophy
         super.tick();
     }
 
-    /**
-     * 渲染拟合：位置按 owner 插值环绕；姿态朝向玩家（yaw/pitch 指向玩家中心），roll 随时间自旋。
-     */
     @Override
     public PathNode getRenderNode(float partialTick) {
         PathNode orbit = getOrbitNode(partialTick);

@@ -1,6 +1,5 @@
 package dev.arakiel.fargosoulfabric.mixin;
 
-
 import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;

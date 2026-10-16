@@ -10,13 +10,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 
-/**
- * Adds the summon attributes to the entity types that carry them.
- *
- * <p>Vanilla builds one immutable {@link AttributeSupplier} per entity type, so the patched
- * suppliers are built lazily: the first time the game asks for the attributes of an entity type,
- * the supplier of the game is copied and the extra attributes are added.
- */
 public final class FSFEntityAttributes {
 
     private static final Map<EntityType<? extends LivingEntity>, AttributeSupplier> PATCHED = new WeakHashMap<>();

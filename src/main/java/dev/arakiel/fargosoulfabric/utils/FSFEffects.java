@@ -42,12 +42,6 @@ public final class FSFEffects {
         }
     }
 
-    /**
-     * A thin thread of {@code particle} from {@code from} to {@code to}, bowed out to the side.
-     *
-     * <p>{@code seed} is per thread: it picks the direction the thread bows in and keeps that bow
-     * stable while the thread flies. The slow wave makes it read as a strand, not a straight line.
-     */
     public static void arc(Level level, Vec3 from, Vec3 to, ParticleOptions particle,
                            int points, double seed) {
         if (!(level instanceof ServerLevel serverLevel)) {
@@ -65,14 +59,14 @@ public final class FSFEffects {
         if (side.lengthSqr() < 1.0E-6D) {
             side = direction.cross(new Vec3(1.0D, 0.24D, 0.53D));
         }
-        side = side.normalize().yRot((float) (seed * Math.TAU)).scale(0.35D + length * 0.12D);
+        side = side.normalize().yRot((float) (seed * Math.TAU)).scale(0.18D + length * 0.05D);
         double phase = seed * Math.TAU + level.getGameTime() * 0.06D;
 
         for (int i = 0; i <= points; i++) {
             double t = (double) i / points;
             double bow = Math.sin(t * Math.PI) * (1.0D + 0.35D * Math.sin(phase + t * 4.0D));
             Vec3 point = from.add(line.scale(t)).add(side.scale(bow));
-            serverLevel.sendParticles(particle, point.x, point.y, point.z, 1, 0.004D, 0.004D, 0.004D, 0.0D);
+            serverLevel.sendParticles(particle, point.x, point.y, point.z, 1, 0.002D, 0.002D, 0.002D, 0.0D);
         }
     }
 }

@@ -41,10 +41,6 @@ public class ShadowOrb extends Minion {
         return FSFPlayerSummons.get(owner).getSummons().get(getType()).size();
     }
 
-    /**
-     * 计算环绕位置：按同组内顺序均分角度，绕玩家腰部高度旋转。
-     * 客户端同步使用同一公式插值渲染。
-     */
     public PathNode getOrbitNode(float partialTick) {
         Player owner = getOwner();
         int total = Math.max(1, getSameSize());

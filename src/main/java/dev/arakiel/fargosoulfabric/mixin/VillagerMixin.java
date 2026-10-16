@@ -1,6 +1,5 @@
 package dev.arakiel.fargosoulfabric.mixin;
 
-
 import dev.arakiel.fargosoulfabric.common.attachment.PlayerSouls;
 import dev.arakiel.fargosoulfabric.common.item.base.ValueModifier;
 import net.minecraft.world.entity.npc.Villager;

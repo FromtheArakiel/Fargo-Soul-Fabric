@@ -17,10 +17,6 @@ import java.util.UUID;
 /** Tells the server that the player started a soul sprint. */
 public record SprintPacket() implements CustomPacketPayload {
 
-    /**
-     * The client decides when a sprint starts, so the server has to bound how often it accepts one:
-     * every accepted packet spawns an entity and runs the soul hooks.
-     */
     private static final int MIN_TICKS_BETWEEN_PACKETS = 10;
 
     private static final int MAX_TRACKED_PLAYERS = 512;

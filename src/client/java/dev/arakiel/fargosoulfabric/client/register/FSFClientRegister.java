@@ -7,12 +7,6 @@ import dev.arakiel.fargosoulfabric.common.component.RarityAnimation;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.Minecraft;
 
-/**
- * The client half of the registrations the summon library needs.
- *
- * <p>A dedicated server never runs this: the particle implementation, the packet receivers and the
- * rarity animation stay out of the common code.
- */
 public final class FSFClientRegister {
 
     private FSFClientRegister() {

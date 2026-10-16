@@ -28,6 +28,8 @@ import java.util.function.Consumer;
 public class PlayerSouls implements StreamCodec<RegistryFriendlyByteBuf, PlayerSouls> {
 
     private final Set<SoulItem> cache = new HashSet<>();
+    /** Fingerprint of the equipped curios, so a change that never reaches the event is still noticed. */
+    private int curioFingerprint = 0;
     private boolean canSprint = false;
     private int maxFlyTime = 0;
     private boolean renderLavaFog = true;
@@ -67,6 +69,7 @@ public class PlayerSouls implements StreamCodec<RegistryFriendlyByteBuf, PlayerS
     }
 
     public void tick(Player player){
+        this.refreshFromCurios(player);
         canSprint = false;
         maxFlyTime = 0;
         renderLavaFog = true;
@@ -114,6 +117,25 @@ public class PlayerSouls implements StreamCodec<RegistryFriendlyByteBuf, PlayerS
         Attachments.sync(player, FSFAttachmentRegister.SOUL_ITEM_DATA);
     }
 
+    private void refreshFromCurios(Player player) {
+        ICuriosItemHandler handler = CuriosApi.getCuriosInventory(player).orElse(null);
+        if (handler == null) {
+            return;
+        }
+        IItemHandlerModifiable curios = handler.getEquippedCurios();
+        int fingerprint = 1;
+        for (int i = 0; i < curios.getSlots(); i++) {
+            ItemStack itemStack = curios.getStackInSlot(i);
+            if (!itemStack.isEmpty()) {
+                fingerprint = fingerprint * 31 + itemStack.getItem().hashCode();
+            }
+        }
+        if (fingerprint != this.curioFingerprint) {
+            this.curioFingerprint = fingerprint;
+            this.update(player);
+        }
+    }
+
     public void update(Player player) {
         cache.clear();
         ICuriosItemHandler handler = CuriosApi.getCuriosInventory(player).orElse(null);
@@ -146,9 +168,6 @@ public class PlayerSouls implements StreamCodec<RegistryFriendlyByteBuf, PlayerS
 
     @Override
     public void encode(@NotNull RegistryFriendlyByteBuf registryFriendlyByteBuf, @NotNull PlayerSouls soulItemData) {
-        // The soul list travels with every packet. A Fabric attachment value is replaced by whatever
-        // the codec decodes, so a packet that carried only the flags would wipe the list the client
-        // already had - and with it every active soul key, which is read from that list.
         DefaultedRegistry<Item> item = BuiltInRegistries.ITEM;
         registryFriendlyByteBuf.writeInt(soulItemData.cache.size());
         for (SoulItem soulItem : soulItemData.cache) {

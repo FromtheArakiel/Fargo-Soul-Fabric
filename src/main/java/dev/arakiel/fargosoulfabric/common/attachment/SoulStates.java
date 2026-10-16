@@ -19,12 +19,6 @@ import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * The soul state of one entity.
- *
- * <p>The entries are keyed by the soul info type, are written to NBT when the world is saved and are
- * sent to the clients that track the entity.
- */
 public record SoulStates(Map<SoulStateType<?>, SoulState> data)
         implements StreamCodec<RegistryFriendlyByteBuf, SoulStates>, NbtSerializable<CompoundTag> {
 
@@ -48,26 +42,12 @@ public record SoulStates(Map<SoulStateType<?>, SoulState> data)
         dataOf(entity, type.get()).data().remove(type.get());
     }
 
-    /**
-     * The attachment a soul info of {@code type} is stored in.
-     *
-     * <p>Client sided infos never leave the client, so they use their own attachment; everything else is
-     * the authoritative value the server keeps and sends to the clients that track the entity.
-     */
     private static SoulStates dataOf(Entity entity, SoulStateType<?> type) {
         return Attachments.get(entity, type.isClientSide()
                 ? FSFAttachmentRegister.LOCAL_SOUL_INFO_DATA
                 : FSFAttachmentRegister.SOUL_INFO_DATA);
     }
 
-    /**
-     * Ticks the soul state of one living entity.
-     *
-     * <p>Called for every living entity that ticks, on both sides: the server decreases the cooldowns of
-     * the authoritative infos and sends the result to the clients, the client only decreases the infos it
-     * owns itself. Without this call a cooldown never runs out and a state is never cleaned up, so an
-     * ability would fire exactly once.
-     */
     public static void tick(LivingEntity living) {
         if (living.level().isClientSide()) {
             SoulStates local = Attachments.getOrNull(living, FSFAttachmentRegister.LOCAL_SOUL_INFO_DATA);

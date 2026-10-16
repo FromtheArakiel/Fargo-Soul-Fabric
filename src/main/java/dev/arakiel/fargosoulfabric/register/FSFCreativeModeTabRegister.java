@@ -7,12 +7,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 
-/**
- * The tab the souls are listed in.
- *
- * <p>The items are listed in registration order in one flat grid: the tab is a plain item list, not a
- * set of separate sections.
- */
 public final class FSFCreativeModeTabRegister {
 
     public static final CreativeModeTab FSFTab = Registry.register(

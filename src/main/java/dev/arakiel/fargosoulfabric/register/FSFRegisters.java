@@ -24,14 +24,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * The registries this mod adds.
- *
- * <p>Fabric cannot add game registries, so the soul info types and the summon types live in a
- * {@link NamedRegistry}, which is all the serialisation needs: look a type up by name, and name a
- * type. The item components and the particle type are real vanilla registries and are registered
- * straight into them.
- */
 public final class FSFRegisters {
 
     public static final ResourceKey<Registry<SoulStateType<?>>> SOUL_INFO_TYPE_KEY =
@@ -83,16 +75,6 @@ public final class FSFRegisters {
         // order. The item registrations rely on that: they read the components declared above.
     }
 
-
-/**
- * A small, id based registry.
- *
- * <p>Fabric has no way to create brand new game registries, so the value types that only need to be
- * looked up by name (the soul info types and the attachment entity types) live in here instead. It
- * behaves like a plain {@code Map<ResourceLocation, T>} with the lookups the game code needs.
- *
- * @param <T> type of the registered values
- */
 public static class NamedRegistry<T> {
 
     private final ResourceKey<Registry<T>> key;
@@ -147,4 +129,3 @@ public static class NamedRegistry<T> {
     }
 }
 }
-

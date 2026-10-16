@@ -18,13 +18,6 @@ import java.util.List;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.Predicate;
 
-/**
- * 目标缓存，存储玩家周围的实体列表。
- * <p>
- * 每tick更新一次，所有仆从共享同一份缓存，避免重复查询。
- * 存储为玩家附件，仅服务端使用。
- * </p>
- */
 public class SoulTargets {
 
     public static SoulTargets get(Player player) {
@@ -38,14 +31,6 @@ public class SoulTargets {
         return ((long) (Mth.floor(pos.x) >> 4) & 0x3FFFFFFL) << 38 | ((long) (Mth.floor(pos.y) >> 4) & 0x3FFFFFFL) << 12 | ((long) (Mth.floor(pos.z) >> 4) & 0x3FFFFFFL);
     }
 
-    /**
-     * 以指定位置和半径查询实体（走空间分组，不做全量遍历），支持过滤条件。
-     *
-     * @param pos      查询中心坐标
-     * @param radius   查询半径
-     * @param filter   额外过滤条件，可为 null
-     * @return 半径内且满足过滤条件的存活实体列表
-     */
     public List<LivingEntity> getEntitiesInRadius(Vec3 pos, float radius, Predicate<LivingEntity> filter) {
         List<LivingEntity> result = new ArrayList<>();
         if (radius <= 0) {
@@ -83,11 +68,6 @@ public class SoulTargets {
         return distanceCache.computeIfAbsent(key, (IntToDoubleFunction) (k -> (float) living1.getBoundingBox().getCenter().distanceTo(living2.getBoundingBox().getCenter())));
     }
 
-    /**
-     * 更新缓存。每tick调用一次。
-     *
-     * @param player 玩家
-     */
     public void tick(Player player) {
         spatialGroups.clear();
         distanceCache.clear();

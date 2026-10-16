@@ -15,13 +15,6 @@ import dev.arakiel.fargosoulfabric.register.FSFItemRegistries;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.resources.ResourceLocation;
 
-/**
- * The mod entry point.
- *
- * <p>The summon library this mod grew out of was a mod of its own; it ships inside this one now, so
- * its registrations are part of this initializer and the order is explicit: the library first (the
- * items need its components), then everything the mod adds on top.
- */
 public class FSF implements ModInitializer {
 
     public static final String MODID = "fargosoulfabric";

@@ -6,12 +6,6 @@ import java.util.Map;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 
-/**
- * Carries one hit through the damage pipeline.
- *
- * <p>The hooks fire before vanilla applies armour and the other reductions, so a listener sees the
- * damage as it was dealt and may change it, cancel it or take a share of it away.
- */
 public class DamageContainer {
 
     private final DamageSource source;
@@ -123,7 +117,6 @@ public class DamageContainer {
         INVULNERABILITY
     }
 
-
 /** Computes how much of a hit one of the {@link DamageContainer.Reduction} stages removes. */
 @FunctionalInterface
 public interface IReductionFunction {
@@ -131,4 +124,3 @@ public interface IReductionFunction {
     float getReduction(DamageContainer container);
 }
 }
-

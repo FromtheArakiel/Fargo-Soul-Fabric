@@ -1,13 +1,5 @@
 package dev.arakiel.fargosoulfabric.common;
 
-/**
- * The keys the souls can be bound to.
- *
- * <p>The entries live on the common side so that the items can name the binding they answer to.
- * The client turns every entry into a {@code KeyMapping} and resolves a raw key press back into one
- * of these values; a dedicated server never sees a binding, only the resolved value that travels
- * over the {@code KeyHandlePacket}.
- */
 public enum SoulKey {
 
     /** The key that lights the blaze soul up. */

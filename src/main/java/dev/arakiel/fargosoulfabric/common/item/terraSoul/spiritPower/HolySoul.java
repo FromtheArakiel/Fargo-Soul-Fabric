@@ -39,11 +39,6 @@ public class HolySoul extends SoulItem {
         }
         if (info.cooldown <= 0) {
             info.cooldown = 20;
-           if (player.tickCount % 200 == 0 && FSFConfig.auraRings()) {
-               FSFEffects.ring(player.level(), player.getBoundingBox().getCenter(), 6.0D, ParticleTypes.END_ROD, 56, 0.02D);
-           }
-           FSFEffects.aura(player.level(), player, ParticleTypes.HEART, 20, 1.0D, 0.05D);
-           FSFEffects.aura(player.level(), player, ParticleTypes.END_ROD, 25, 1.2D, 0.05D);
             Vec3 center = player.getBoundingBox().getCenter();
             List<LivingEntity> enemies = SoulTargets.get(player).getEntitiesInRadius(center, 6, null);
             for (LivingEntity enemy : enemies) {

@@ -47,8 +47,6 @@ public class RainCloudSoul extends SoulItem {
                 info.cooldown = 40;
                 Vec3 pos = living.getBoundingBox().getCenter();
                 LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(target.level());
-               FSFEffects.burst(target.level(), living.getBoundingBox().getCenter(), ParticleTypes.FALLING_WATER, 30, 0.6D, 0.1D);
-               FSFEffects.burst(target.level(), living.getBoundingBox().getCenter(), ParticleTypes.RAIN, 20, 0.8D, 0.1D);
                 if (bolt != null) {
                     bolt.moveTo(pos);
                     target.level().addFreshEntity(bolt);

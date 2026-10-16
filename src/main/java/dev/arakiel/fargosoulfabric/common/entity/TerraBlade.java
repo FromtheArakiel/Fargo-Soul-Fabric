@@ -30,7 +30,6 @@ import java.util.Set;
 public class TerraBlade extends Minion implements IEntityCollision<TerraBlade> {
 
     public boolean attacking = false;
-    private boolean blend = false;
     public int trailTimer = 0;
     public float idleBlend = 0f;
     public float idleBlendO = 0f;
@@ -47,7 +46,9 @@ public class TerraBlade extends Minion implements IEntityCollision<TerraBlade> {
     protected void registerSyncFields(SyncFieldDispatcher fields) {
         super.registerSyncFields(fields);
         fields.field(ByteBufCodecs.BOOL, () -> attacking, value -> attacking = value);
-        fields.field(ByteBufCodecs.BOOL, () -> !(getGoalSelector().getCurrentGoal() instanceof BladeIdleGoal), value -> blend = value);
+        fields.field(ByteBufCodecs.FLOAT, () -> idleBlend, value -> idleBlend = value);
+        fields.field(ByteBufCodecs.FLOAT, () -> idleBlendO, value -> idleBlendO = value);
+        fields.field(ByteBufCodecs.INT, () -> trailTimer, value -> trailTimer = value);
     }
 
     @Override
@@ -63,11 +64,11 @@ public class TerraBlade extends Minion implements IEntityCollision<TerraBlade> {
         if (distance > 0) {
             FSFPlayerSummons helper = FSFPlayerSummons.get(this.owner);
             RecentTargets targetCache = helper.getRecentTargets();
-            if (!targetCache.isEmpty()) {
-                List<LivingEntity> targets = targetCache.getEntitiesInRadius(this.getPos(), targetCache.getSummonSearchRange(this.getOwner(), (float) distance), (living) -> (attacking || targetCache.isVisibility(this.owner, living)) && this.isTarget(living));
-                if (!targets.isEmpty()) {
-                    return targetCache.getNewTarget(this, targets, 8, false);
-                }
+            List<LivingEntity> targets = targetCache.getEntitiesInRadius(this.getPos(),
+                    targetCache.getSummonSearchRange(this.getOwner(), (float) distance),
+                    (living) -> (attacking || targetCache.isVisibility(this.owner, living)) && this.isTarget(living));
+            if (!targets.isEmpty()) {
+                return targetCache.getNewTarget(this, targets, 8, false);
             }
         }
         return null;
@@ -108,24 +109,21 @@ public class TerraBlade extends Minion implements IEntityCollision<TerraBlade> {
 
     @Override
     public void tick() {
-        if (owner.level().isClientSide()) {
-            idleBlendO = idleBlend;
-            if (blend) {
-                trailTimer = Math.min(trailTimer + 1, 12);
-                idleBlend = Math.max(0.0f, idleBlend - 0.25f);
-            } else {
-                trailTimer = Math.max(trailTimer - 1, 0);
-                idleBlend = Math.min(1.0f, idleBlend + 0.1f);
-            }
-        } else {
-            if (spiritPower && !PlayerSouls.isEquipped(getOwner(), FSFItemRegister.SpiritPowerItem)){
-                setRemove();
-            }
-            if (ancientHolySoul && !PlayerSouls.isEquipped(getOwner(), FSFItemRegister.AncientHolySoulItem)){
-                setRemove();
-            }
-        }
         super.tick();
+        idleBlendO = idleBlend;
+        if (getGoalSelector().getCurrentGoal() instanceof BladeIdleGoal) {
+            trailTimer = Math.max(trailTimer - 1, 0);
+            idleBlend = Math.min(1.0f, idleBlend + 0.1f);
+        } else {
+            trailTimer = Math.min(trailTimer + 1, 12);
+            idleBlend = Math.max(0.0f, idleBlend - 0.25f);
+        }
+        if (spiritPower && !PlayerSouls.isEquipped(getOwner(), FSFItemRegister.SpiritPowerItem)) {
+            setRemove();
+        }
+        if (ancientHolySoul && !PlayerSouls.isEquipped(getOwner(), FSFItemRegister.AncientHolySoulItem)) {
+            setRemove();
+        }
     }
 
     @Override

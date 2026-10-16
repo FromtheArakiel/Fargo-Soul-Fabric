@@ -19,8 +19,6 @@ public class PlannedPath {
       this("path", nodes);
    }
 
-
-
    public String getIdentifier() {
       return this.identifier;
    }

@@ -3,12 +3,12 @@ package dev.arakiel.fargosoulfabric.client.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.fabricmc.fabric.api.client.model.loading.v1.FabricBakedModelManager;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
@@ -44,13 +44,10 @@ public final class RenderUtil {
       }
    }
 
-   /**
-    * Renders one of the models the mod declares as standalone, centered on the pose of
-    * {@code poseStack}.
-    */
-   public static void renderStandalone(ModelResourceLocation modelLocation, PoseStack poseStack,
+   public static void renderStandalone(ResourceLocation modelLocation, PoseStack poseStack,
                                        MultiBufferSource bufferSource, int tintColor, int packedLight) {
-      BakedModel model = Minecraft.getInstance().getModelManager().getModel(modelLocation);
+      FabricBakedModelManager modelManager = (FabricBakedModelManager) Minecraft.getInstance().getModelManager();
+      BakedModel model = modelManager.getModel(modelLocation);
       renderModel(model, poseStack, bufferSource.getBuffer(FSFRenderTypes.getModel()), packedLight);
    }
 

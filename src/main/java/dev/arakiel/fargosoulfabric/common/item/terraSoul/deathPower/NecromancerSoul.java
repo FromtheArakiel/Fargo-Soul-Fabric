@@ -36,7 +36,6 @@ public class NecromancerSoul extends SoulItem {
                 SoulStates.putSoulState(attacker, soulInfo);
             }
             soulInfo.necromancerPower = Math.min(soulInfo.necromancerPower + 1, soulInfo.maxNecromancerPower);
-            FSFEffects.burst(attacker.level(), target.getBoundingBox().getCenter(), ParticleTypes.SCULK_SOUL, 25, 0.4D, 0.05D);
             if (target.getType() == EntityType.SKELETON || target.getType() == EntityType.WITHER_SKELETON) {
                 soulInfo.necromancerPower = Math.min(soulInfo.necromancerPower + 2, soulInfo.maxNecromancerPower);
                 ItemStack skull = target.getType() == EntityType.SKELETON ? Items.SKELETON_SKULL.getDefaultInstance() : Items.WITHER_SKELETON_SKULL.getDefaultInstance();

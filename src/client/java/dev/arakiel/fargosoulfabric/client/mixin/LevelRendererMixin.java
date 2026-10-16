@@ -34,4 +34,5 @@ public class LevelRendererMixin {
    private void fsf$compileSections(Camera camera, CallbackInfo ci) {
       DynamicLightDispatcher.INSTANCE.update((LevelRendererAccessor)this);
    }
+
 }

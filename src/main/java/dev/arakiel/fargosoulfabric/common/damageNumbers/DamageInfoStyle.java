@@ -15,7 +15,6 @@ public record DamageInfoStyle(
 ) {
    public static final int GLYPH_COUNT = 11;
 
-
    public int glyphPixelWidth() {
       return this.textureWidth / 11;
    }

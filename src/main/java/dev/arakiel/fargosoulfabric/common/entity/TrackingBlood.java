@@ -23,8 +23,6 @@ public class TrackingBlood extends SummonProjectile {
             Vec3 targetCenter = owner.getBoundingBox().getCenter();
             // One thin bowed thread per ball; the ball's own id seeds its curve, so every thread keeps
             // its own bend on the way from the enemy it was born on back to the player.
-            FSFEffects.arc(owner.level(), getPos(), targetCenter, ParticleTypes.CRIMSON_SPORE, 14,
-                    Math.abs(getUuid().getMostSignificantBits() % 1000L) / 1000.0D);
             applyForce(targetCenter.subtract(getPos()).normalize().scale(0.25));
             if (targetCenter.distanceTo(getPos()) < owner.getBoundingBox().getSize()) {
                 owner.heal(3.0f);

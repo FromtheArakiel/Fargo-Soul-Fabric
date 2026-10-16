@@ -14,14 +14,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 
-/**
- * Item registry of one mod.
- *
- * <p>Items are registered straight into {@code minecraft:item} while the mod initializes. The
- * builder that is handed out keeps the pieces the original used for its data generation (loot
- * injection and the generated lang, model and recipe files); the resources ship with the mod now,
- * so only the loot injection is wired up to the game.
- */
 public final class FSFItemRegistries {
 
     /** All registries, by mod id, so the loot injection can walk them. */

@@ -32,13 +32,6 @@ public final class FSFAttachmentRegister {
                     .persistent(CompoundTag.CODEC.xmap(SoulStates::load, SoulStates::save))
                     .syncWith(new SoulStates(new HashMap<>()), AttachmentSyncPredicate.all()));
 
-    /**
-     * The soul infos that only exist on the client.
-     *
-     * <p>They deliberately live in their own attachment: Fabric replaces a synced attachment with the
-     * value that arrives from the server, so client side state written into the synced attachment would
-     * be wiped as soon as the server sends an update. This one is neither persisted nor synced.
-     */
     public static final AttachmentType<SoulStates> LOCAL_SOUL_INFO_DATA = AttachmentRegistry.create(
             FSF.rl("local_soul_states"),
             builder -> builder.initializer(() -> new SoulStates(new HashMap<>())));

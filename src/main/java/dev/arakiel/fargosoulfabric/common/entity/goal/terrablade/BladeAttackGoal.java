@@ -17,9 +17,6 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 泰拉棱镜仆从的攻击状态机。
- */
 public class BladeAttackGoal extends SummonGoal<TerraBlade> {
 
     private boolean firstStrike = true;
@@ -71,9 +68,6 @@ public class BladeAttackGoal extends SummonGoal<TerraBlade> {
         }
     }
 
-    /**
-     * 规划直线攻击路径。
-     */
     private void planFirstStrike() {
         LivingEntity target = minion.getTarget();
         Vec3 start = minion.getPos();
@@ -96,12 +90,6 @@ public class BladeAttackGoal extends SummonGoal<TerraBlade> {
         minion.setPath(nodes);
     }
 
-    /**
-     * 规划椭圆斩击攻击路径。
-     * <p>
-     * 50%概率后半段翻滚：以终点和初始位置的镜像点构成同平面椭圆，剑尖朝心，形成自然翻滚。
-     * </p>
-     */
     private void planEllipseSlash() {
         // 目标头顶4格、半径4格的圆上，选择离startPos最近的位置
         Vec3 center = lastTargetPos.add(0, 3, 0);
@@ -164,9 +152,6 @@ public class BladeAttackGoal extends SummonGoal<TerraBlade> {
         minion.setPath(nodes);
     }
 
-    /**
-     * 规划刺击路径。
-     */
     private void planHourglassSlash() {
         LivingEntity target = minion.getTarget();
         Vec3 startPos = minion.getPos();
@@ -211,9 +196,6 @@ public class BladeAttackGoal extends SummonGoal<TerraBlade> {
         minion.setPath(nodes);
     }
 
-    /**
-     * 规划连锁攻击路径。
-     */
     private void planChainStrike() {
         Vec3 endPos = minion.getTarget().getBoundingBox().getCenter();
         int duration = 7;
@@ -229,9 +211,6 @@ public class BladeAttackGoal extends SummonGoal<TerraBlade> {
         minion.setPath(nodes);
     }
 
-    /**
-     * 位置修正机制使,仆从轨迹能够实时追踪移动中的目标。
-     */
     private void applyPositionCorrection() {
         LivingEntity target = minion.getTarget();
         Vec3 currentTargetCenter = target.getBoundingBox().getCenter();
@@ -252,7 +231,6 @@ public class BladeAttackGoal extends SummonGoal<TerraBlade> {
         }
         lastTargetPos = currentTargetCenter;
     }
-
 
 public static class Ellipse {
    private final Vec3 pointA;

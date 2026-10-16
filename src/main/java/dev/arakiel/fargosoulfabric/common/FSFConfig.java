@@ -22,14 +22,23 @@ public final class FSFConfig {
 
     private static final FSFConfig INSTANCE = load();
 
-    /**
-     * Draws a ring every ten seconds around a soul whose effect reaches that far, one circle at the
-     * effect's own radius.
-     */
     private boolean auraRings = true;
+
+    private boolean debugSummons = false;
 
     public static boolean auraRings() {
         return INSTANCE.auraRings;
+    }
+
+    public static boolean debugSummons() {
+        return INSTANCE.debugSummons;
+    }
+
+    /** Lays the creative tab out in sections, each introduced by a banner row. */
+    private boolean creativeTabSections = true;
+
+    public static boolean creativeTabSections() {
+        return INSTANCE.creativeTabSections;
     }
 
     private static FSFConfig load() {
@@ -40,6 +49,13 @@ public final class FSFConfig {
                 FSFConfig config = GSON.fromJson(reader, FSFConfig.class);
 
                 if (config != null) {
+                    // Written back, so a setting added in a later version shows up in the file the
+                    // user edits instead of only existing as an invisible default.
+                    try (Writer writer = Files.newBufferedWriter(FILE, StandardCharsets.UTF_8)) {
+                        GSON.toJson(config, writer);
+                    } catch (Exception ignored) {
+                        LOGGER.warn("Could not refresh {}", FILE);
+                    }
                     return config;
                 }
             } catch (Exception exception) {

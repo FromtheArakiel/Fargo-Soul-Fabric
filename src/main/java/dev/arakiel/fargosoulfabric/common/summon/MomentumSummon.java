@@ -65,12 +65,6 @@ public abstract class MomentumSummon extends Summon implements IMomentumSummon {
       this.addVelocity(force);
    }
 
-   /**
-    * The path node the entity continues with after it hit something.
-    *
-    * <p>The movement stops at the hit point, which keeps the entity on the surface it touched
-    * instead of passing through it.
-    */
    public PathNode getCollisionAfterPathNode(Vec3 hitPoint, PathNode current) {
       return current.modifyPos(hitPoint);
    }

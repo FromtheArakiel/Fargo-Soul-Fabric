@@ -1,5 +1,7 @@
 package dev.arakiel.fargosoulfabric.common.entity;
 
+import dev.arakiel.fargosoulfabric.utils.FSFEffects;
+import net.minecraft.core.particles.ParticleTypes;
 import dev.arakiel.fargosoulfabric.common.attachment.SoulTargets;
 import dev.arakiel.fargosoulfabric.register.FSFMobEffectRegister;
 import dev.arakiel.fargosoulfabric.register.SummonTypeRegister;

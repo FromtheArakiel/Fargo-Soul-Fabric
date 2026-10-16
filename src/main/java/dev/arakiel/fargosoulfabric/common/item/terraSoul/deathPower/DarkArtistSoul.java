@@ -43,7 +43,6 @@ public class DarkArtistSoul extends SoulItem {
             if (soulInfo.darkPower >= soulInfo.maxDarkPower){
                 soulInfo.darkPower = 0;
                 attacker.addEffect(new MobEffectInstance(FSFMobEffectRegister.ShadowGift, 400));
-               FSFEffects.aura(attacker.level(), attacker, ParticleTypes.SOUL, 40, 0.6D, 0.05D);
             }
         }
     }

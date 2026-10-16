@@ -34,15 +34,8 @@ public class SummonData implements Attachments.Bound {
    private final Map<SummonType<?>, List<Summon>> groups = new HashMap<>();
    private final Map<UUID, Summon> uuidToEntity = new HashMap<>();
    private final List<Summon> renderCache = new ArrayList<>();
-   /**
-    * Payloads that arrived and are waiting for their owner's client tick to apply them.
-    *
-    * <p>The queue deliberately does not live on this object: a synced attachment is replaced whole by
-    * whatever the codec decodes, so a queue kept here would be dropped as soon as a second update
-    * arrived before the client tick drained the first one. The payload carries the owner id, which is
-    * what makes it possible to keep the queue on the side, keyed by owner.
-    */
    private static final Map<UUID, List<byte[]>> PENDING_PAYLOADS = new java.util.concurrent.ConcurrentHashMap<>();
+   private static final Map<UUID, SummonData> CLIENT_INSTANCES = new java.util.concurrent.ConcurrentHashMap<>();
    private Player owner;
    private Level level = null;
    private boolean changed = false;
@@ -117,10 +110,11 @@ public class SummonData implements Attachments.Bound {
                List<Summon> entities = this.groups.computeIfAbsent(entry.getKey(), key -> new ArrayList<>());
 
                for (Summon summon : entry.getValue()) {
-                  if (!summon.getCurrentPathNode().pos().equals(Vec3.ZERO)) {
-                     summon.setOwner(this.owner);
-                     entities.add(summon);
+                  if (summon.getCurrentPathNode().pos().equals(Vec3.ZERO)) {
+                     summon.setPos(this.owner.position());
                   }
+                  summon.setOwner(this.owner);
+                  entities.add(summon);
                }
             }
 
@@ -131,6 +125,9 @@ public class SummonData implements Attachments.Bound {
          Map<MinionSlotType, Integer> limits = new HashMap<>();
 
          for (Minion minion : this.get(Minion.class)) {
+            if (minion.getSlotType() == MinionSlotType.None) {
+               continue;
+            }
             Player owner = minion.getOwner();
             int limit = limits.computeIfAbsent(minion.getSlotType(), slotType -> {
                AttributeInstance instance = switch (slotType) {
@@ -330,7 +327,7 @@ public class SummonData implements Attachments.Bound {
                updated.add(payload);
                return updated;
             });
-            return data;
+            return CLIENT_INSTANCES.computeIfAbsent(ownerId, key -> data);
          }
       }
    }

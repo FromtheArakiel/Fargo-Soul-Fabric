@@ -23,12 +23,6 @@ public record ParticleBatchPayload(List<ParticleBatchPayload.Entry> entries) imp
       boundedList(ParticleBatchPayload.Entry.STREAM_CODEC, MAX_ENTRIES), ParticleBatchPayload::entries, ParticleBatchPayload::new
    );
 
-   /**
-    * Writes any list, but refuses to read one longer than {@code max}.
-    *
-    * <p>Vanilla's {@code ByteBufCodecs.list()} trusts the length the sender wrote, so a server that
-    * means harm could ask the client for an arbitrarily large allocation.
-    */
    private static <V> StreamCodec<RegistryFriendlyByteBuf, List<V>> boundedList(
            StreamCodec<? super RegistryFriendlyByteBuf, V> element, int max) {
       return StreamCodec.of(

@@ -11,15 +11,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 
-/**
- * Declares one item.
- *
- * <p>The chained calls describe what the original wrote into the generated resources (lang, models,
- * recipes, tags and the JEI description). Those files ship with the mod here, so the calls only
- * document the item and add its loot injection.
- *
- * @param <T> the item class
- */
 public class FSFItemBuilder<T extends Item> {
 
     private final FSFItemRegistries registries;

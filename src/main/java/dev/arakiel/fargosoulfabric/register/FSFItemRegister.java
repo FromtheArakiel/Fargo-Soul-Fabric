@@ -40,9 +40,6 @@ public class FSFItemRegister {
                     .itemTag(FSFItemTagsRegister.Souls)
                     .build();
 
-    // ============================================================
-    // 宇宙之力 · 魔石分段
-    // ============================================================
     public static final CosmicPower CosmicPowerItem =
             register("cosmic_power", CosmicPower::new, FSFRarity.Purple)
                     .recipeWithLookup((provider, output) -> shapeless(output, "cosmic_power", FSFItemRegister.CosmicPowerItem, FSFItemRegister.BlazeSoulItem, FSFItemRegister.METEOR_SOUL, FSFItemRegister.NebulaSoulItem, FSFItemRegister.StardustSoulItem, FSFItemRegister.VortexSoulItem, FSFItemRegister.WizardSoulItem))
@@ -151,9 +148,6 @@ public class FSFItemRegister {
                     .itemTag(FSFItemTagsRegister.Souls)
                     .build();
 
-    // ============================================================
-    // 死亡之力 · 魔石分段
-    // ============================================================
     public static final DeathPower DeathPowerItem =
             register("death_power", DeathPower::new, FSFRarity.Purple)
                     .recipeWithLookup((provider, output) -> shapeless(output, "death_power", FSFItemRegister.DeathPowerItem, FSFItemRegister.AncientShadowSoulItem, FSFItemRegister.NinjaSoulItem, FSFItemRegister.CrystalAssassinSoulItem, FSFItemRegister.DarkArtistSoulItem, FSFItemRegister.GloomySoulItem, FSFItemRegister.NecromancerSoulItem, FSFItemRegister.PenetratingNinjaSoulItem))
@@ -272,9 +266,6 @@ public class FSFItemRegister {
                     .itemTag(FSFItemTagsRegister.Souls)
                     .build();
 
-    // ============================================================
-    // 泰拉之力 · 魔石分段
-    // ============================================================
     public static final TerraPower TerraPowerItem =
             register("terra_power", TerraPower::new, FSFRarity.Purple)
                     .recipeWithLookup((provider, output) -> shapeless(output, "terra_power", FSFItemRegister.TerraPowerItem, FSFItemRegister.CopperSoulItem, FSFItemRegister.TinSoulItem, FSFItemRegister.IronSoulItem, FSFItemRegister.LeadSoulItem, FSFItemRegister.SilverSoulItem, FSFItemRegister.TungstenSoulItem, FSFItemRegister.ObsidianSoulItem))
@@ -395,9 +386,6 @@ public class FSFItemRegister {
                     .itemTag(FSFItemTagsRegister.Souls)
                     .build();
 
-    // ============================================================
-    // 森林之力 · 魔石分段
-    // ============================================================
     public static final ForestPower ForestPowerItem =
             register("forest_power", ForestPower::new, FSFRarity.Purple)
                     .recipeWithLookup((provider, output) -> shapeless(output, "forest_power", FSFItemRegister.ForestPowerItem, FSFItemRegister.WoodSoulItem, FSFItemRegister.PineWoodSoulItem, FSFItemRegister.RoseWoodSoulItem, FSFItemRegister.EbonyWoodSoulItem, FSFItemRegister.ShadowWoodSoulItem, FSFItemRegister.PalmWoodSoulItem, FSFItemRegister.PearlWoodSoulItem))
@@ -508,9 +496,6 @@ public class FSFItemRegister {
                     .itemTag(FSFItemTagsRegister.Souls)
                     .build();
 
-    // ============================================================
-    // 大地之力 · 魔石分段
-    // ============================================================
     public static final EarthPower EarthPowerItem =
             register("earth_power", EarthPower::new, FSFRarity.Purple)
                     .recipeWithLookup((provider, output) -> shapeless(output, "earth_power", FSFItemRegister.EarthPowerItem, FSFItemRegister.CobaltSoulItem, FSFItemRegister.PalladiumSoulItem, FSFItemRegister.MithrilSoulItem, FSFItemRegister.OrichalcumSoulItem, FSFItemRegister.AdamantiteSoulItem, FSFItemRegister.TitaniumSoulItem))
@@ -612,9 +597,6 @@ public class FSFItemRegister {
                     .itemTag(FSFItemTagsRegister.Souls)
                     .build();
 
-    // ============================================================
-    // 自然之力 · 魔石分段
-    // ============================================================
     public static final NaturePower NaturePowerItem =
             register("nature_power", NaturePower::new, FSFRarity.Purple)
                     .recipeWithLookup((provider, output) -> shapeless(output, "nature_power", FSFItemRegister.NaturePowerItem, FSFItemRegister.CrimsonSoulItem, FSFItemRegister.LavaSoulItem, FSFItemRegister.RainCloudSoulItem, FSFItemRegister.FrostSoulItem, FSFItemRegister.GreenSoulItem, FSFItemRegister.MushroomSoulItem))
@@ -716,9 +698,6 @@ public class FSFItemRegister {
                     .itemTag(FSFItemTagsRegister.Souls)
                     .build();
 
-    // ============================================================
-    // 生命之力 · 魔石分段
-    // ============================================================
     public static final LifePower LifePowerItem =
             register("life_power", LifePower::new, FSFRarity.Purple)
                     .recipeWithLookup((provider, output) -> shapeless(output, "life_power", FSFItemRegister.LifePowerItem, FSFItemRegister.BeeSoulItem, FSFItemRegister.BeetleSoulItem, FSFItemRegister.PumpkinSoulItem, FSFItemRegister.SpiderSoulItem, FSFItemRegister.TurtleSoulItem))
@@ -805,9 +784,6 @@ public class FSFItemRegister {
                     .itemTag(FSFItemTagsRegister.Souls)
                     .build();
 
-    // ============================================================
-    // 心灵之力 · 魔石分段
-    // ============================================================
     public static final SpiritPower SpiritPowerItem =
             register("spirit_power", SpiritPower::new, FSFRarity.Purple)
                     .recipeWithLookup((provider, output) -> shapeless(output, "spirit_power", FSFItemRegister.SpiritPowerItem, FSFItemRegister.ForbiddenSoulItem, FSFItemRegister.HolySoulItem, FSFItemRegister.AncientHolySoulItem, FSFItemRegister.TekeSoulItem, FSFItemRegister.GhostSoulItem))
@@ -890,9 +866,6 @@ public class FSFItemRegister {
                     .itemTag(FSFItemTagsRegister.Souls)
                     .build();
 
-    // ============================================================
-    // 意志之力 · 魔石分段
-    // ============================================================
     public static final WillPower WillPowerItem =
             register("will_power", WillPower::new, FSFRarity.Purple)
                     .recipeWithLookup((provider, output) -> shapeless(output, "will_power", FSFItemRegister.WillPowerItem, FSFItemRegister.GoldSoulItem, FSFItemRegister.PlatinumSoulItem, FSFItemRegister.GladiatorSoulItem, FSFItemRegister.RedRidingSoulItem, FSFItemRegister.ValhallaKnightSoulItem))

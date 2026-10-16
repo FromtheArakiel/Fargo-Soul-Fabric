@@ -10,12 +10,6 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-/**
- * Draws the glyphs of a single damage number.
- *
- * <p>This is the rendering half of {@link DamageInfo}: it needs a vertex consumer, so it stays on
- * the client.
- */
 public final class DamageInfoGlyphRenderer {
 
     private DamageInfoGlyphRenderer() {

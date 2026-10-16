@@ -11,12 +11,6 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-/**
- * 漩涡（星旋）：传送后于落点生成的静止区域实体，持续 5 秒。
- * 将半径 4 格内的敌人持续向中心拉扯（受拉拽保护系数衰减），
- * 并对半径 3 格内的敌人每 10 tick 结算一次伤害。
- * 无渲染，通过多层同心圆切向 + 径向向内粒子模拟漩涡旋转效果。
- */
 @SuppressWarnings("this-escape")
 public class Vortex extends SummonProjectile {
 
@@ -26,9 +20,6 @@ public class Vortex extends SummonProjectile {
         setDrag(1);
     }
 
-    /**
-     * 静止区域：不执行射弹飞行物理，仅保留生命周期判定。
-     */
     @Override
     public void tick() {
         Vec3 center = getPos();
