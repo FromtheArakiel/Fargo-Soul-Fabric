@@ -6,10 +6,10 @@
   "name": "${mod_name}",
   "description": "${mod_description}",
   "authors": [
-    "First-Sight"
+    "FromtheArakiel"
   ],
   "contributors": [
-    "FromtheArakiel (Fabric port)"
+    "First-Sight (Oringin Author)"
   ],
   "license": "${mod_license}",
   "environment": "*",
